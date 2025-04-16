@@ -13,14 +13,6 @@
         <el-form-item label="密码" prop="password">
           <el-input v-model="ruleForm.password" type="password" autocomplete="off" />
         </el-form-item>
-        <!-- <el-form-item label="验证码" prop="verificationCode">
-          <div class="verification-code-container">
-            <el-input v-model="ruleForm.verificationCode" autocomplete="off" placeholder="请输入验证码" />
-            <div class="verification-code" @click="refreshVerificationCode">
-              {{ verificationCode }}
-            </div>
-          </div>
-        </el-form-item> -->
         <el-form-item>
           <el-button type="primary" @click="submitForm(ruleFormRef)">
             提交
@@ -35,46 +27,76 @@
 
 <script lang="ts" setup>
 
-import { reactive, ref, onMounted } from 'vue'
+import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import { House } from '@element-plus/icons-vue'
-import type { RuleForm } from './rules'
-import { createRules, generateVerificationCode } from './rules'
+import { LoginStore } from '@/stores/login'
 import router from '@/router'
 
+interface RuleForm {
+  username: string;
+  password: string;
+}
 
-const ruleFormRef = ref<FormInstance>()
-const verificationCode = ref('')
+const validateUsername = (
+  rule: unknown,
+  value: string,
+  callback: (error?: Error) => void
+) => {
+  if (value === '') {
+    callback(new Error('请输入用户名'));
+  } else if (value.length < 2) {
+    callback(new Error('用户名长度不能小于2个字符'));
+  } else {
+    callback();
+  }
+};
 
-const ruleForm = reactive<RuleForm>({
+const validatePassword = (
+  rule: unknown,
+  value: string,
+  callback: (error?: Error) => void
+) => {
+  if (value === '') {
+    callback(new Error('请输入密码'));
+  } else if (value.length < 6) {
+    callback(new Error('密码长度不能小于6个字符'));
+  } else if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[^]{6,}$/.test(value)) {
+    callback(new Error('密码必须包含大小写字母和数字'));
+  } else {
+    callback();
+  }
+};
+
+const rules = ref({
+  username: [{ validator: validateUsername, trigger: 'blur' }],
+  password: [{ validator: validatePassword, trigger: 'blur' }],
+});
+
+const ruleFormRef = ref<FormInstance>() // 表单引用
+
+const ruleForm = reactive<RuleForm>({ // 注册表单数据
   username: '',
   password: '',
-  verificationCode: '',
-})
+});
+
+const authStore = LoginStore(); // 存储用户信息
 
 
-
-
-const refreshVerificationCode = () => {
-  verificationCode.value = generateVerificationCode()
-  // 当验证码刷新时，重新创建验证规则
-  rules.value = createRules(verificationCode.value)
-}
-
-// 使用ref来存储规则，这样可以在验证码刷新时更新规则
-const rules = ref(createRules(verificationCode.value))
-
-const submitForm = (formEl: FormInstance | undefined) => { //提交表单
-  if (!formEl) return //如果表单为空，则返回
-  formEl.validate((valid: boolean) => { //验证表单
-    if (valid) { //如果表单验证通过
-      console.log('submit!') //打印提交信息
-      // 这里可以添加登录逻辑
+const submitForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return;
+  formEl.validate((valid: boolean) => {
+    if (valid) { //前端校验通过
+      authStore.SendLoginInfo(ruleForm).then(() => { //请求后端数据
+        console.log('表单验证成功');
+      }).catch((error) => {
+        console.error('登录请求失败', error);
+      });
     } else {
-      console.log('error submit!') //打印错误信息
+      console.log('前端表单验证失败');
     }
-  })
-}
+  });
+};
 
 const goToManagement = () => {
   router.push('/management-platform')
@@ -83,11 +105,9 @@ const goToManagement = () => {
 const goToRegister = () => {
   router.push('/register')
 }
-
-onMounted(() => {
-  refreshVerificationCode()
-})
 </script>
+
+
 
 <style scoped>
 .particle-background {

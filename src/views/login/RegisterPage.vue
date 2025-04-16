@@ -35,7 +35,7 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import router from '@/router'
-import { useAuthStore } from '@/stores/auth';
+import { RegisterStore } from '@/stores/login';
 
 const registerFormRef = ref<FormInstance>() // 表单引用
 const registerForm = reactive({ // 注册表单数据
@@ -68,7 +68,7 @@ const rules = {
   organization: [{ required: true, message: '请输入注册机构', trigger: 'blur' }],
 }
 
-const authStore = useAuthStore();
+const authStore = RegisterStore();
 
 const submitRegisterForm = () => {
   // 校验表单
@@ -83,9 +83,17 @@ const submitRegisterForm = () => {
         phoneNumber: registerForm.phone,
         organization: registerForm.organization,
       };
-      authStore.addUser(user); // 存储用户信息
+      // 将用户信息发送给后端
+      authStore.SendRegisterInfo(user).then((response) => {
+        if (response.status === 200) {
+          console.log('注册成功：', response.data);
+        } else {
+          console.error('注册失败：', response.data);
+        }
+      });
+
       console.log('表单正确', user);
-      router.push('/login');
+      router.push('/home');
     } else {
       console.log('表单错误');
     }
