@@ -42,7 +42,7 @@ import { useUserListStore } from '@/stores/userlist';
 const userListStore = useUserListStore(); // 获取用户列表的 store
 const userList = computed(() => userListStore.userList); // 绑定到 store 的 userList
 
-const refreshUserList = userListStore.clearUserList; // 刷新用户列表的方法
+const refreshUserList = userListStore.fetchUncheckUserList; // 刷新用户列表的方法
 
 // onMounted(() => {
 //   userListStore.fetchUserList(); // 组件挂载时获取用户列表
