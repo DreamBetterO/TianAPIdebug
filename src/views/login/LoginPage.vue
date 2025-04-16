@@ -15,7 +15,7 @@
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm(ruleFormRef)">
-            提交
+            登录
           </el-button>
           <el-button type="success" @click="goToRegister">注册</el-button>
         </el-form-item>
@@ -28,7 +28,7 @@
 <script lang="ts" setup>
 
 import { reactive, ref } from 'vue'
-import type { FormInstance } from 'element-plus'
+import  { type FormInstance,ElMessageBox } from 'element-plus'
 import { House } from '@element-plus/icons-vue'
 import { LoginStore } from '@/stores/login'
 import router from '@/router'
@@ -88,6 +88,15 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid: boolean) => {
     if (valid) { //前端校验通过
       authStore.SendLoginInfo(ruleForm).then(() => { //请求后端数据
+        if(authStore.loginResponse?.data.id == null) {
+          ElMessageBox.alert('请先注册！', '错误', {
+            confirmButtonText: '确定',
+            type: 'error',
+          });
+          router.push('/management-platform');
+        } else {
+
+        }
         console.log('表单验证成功');
       }).catch((error) => {
         console.error('登录请求失败', error);

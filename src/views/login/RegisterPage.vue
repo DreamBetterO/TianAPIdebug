@@ -36,6 +36,7 @@ import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import router from '@/router'
 import { RegisterStore } from '@/stores/login';
+import { ElMessageBox } from 'element-plus';
 
 const registerFormRef = ref<FormInstance>() // 表单引用
 const registerForm = reactive({ // 注册表单数据
@@ -68,7 +69,8 @@ const rules = {
   organization: [{ required: true, message: '请输入注册机构', trigger: 'blur' }],
 }
 
-const authStore = RegisterStore();
+const authStore = RegisterStore(); // 注册内容
+
 
 const submitRegisterForm = () => {
   // 校验表单
@@ -84,18 +86,21 @@ const submitRegisterForm = () => {
         organization: registerForm.organization,
       };
       // 将用户信息发送给后端
-      authStore.SendRegisterInfo(user).then((response) => {
-        if (response.status === 200) {
-          console.log('注册成功：', response.data);
+      authStore.SendRegisterInfo(user).then(() => {
+        if(authStore.RegisterResponseStore!= null) {
+          console.log('注册成功：', authStore.RegisterResponseStore);
         } else {
-          console.error('注册失败：', response.data);
+          ElMessageBox.alert('注册失败，请重试', '错误', {
+            confirmButtonText: '确定',
+            type: 'error',
+          });
         }
       });
 
       console.log('表单正确', user);
-      router.push('/home');
+      router.push('/'); // 注册成功后跳转到登录页面
     } else {
-      console.log('表单错误');
+      console.log('数据库表单获取失败');
     }
   });
 };

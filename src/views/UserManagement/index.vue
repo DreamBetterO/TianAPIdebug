@@ -24,7 +24,6 @@
           </span>
         </template>
       </el-table-column>
-      <el-table-column prop="phoneNumber" label="电话号码" width="150" />
     </el-table>
   </div>
 </template>

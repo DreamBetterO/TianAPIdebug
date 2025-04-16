@@ -2,7 +2,8 @@
 import axios, { type AxiosInstance } from 'axios'
 
 // 动态设置 baseURL
-const baseURL = import.meta.env.VITE_API_BASE_URL || '/api'
+const baseURL = import.meta.env.VITE_API_BASE_URL; // 动态从环境变量获取 baseURL，默认为 /api
+
 const request: AxiosInstance = axios.create({
   baseURL, // 基础 URL，baseURL 动态地从环境变量 VITE_API_BASE_URL 中获取，若未定义，则默认为 /api
   timeout: 10000,
@@ -23,15 +24,19 @@ request.interceptors.request.use(
 
 // 响应拦截器（统一处理错误）
 request.interceptors.response.use(
-  (response) => response.data,
+  (response) => {
+    console.log('请求成功'); // 添加成功日志
+    return response.data;
+  },
   (error) => {
-    const { response } = error
+    const { response } = error;
     if (response) {
       switch (response.status) {
         case 200:
-          console.log('请求成功')
+          console.log('请求成功');
+          break; // 添加 break，避免继续执行
         case 401:
-          console.error('未授权，请重新登录')
+          console.error('未授权，请重新登录');
           break
         case 403:
           console.error('拒绝访问')
@@ -43,12 +48,12 @@ request.interceptors.response.use(
           console.error('服务器内部错误')
           break
         default:
-          console.error(`错误：${response.status}`)
+          console.error(`未知错误：状态码 ${response.status}，响应内容：`, response.data);
       }
     } else {
       console.error('网络错误或服务器无响应')
     }
-    return Promise.reject(error)
+    return Promise.reject(error);
   },
 )
 

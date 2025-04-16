@@ -17,7 +17,7 @@ export const RegisterUser = async (userData: RegisterInfo): Promise<RegisterResp
 // 用户登录
 export const LoginUser = async (logininfo: LoginInfo): Promise<LoginResponse> => {
   try {
-    const response = await request.post<LoginResponse>('/auth/signup', logininfo)
+    const response = await request.post<LoginResponse>('/auth/login', logininfo)
     return response.data
   } catch (error) {
     console.error('登录失败:', error)
