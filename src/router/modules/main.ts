@@ -5,7 +5,7 @@ const ManageRoutes: Array<RouteRecordRaw> = [
   {
     path: '/management-platform',
     name: 'ManagementPlatform',
-    component: () => import('@/layout/index.vue'),
+    component: () => import('@/layout/ManagementSystem/index.vue'),
     meta: { title: '首页' },
     children: [
       {

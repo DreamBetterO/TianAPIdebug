@@ -31,7 +31,9 @@
 
     <!-- 主内容区 -->
     <main class="main-content">
+      <header-component></header-component>
       <transition name="slide-fade" mode="out-in">
+
         <router-view :key="$route.path"></router-view>
       </transition>
     </main>
@@ -42,6 +44,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import HeaderComponent from './header.vue';
 
 // 路由相关
 const router = useRouter()

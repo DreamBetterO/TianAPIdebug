@@ -51,7 +51,7 @@ const registerForm = reactive({ // 注册表单数据
 const rules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 3, max: 15, message: '用户名长度在 3 到 15 个字符', trigger: 'blur' },
+    { min: 2, max: 15, message: '用户名长度在 2 到 15 个字符', trigger: 'blur' },
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },

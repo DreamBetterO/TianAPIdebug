@@ -88,7 +88,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
   formEl.validate((valid: boolean) => {
     if (valid) { //前端校验通过
       authStore.SendLoginInfo(ruleForm).then(() => { //请求后端数据
-        if(authStore.loginResponse?.data.id == null) {
+        if(authStore.loginResponseDate?.id == null) {
           ElMessageBox.alert('请先注册！', '错误', {
             confirmButtonText: '确定',
             type: 'error',

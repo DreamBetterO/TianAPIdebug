@@ -1,4 +1,9 @@
 import { type RouteRecordRaw } from 'vue-router'
+// import {RegisterStore, LoginStore}from '@/stores/login'
+
+
+//代办事项：设置路由守卫，当LoginStore.isLogin为true时，跳转到首页,且不允许访问登录和注册页面。
+//
 
 const LoginRoutes: Array<RouteRecordRaw> = [
   {

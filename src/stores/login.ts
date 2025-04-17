@@ -1,6 +1,6 @@
 // store/auth.ts
 import { defineStore } from 'pinia'
-import type { LoginInfo, RegisterInfo, RegisterResponse, LoginResponse } from '@/types/login'
+import type { LoginInfo, RegisterInfo, RegisterResponse, LoginResponseData } from '@/types/login'
 import { RegisterUser, LoginUser } from '@/api/login'
 
 //注册状态管理
@@ -9,7 +9,7 @@ export const RegisterStore = defineStore('register', {
   state: () => ({
     //定义store的初始状态
     registerInfo: null as RegisterInfo | null, //用户信息
-    RegisterResponseStore: null as RegisterResponse | null,
+    RegisterResponseStore: null as RegisterResponse | null,  //注册响应数据（后端返回的数据，注意这是一个完整的响应对象）
   }),
   actions: {
     //定义store的方法
@@ -56,8 +56,9 @@ export const LoginStore = defineStore('login', {
   //定义store的唯一ID
   state: () => ({
     //定义store的初始状态
-    loginInfo: null as LoginInfo | null,
-    loginResponse: null as LoginResponse | null,
+    loginInfo: null as LoginInfo | null,  //登录用户信息（发送给后端）
+    loginResponseDate: null as LoginResponseData | null, //登录响应数据（后端返回的数据）
+    islogin: false, //登录状态
   }),
   actions: {
     //定义store的方法
@@ -70,12 +71,18 @@ export const LoginStore = defineStore('login', {
       state.loginInfo = null
       console.log('LoginInfo cleared.')
     },
-    setLoginResponse(response: LoginResponse) {
-      this.loginResponse = response
-      console.log('LoginResponse updated:', this.loginResponse)
+    setLoginResponse(response: LoginResponseData) {
+      this.loginResponseDate = response
+      console.log('LoginResponse updated:', this.loginResponseDate)
+      if (this.loginResponseDate.id!== 0) {
+        //如果登录成功，设置登录状态
+        this.islogin = true
+        console.log('Login successful:', this.islogin)
+      }
     },
-    clearLoginResponse(state: { loginResponse: null }) {
-      state.loginResponse = null
+    clearLoginResponse() {
+      this.islogin = false; //清除登录状态
+      this.loginResponseDate = null
       console.log('LoginResponse cleared.')
     },
     async SendLoginInfo(info: LoginInfo) {
@@ -84,12 +91,14 @@ export const LoginStore = defineStore('login', {
         throw new Error('LoginInfo is not valid')
       }
       try {
+        /*请求成功后，先清除之前的登录状态，随后设置登录状态 */
         console.log('开始请求后端数据，请求内容为：', this.loginInfo)
         //调用注册接口
         const response = await LoginUser(this.loginInfo)
         console.log('Registration successful:', response)
-        this.setLoginResponse(response)
-        console.log('\n\nLoginResponse updated:', this.loginResponse)
+        this.clearLoginResponse();
+        this.setLoginResponse(response.data)
+        console.log('\n\nLoginResponse updated:', this.loginResponseDate)
         //将注册响应存储到store中
         return response
       } catch (error) {
