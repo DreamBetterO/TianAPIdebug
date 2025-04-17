@@ -32,17 +32,18 @@
     <!-- 主内容区 -->
     <main class="main-content">
       <header-component></header-component>
-      <transition name="slide-fade" mode="out-in">
-
-        <router-view :key="$route.path"></router-view>
-      </transition>
+      <router-view v-slot="{ Component }">
+        <transition name="slide-fade" mode="out-in">
+          <component :is="Component" :key="$route.path" />
+        </transition>
+      </router-view>
     </main>
   </div>
 </template>
 
 <!-- 核心功能脚本 -->
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import HeaderComponent from './header.vue';
 
@@ -67,6 +68,11 @@ const handleMenuSelect = (key: string) => {
   if (key === activeMenu.value) return
   router.push(key).catch(() => { })
 }
+
+// 清理事件监听器
+onUnmounted(() => {
+  console.log('组件卸载，清理资源');
+});
 </script>
 
 <!-- 组件配置 -->

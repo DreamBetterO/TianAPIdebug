@@ -60,15 +60,18 @@ const logout = () => {
 
 <style scoped>
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  width: 100%;
-  height: 30px;
-  margin: 0px 0px 5px 0px;
+  height: 50px;
   padding: 5px 10px;
   background-color: rgba(255, 255, 255, 0);
-  color: #fff;
+  color: #000;
   font-family: 'Roboto', sans-serif;
 }
 
@@ -77,6 +80,7 @@ const logout = () => {
   align-items: center;
   gap: 20px;
 }
+
 .el-dropdown-menu {
   background-color: rgba(229, 235, 244, 0.9);
   border: none;
@@ -99,7 +103,7 @@ const logout = () => {
   padding-top: 0px;
   vertical-align: middle;
   font-size: 16px;
-  color: #ffffff;
+  color: #000;
   cursor: pointer;
   transition: all 0.3s ease;
 }
