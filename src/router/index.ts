@@ -3,10 +3,16 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 // 1. 导入所有路由模块
 import LoginRoutes from './modules/login'
 import ManagementRoutes from './modules/main'
-import RegisterPage from '@/views/login/RegisterPage.vue'
+
 
 // 2. 合并所有路由配置
 const routes: RouteRecordRaw[] = [
+  {
+    path: '/',
+    name: 'WelcomePage',
+    component: () => import('@/views/Welecome.vue'),
+    meta: { title: '首页' },
+  },
   // 登录模块
   ...LoginRoutes,
   ...ManagementRoutes,
@@ -22,13 +28,8 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/WorkingForNew.vue'),
     meta: { title: '工作台' },
   },
-  // 注册页面
-  {
-    path: '/register',
-    name: 'Register',
-    component: RegisterPage,
-  },
 ]
+
 
 // 3. 创建路由实例
 const router = createRouter({

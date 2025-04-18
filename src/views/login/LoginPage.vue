@@ -1,9 +1,6 @@
 <template>
-  <div class="page-container">
-    <div class="extect-button">
-      <el-button type="Info" :icon="House" @click="goToManagement">管理平台</el-button>
 
-    </div>
+
     <div class="login-Item">
       <el-form ref="ruleFormRef" style="max-width: 600px" :model="ruleForm" status-icon :rules="rules"
         label-width="auto" class="demo-ruleForm">
@@ -22,14 +19,13 @@
       </el-form>
     </div>
 
-  </div>
 </template>
 
 <script lang="ts" setup>
 
 import { reactive, ref } from 'vue'
 import  { type FormInstance,ElMessageBox } from 'element-plus'
-import { House } from '@element-plus/icons-vue'
+
 import { LoginStore } from '@/stores/login'
 import router from '@/router'
 
@@ -107,9 +103,7 @@ const submitForm = (formEl: FormInstance | undefined) => {
   });
 };
 
-const goToManagement = () => {
-  router.push('/management-platform')
-}
+
 
 const goToRegister = () => {
   router.push('/register')
@@ -128,28 +122,16 @@ const goToRegister = () => {
   height: 100%;
 }
 
-.extect-button {
-  height: 100px;
-  /* 高度 */
-  width: 100%;
-  /* 宽度 */
-  padding: 10px;
-  /* 内边距 */
-  display: flex;
-  /* 弹性布局 */
-  justify-content: flex-end;
-  /* 右对齐 */
-  align-items: flex-start;
-  /* 上对齐 */
-}
+
 
 .login-Item {
-  margin-top: 200px;
   display: grid;
   place-items: center;
   /* 使用grid的place-items属性实现水平和垂直居中 */
   width: 100%;
   height: 100%;
+  margin: 0px;
+  padding: 0px;
 }
 
 .demo-ruleForm {

@@ -31,6 +31,12 @@
   </div>
 </template>
 
+<script lang="ts">
+  export default {
+    name: 'RegisterPage',
+  }
+</script>
+
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
@@ -106,17 +112,19 @@ const submitRegisterForm = () => {
 };
 
 const goBack = () => {
-  router.push('/')
+  router.push('/Login')
 }
 </script>
 
 <style scoped>
 .register-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  /* background-color: #f5f5f5; */
+  display: grid;
+  place-items: center;
+  /* 使用grid的place-items属性实现水平和垂直居中 */
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
 }
 
 .el-form {
