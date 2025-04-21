@@ -2,8 +2,9 @@
   <el-container class="Overall">
     <h5>看什么，这就是数据统计。不过没有写完整罢了！</h5>
     <el-container class="echart-container">
-      <el-container class="Echart">
+      <el-container class="Echart" direction="vertical">
         <span>这是近一周访问数据统计</span>
+        <columnChart />
       </el-container>
       <el-container class="Echart">
         <span>数据下载统计</span>
@@ -35,7 +36,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-
+import columnChart from '@/views/echarts/lineChart/index.vue
 
 
 </script>
