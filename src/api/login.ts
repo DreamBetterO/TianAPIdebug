@@ -1,6 +1,6 @@
 // api/register.ts
 import request from '@/utils/request'
-import type { RegisterInfo, RegisterResponse, LoginInfo, LoginResponse } from '@/types/login'
+import type { RegisterInfo, RegisterResponse, LoginInfo,LoginResponseData } from '@/types/login'
 
 // 用户注册
 export const RegisterUser = async (userData: RegisterInfo): Promise<RegisterResponse> => {
@@ -15,9 +15,9 @@ export const RegisterUser = async (userData: RegisterInfo): Promise<RegisterResp
 }
 
 // 用户登录
-export const LoginUser = async (logininfo: LoginInfo): Promise<LoginResponse> => {
+export const LoginUser = async (logininfo: LoginInfo): Promise<LoginResponseData> => {
   try {
-    const response = await request.post<LoginResponse>('/auth/login', logininfo)
+    const response = await request.post('/auth/login', logininfo);
     return response.data
   } catch (error) {
     console.error('登录失败:', error)

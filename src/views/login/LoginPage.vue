@@ -89,11 +89,11 @@ const submitForm = (formEl: FormInstance | undefined) => {
             confirmButtonText: '确定',
             type: 'error',
           });
-          router.push('/management-platform');
         } else {
 
         }
         console.log('表单验证成功');
+        router.push('/home');
       }).catch((error) => {
         console.error('登录请求失败', error);
       });

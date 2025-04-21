@@ -1,6 +1,6 @@
 // api/update.ts
 import request from '@/utils/request'
-import type { updateUserinfo, updateUserinfoResponse} from '@/types/userlist'
+import type { updateUserinfo, updateUserinfoResponse,AuditUserRequest} from '@/types/userlist'
 
 // 更新用户信息
 export const UpdateUserInfo = async (userData: updateUserinfo): Promise<updateUserinfoResponse> => {
@@ -17,6 +17,17 @@ export const UpdateUserInfo = async (userData: updateUserinfo): Promise<updateUs
 export const GetUncheckList = async () => {
   try {
     const response = await request.post('/auth/uncheck')
+    return response.data
+  } catch (error) {
+    console.error('后端请求失败', error)
+    throw error
+  }
+}
+
+// 审核用户
+export const DoAuditUser = async (userData: AuditUserRequest) => {
+  try {
+    const response = await request.post('/auth/update', userData)
     return response.data
   } catch (error) {
     console.error('后端请求失败', error)

@@ -74,16 +74,16 @@ export const LoginStore = defineStore('login', {
     setLoginResponse(response: LoginResponseData) {
       this.loginResponseDate = response
       console.log('LoginResponse updated:', this.loginResponseDate)
-      if (this.loginResponseDate.id!== 0) {
+      if (this.loginResponseDate.id != 0) {
+        console.log('@@@@@@@',response.id)
         //如果登录成功，设置登录状态
         this.islogin = true
         console.log('Login successful:', this.islogin)
       }
     },
-    clearLoginResponse() {
+    clearLoginStatus() {
       this.islogin = false; //清除登录状态
-      this.loginResponseDate = null
-      console.log('LoginResponse cleared.')
+      console.log('LoginStatus cleared.')
     },
     async SendLoginInfo(info: LoginInfo) {
       this.setLoginInfo(info)
@@ -96,8 +96,8 @@ export const LoginStore = defineStore('login', {
         //调用注册接口
         const response = await LoginUser(this.loginInfo)
         console.log('Registration successful:', response)
-        this.clearLoginResponse();
-        this.setLoginResponse(response.data)
+        this.clearLoginStatus();
+        this.setLoginResponse(response)
         console.log('\n\nLoginResponse updated:', this.loginResponseDate)
         //将注册响应存储到store中
         return response

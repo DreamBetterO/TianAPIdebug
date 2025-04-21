@@ -1,16 +1,17 @@
 <template>
   <el-container class="Overall">
-    <h5>看什么，这就是数据统计。不过没有写完整罢了！</h5>
     <el-container class="echart-container">
       <el-container class="Echart" direction="vertical">
-        <span>这是近一周访问数据统计</span>
+        <span>这是近一周访问数据统计</span><br>
         <columnChart />
       </el-container>
       <el-container class="Echart">
-        <span>数据下载统计</span>
+        <span>数据下载统计</span><br>
+        <radarchart />
       </el-container>
       <el-container class="Echart">
-        <span>各种行为占比</span>
+        <span>各种行为占比</span><br>
+        <piechart />
       </el-container>
 
     </el-container>
@@ -37,6 +38,8 @@ export default {
 
 <script setup lang="ts">
 import columnChart from '@/views/echarts/lineChart/index.vue'
+import radarchart from '@/views/echarts/radarChart/index.vue'
+import piechart from '@/views/echarts/pieChart/index.vue'
 </script>
 
 <style>

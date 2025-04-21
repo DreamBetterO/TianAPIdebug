@@ -1,5 +1,5 @@
 import * as echarts from 'echarts/core'
-import { BarChart, LineChart } from 'echarts/charts'
+import { BarChart, LineChart, PieChart,RadarChart } from 'echarts/charts'
 import {
   TitleComponent,
   TooltipComponent,
@@ -15,6 +15,7 @@ import type {
   // 系列类型的定义后缀都为 SeriesOption
   BarSeriesOption,
   LineSeriesOption,
+  RadarSeriesOption,
 } from 'echarts/charts'
 import type {
   // 组件类型的定义后缀都为 ComponentOption
@@ -24,15 +25,18 @@ import type {
   DatasetComponentOption,
 } from 'echarts/components'
 import type { ComposeOption } from 'echarts/core'
+import type { PieSeriesOption } from 'echarts'
 
 // 通过 ComposeOption 来组合出一个只有必须组件和图表的 Option 类型
 type ECOption = ComposeOption<
   | BarSeriesOption
+  | PieSeriesOption
   | LineSeriesOption
   | TitleComponentOption
   | TooltipComponentOption
   | GridComponentOption
   | DatasetComponentOption
+  | RadarSeriesOption
 >
 
 // 注册必须的组件
@@ -44,6 +48,8 @@ echarts.use([
   TransformComponent,
   BarChart,
   LineChart,
+  PieChart,
+  RadarChart,
   LabelLayout,
   UniversalTransition,
   CanvasRenderer,

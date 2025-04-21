@@ -24,6 +24,17 @@
           </span>
         </template>
       </el-table-column>
+      <!-- 新增审核列 -->
+      <el-table-column label="审核" width="120">
+        <template #default="{ row }">
+          <el-button
+            type="primary"
+            size="small"
+            :disabled="row.status === 1" @click="auditUser(row)" >
+            审核
+          </el-button>
+        </template>
+      </el-table-column>
     </el-table>
   </div>
 </template>
@@ -36,14 +47,31 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { useUserListStore } from '@/stores/userlist';
+import { Auditlist, AuditUser } from '@/stores/userlist';
 
-const userListStore = useUserListStore(); // 获取用户列表的 store
+const userListStore = Auditlist(); // 获取用户列表的 store
+const auditUserStore = AuditUser(); // 获取单个用户审核的 store
+
 const userList = computed(() => userListStore.userList); // 绑定到 store 的 userList
-
 const refreshUserList = userListStore.fetchUncheckUserList; // 刷新用户列表的方法
 
-// onMounted(() => {
-//   userListStore.fetchUserList(); // 组件挂载时获取用户列表
-// });
+// 审核用户的方法
+const auditUser = async (row: { id: number; status: number }) => {
+  try {
+    console.log("审核用户");
+    // 调用审核接口
+    auditUserStore.AuditUncheckUser({id:row.id,status:1});
+    // 刷新用户列表
+    refreshUserList();
+  } catch (error) {
+    console.error('审核用户失败:', error);
+  }
+};
 </script>
+
+<style scoped lang="scss">
+.content-box {
+  width: 100%;
+  height: 400px;
+}
+</style>

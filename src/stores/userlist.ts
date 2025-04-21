@@ -1,9 +1,10 @@
 // store/userlist.ts
 import { defineStore } from 'pinia'
-import type { UserList } from '@/types/userlist'
-import { GetUncheckList } from '@/api/userlists'
+import type { UserList, AuditUserRequest } from '@/types/userlist'
+import { GetUncheckList,DoAuditUser } from '@/api/userlists'
 
-export const useUserListStore = defineStore('userList', {
+//审核列表拉取
+export const Auditlist = defineStore('userList', {
   state: () => ({
     userList: [] as UserList[], // 明确指定为二维数组类型
   }),
@@ -26,6 +27,38 @@ export const useUserListStore = defineStore('userList', {
         this.setUserList(response) // 设置返回值用户信息为二维数组
       } catch (error) {
         console.error('Failed to fetch user list:', error)
+      }
+    },
+  },
+})
+
+
+//审核列表管理（审核单个用户，随后传递给后端）
+export const AuditUser = defineStore('auditUser', {
+  state: () => ({
+    audituser: {} as AuditUserRequest, // 声明其类型为 AuditUserRequest 的单个对象
+  }),
+  actions: {
+    clearUser() {
+      this.audituser = {} as AuditUserRequest; //
+      return this.audituser
+    },
+    setUser(user: AuditUserRequest) {
+      this.audituser = user // 设置用户信息为 AuditUserRequest 类型的单个对象
+      console.log(typeof this.audituser)
+    },
+    async AuditUncheckUser(info: AuditUserRequest) {
+      try {
+        this.clearUser();
+        this.setUser(info);
+        console.log('开始审核用户')
+        // 调用审核接口
+        console.log("后端审核信息为：",this.audituser)
+        const response = await DoAuditUser(this.audituser)
+        console.log('审核用户成功:', response)
+        this.setUser(response) // 设置返回值用户信息为 AuditUserRequest 类型的单个对象
+      } catch (error) {
+        console.error('Failed to fetch user:', error)
       }
     },
   },
