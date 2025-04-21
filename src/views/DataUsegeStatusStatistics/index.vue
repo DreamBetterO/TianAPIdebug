@@ -36,9 +36,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import columnChart from '@/views/echarts/lineChart/index.vue
-
-
+import columnChart from '@/views/echarts/lineChart/index.vue'
 </script>
 
 <style>
