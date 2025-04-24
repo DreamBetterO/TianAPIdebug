@@ -47,7 +47,7 @@ export default {
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { Auditlist, AuditUser } from '@/stores/userlist';
+import { Auditlist, AuditUser } from '@/stores/LoginSystem/userlist';
 
 const userListStore = Auditlist(); // 获取用户列表的 store
 const auditUserStore = AuditUser(); // 获取单个用户审核的 store

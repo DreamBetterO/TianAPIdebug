@@ -41,7 +41,7 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import router from '@/router'
-import { RegisterStore } from '@/stores/login';
+import { RegisterStore } from '@/stores/LoginSystem/login';
 import { ElMessageBox } from 'element-plus';
 
 const registerFormRef = ref<FormInstance>() // 表单引用
@@ -94,21 +94,36 @@ const submitRegisterForm = () => {
       // 将用户信息发送给后端
       authStore.SendRegisterInfo(user).then(() => {
         if(authStore.RegisterResponseStore!= null) {
+          ElMessageBox.alert('注册成功,请登录', '提示', {
+            confirmButtonText: '确定',
+            type: 'success',
+          });
           console.log('注册成功：', authStore.RegisterResponseStore);
         } else {
           ElMessageBox.alert('注册失败，请重试', '错误', {
             confirmButtonText: '确定',
             type: 'error',
           });
+          resetForm();
         }
       });
-
       console.log('表单正确', user);
-      router.push('/'); // 注册成功后跳转到登录页面
+      router.push('/Login'); // 注册成功后跳转到登录页面
     } else {
       console.log('数据库表单获取失败');
     }
   });
+};
+
+// 清空表单内容
+const resetForm = () => {
+  registerForm.username = '';
+  registerForm.password = '';
+  registerForm.email = '';
+  registerForm.phone = '';
+  registerForm.userType = '';
+  registerForm.organization = '';
+  registerFormRef.value?.clearValidate();
 };
 
 const goBack = () => {
