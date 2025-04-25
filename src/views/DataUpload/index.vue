@@ -1,54 +1,95 @@
 <template>
   <div>
-  <el-container class="data-upload-container">
-    <el-header class="header">
-      <h4>数据上传</h4>
-    </el-header>
-    <el-main class="main">
-      <el-form label-width="120px" class="data-upload-form">
-        <el-form-item label="选择文件">
-          <el-upload
-            class="upload-demo"
-            drag
-            action="/upload"
-            :on-change="handleChange"
-            :on-success="handleSuccess"
-            :on-error="handleError"
-          >
-          <!-- 这里可以添加上传的文件类型和大小限制 -->
-            <i class="el-icon-upload"></i>
-            <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-          </el-upload>
-        </el-form-item>
-        <el-form-item label="数据类型">
-          <el-select v-model="dataType" placeholder="请选择数据类型">
-            <el-option label="类型1" value="type1"></el-option>
-            <el-option label="类型2" value="type2"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="备注">
-          <el-input type="textarea" v-model="remark"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <el-button type="primary" @click="submit">提交</el-button>
-        </el-form-item>
-      </el-form>
-    </el-main>
-  </el-container>
-  <el-container class="upload-history">
-    <el-header class="header">
-    </el-header>
-
-    <el-main class="main">
-      <h4 style="color: black; margin-bottom: 20px;">上传历史</h4>
-      <el-table :data="uploadHistory" stripe>
-        <el-table-column prop="fileName" label="文件名"></el-table-column>
-        <el-table-column prop="uploadTime" label="上传时间"></el-table-column>
-        <el-table-column prop="status" label="状态"></el-table-column>
-      </el-table>
-    </el-main>
-  </el-container>
-</div>
+    <el-container class="data-upload-container">
+      <el-main class="main">
+        <el-header class="header">
+          <span>数据上传</span>
+        </el-header>
+        <el-container direction="vertical" class="uploadContainer">
+          <el-form :inline="true" label-width="120px" class="data-upload">
+            <el-form-item label="观测对象">
+              <el-input v-model="uploadIterm.observer_object" placeholder="请输入观测对象"></el-input>
+            </el-form-item>
+            <el-form-item label="观测对象">
+              <el-input v-model="uploadIterm.observer_object" placeholder="请输入观测对象"></el-input>
+            </el-form-item>
+            <el-form-item label="观测时间">
+              <el-date-picker v-model="uploadIterm.observer_time" type="datetime" placeholder="选择观测时间"
+                format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="设备编号">
+              <el-input v-model="uploadIterm.observer__device" placeholder="请输入设备编号"></el-input>
+            </el-form-item>
+            <el-form-item label="文件名">
+              <el-input v-model="uploadIterm.filename" placeholder="请输入文件名"></el-input>
+            </el-form-item>
+            <el-form-item label="文件路径">
+              <el-input v-model="uploadIterm.path" placeholder="请输入文件路径"></el-input>
+            </el-form-item>
+            <el-form-item label="数据类型" class="data-type-item">
+              <el-select v-model="uploadIterm.data_type" placeholder="请选择数据类型" style="width: 200px;">
+                <el-option label="txt" value="txt"></el-option>
+                <el-option label="pdf" value="pdf"></el-option>
+              </el-select>
+              <span v-if="uploadIterm.data_type" class="selected-data-type" style="margin-left: 10px;">
+                已选择: {{ uploadIterm.data_type }}
+              </span>
+            </el-form-item>
+          </el-form>
+          <el-container class="file-upload">
+            <el-form-item label="选择文件">
+              <el-upload class="upload-demo" drag action="/upload" :on-change="handleChange" :on-success="handleSuccess"
+                :on-error="handleError">
+                <!-- 这里可以添加上传的文件类型和大小限制 -->
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              </el-upload>
+            </el-form-item>
+            <el-form-item class="UploadRemark">
+              <el-button type="default" @click="submit">重置</el-button>
+              <el-button type="primary" @click="submit">上传到服务器</el-button>
+            </el-form-item>
+          </el-container>
+        </el-container>
+      </el-main>
+    </el-container>
+    <el-container class="upload-history-container">
+      <el-main class="main">
+        <el-header class="header">
+          <span>上传历史</span>
+        </el-header>
+        <el-container direction="horizontal" class="upload-history">
+          <el-form :inline="true" label-width="120px" class="upload-history-form">
+            <el-form-item label="文件名" class="form-item">
+              <el-input v-model="uploadHistorySearch.fileName" placeholder="请输入文件名"></el-input>
+            </el-form-item>
+            <el-form-item label="上传时间" class="form-item">
+              <el-date-picker v-model="uploadHistorySearch.startUploadTime" type="datetime" placeholder="开始时间"
+                format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker><span>--</span>
+              <el-date-picker v-model="uploadHistorySearch.endUploadTime" type="datetime" placeholder="结束时间"
+                format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+            </el-form-item>
+            <el-form-item label="状态" class="data-type-item">
+              <el-select v-model="uploadHistorySearch.status" placeholder="请选择状态" style="width: 200px;">
+                <el-option label="成功" value="success"></el-option>
+                <el-option label="失败" value="fail"></el-option>
+              </el-select>
+              <span v-if="uploadIterm.data_type" class="selected-data-type" style="margin-left: 10px;">
+                已选择: {{ uploadIterm.data_type }}
+              </span>
+            </el-form-item>
+          </el-form>
+          <el-button type="primary" @click="submit">查询</el-button>
+          <el-button type="default" @click="submit">重置</el-button>
+        </el-container>
+        <el-table :data="uploadHistory" stripe>
+          <el-table-column prop="fileName" label="文件名"></el-table-column>
+          <el-table-column prop="uploadTime" label="上传时间"></el-table-column>
+          <el-table-column prop="status" label="状态"></el-table-column>
+        </el-table>
+      </el-main>
+    </el-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -58,7 +99,42 @@ export default {
 </script>
 
 <script setup lang="ts">
+
 import { ref } from 'vue';
+
+//******用于数据上传部分********//
+interface uploadFill {
+  filename: string; //存储显示⽂件名
+  observer_object: string; //观测对象标识
+  observer_time: string;//观测时间(ISO8601格式)
+  observer__device: string; //测设备编号
+  data_type: string; //数据类型标识
+  path: string;
+}
+
+const uploadIterm = ref<uploadFill>({
+  filename: '',
+  observer_object: '',
+  observer_time: '',
+  observer__device: '',
+  data_type: '',
+  path: '',
+});
+
+//******用于上传历史部分********//
+interface UploadHistorySearch {
+  fileName: string;
+  startUploadTime: string;
+  endUploadTime: string;
+  status: string;
+}
+const uploadHistorySearch = ref<UploadHistorySearch>({
+  fileName: '',
+  startUploadTime: '',
+  endUploadTime: '',
+  status: '',
+});
+
 
 const dataType = ref('');
 const remark = ref('');
@@ -97,6 +173,6 @@ const submit = () => {
 
 </script>
 
-<style  scoped>
+<style scoped>
 @import './index.scss';
 </style>

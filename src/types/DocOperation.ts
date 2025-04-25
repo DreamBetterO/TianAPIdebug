@@ -1,13 +1,34 @@
 // 公共分页参数类型（保持不变）
 export interface PaginationParams {
-  page?: number // 当前页码（从0开始）
-  size?: number // 每页数量
+  page: number // 当前页码（从0开始）
+  size: number // 每页数量
   sort?: string // 排序字段（格式：字段名,asc|desc）
 }
 
+
+
+// 1. 文件列表查询请求参数（完全对齐）
+export interface FileSearchParams extends PaginationParams {
+  filename?: string // 文件名，支持模糊查询
+  updateUser?: string // 创建和更新用户名
+  bucketName?: string // 桶名
+  path?: string // 文件路径
+  minSize?: number // 文件大小下限，需要转换为字节
+  maxSize?: number
+  startCreateTime?: string // 文件创建开始时间（ISO 8601格式）
+  endCreateTime?: string
+  startUploadTime?: string
+  endUploadTime?: string
+  startUpdateTime?: string
+  endUpdateTime?: string
+  startObserveTime?: string // 观察时间开始时间（ISO 8601格式）
+  endObserveTime?: string
+  observeDevice?: string // 观察设备
+}
+
 // 公共分页响应类型（保持不变）
-export interface PaginationResponse<T> {
-  content: T[]
+export interface PaginationResponse {
+  content: FileInfoResponse[] // 文件列表查询响应
   pageable: {
     pageNumber: number
     pageSize: number
@@ -36,25 +57,6 @@ export interface PaginationResponse<T> {
   first: boolean
   numberOfElements: number
   empty: boolean
-}
-
-// 1. 文件列表查询请求参数（完全对齐）
-export interface FileSearchParams extends PaginationParams {
-  filename?: string // 文件名，支持模糊查询
-  updateUser?: string // 创建和更新用户名
-  bucketName?: string // 桶名
-  path?: string // 文件路径
-  minSize?: number
-  maxSize?: number
-  startCreateTime?: string // 文件创建开始时间（ISO 8601格式）
-  endCreateTime?: string
-  startUploadTime?: string
-  endUploadTime?: string
-  startUpdateTime?: string
-  endUpdateTime?: string
-  startObserveTime?: string // 观察时间开始时间（ISO 8601格式）
-  endObserveTime?: string
-  observeDevice?: string // 观察设备
 }
 
 // 文件列表响应数据（完全对齐）
@@ -106,6 +108,38 @@ export interface FileOperationParams extends PaginationParams {
 }
 
 // 文件操作记录响应数据
+export interface FileOperationResponse {
+  content:  FileOperationRecord[] // 文件列表查询响应
+  pageable: {
+    pageNumber: number
+    pageSize: number
+    sort: {
+      sorted: boolean
+      unsorted: boolean
+      empty: boolean
+    }
+    offset: number
+    paged: boolean
+    unpaged: boolean
+    totalElements: number
+    totalPages: number
+    numberOfElements: number
+  }
+  last: boolean
+  totalElements: number
+  totalPages: number
+  size: number
+  number: number
+  sort: {
+    sorted: boolean
+    unsorted: boolean
+    empty: boolean
+  }
+  first: boolean
+  numberOfElements: number
+  empty: boolean
+}
+
 export interface FileOperationRecord {
   id: number
   operateUsername: string

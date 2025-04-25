@@ -2,7 +2,7 @@
 .layout-container {
   display: flex;
   height: 100vh;
-  background: url('@/assets/images/MainBackground.jpg') no-repeat center center fixed; 
+  background: url('@/assets/images/MainBackground.jpg') no-repeat center center fixed;
   background-size: cover;
   color: #fff;
   font-family: 'Roboto', sans-serif;
@@ -67,7 +67,7 @@
     background: rgba(10, 25, 47, 0.8);
     box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
     transition: margin-left 0.3s;
-    opacity: 0.8;
+    opacity: 1;
 
     .router-view-wrapper {
       position: relative;

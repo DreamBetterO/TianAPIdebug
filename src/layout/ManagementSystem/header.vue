@@ -9,7 +9,7 @@
       <!-- 用户设置 -->
       <el-dropdown>
         <template #default>
-          <el-icon class="dropdown-icon"><Avatar/></el-icon>
+          <span>{{ ShowName }}</span>
         </template>
         <template #dropdown>
           <el-dropdown-menu>
@@ -30,9 +30,22 @@ export default {
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { FullScreen, Avatar } from '@element-plus/icons-vue'
+import { FullScreen } from '@element-plus/icons-vue'
+import { RegisterStore } from '@/stores/LoginSystem/login';
+import { onMounted,ref } from 'vue';
 
 const router = useRouter();
+const userinfo = RegisterStore();
+const userName = userinfo.$state.registerInfo?.username;
+let ShowName = ref('未登录'); // 显示的用户名
+
+onMounted(() => {
+  if(userName!== undefined) {
+    ShowName = ref(userName);
+  }
+
+});
+
 
 // 全屏功能
 const toggleFullScreen = () => {

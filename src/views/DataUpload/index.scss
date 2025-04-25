@@ -6,26 +6,60 @@
   background-color: #f5f5f5;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  height: 35%;
 }
+
+.upload-history-container {
+  margin-top: 25px;
+  display: flex;
+  gap: 20px; //子元素间距
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  height: 600px; //设置高度
+  overflow-y: auto; //超出部分滚动
+}
+
 
 .header {
   font-size: 20px;
   font-weight: bold;
-  color: #333;
+  color: #000000;
   margin-bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 25px; /* Ensure the parent container has a defined height */
 }
 
 .main {
   background-color: #fff;
-  padding: 20px;
+  padding: 5px;
   border-radius: 8px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.uploadContainer{
+  display: flex;
+  // justify-content: center;
+  // // align-items: center;
 }
 
 .data-upload-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 8px;
+  // max-width: 600px;
+}
+
+.file-upload {
+  //文件上传大容器
+  margin-left: 52px;
+  display: flex;
+  justify-content: space-between;
+  max-width: fit-content; //自适应宽度
 }
 
 .upload-demo {
@@ -57,6 +91,18 @@
   color: #666;
 }
 
-.el-button {
-  align-self: flex-start;
+
+
+.UploadRemark {
+  display: flex;
+  justify-content: flex-end; /* 确保右对齐 */
+  align-items: center; /* 确保垂直居中 */
 }
+
+.UploadRemark{
+  display: flex;
+  margin-left: 35px;
+  flex-direction: row;
+  align-items: flex-end;
+}
+

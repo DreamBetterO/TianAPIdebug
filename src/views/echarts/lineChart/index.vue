@@ -1,5 +1,5 @@
 <template>
-  <div ref="echartsRef" class="content-box"></div>
+  <div ref="echartsRef" class="content-box horizontal-layout"></div>
 </template>
 
 <script setup lang="ts">
@@ -40,7 +40,6 @@ onMounted(() => {
 });
 </script>
 
-
 <script lang="ts">
 export default {
   name: 'LineChart',
@@ -49,4 +48,13 @@ export default {
 
 <style scoped lang="scss">
 @import "../index.scss";
+
+.content-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 100%;
+}
 </style>

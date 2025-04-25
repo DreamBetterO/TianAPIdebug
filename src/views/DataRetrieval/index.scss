@@ -1,0 +1,21 @@
+.SearchMethod {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 35px 20px 0 20px;
+  margin-bottom: 20px;
+  background-color: aliceblue;
+  border-radius: 8px;
+  height: 30%;
+}
+
+.SearchResult {
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 8px;
+  height: 65%;
+}
