@@ -17,11 +17,11 @@
     </el-container>
 
     <el-container class="table-container">
-      <el-container class="RoleScreening">
-        <span>数据角色赛选</span>
+      <el-container class="RoleScreening" direction="vertical">
+        <roleFilter />
       </el-container>
       <el-container class="StatusMonitoring">
-        <span>状态监控</span>
+        <statusMonitor />
       </el-container>
     </el-container>
 
@@ -40,6 +40,8 @@ export default {
 import lineChart from '@/views/echarts/lineChart/index.vue'
 import radarchart from '@/views/echarts/radarChart/index.vue'
 import piechart from '@/views/echarts/pieChart/index.vue'
+import roleFilter from './roleFilter.vue';
+import statusMonitor from './statusMonitor.vue';
 </script>
 
 <style>

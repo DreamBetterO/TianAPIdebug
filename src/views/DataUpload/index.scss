@@ -54,13 +54,7 @@
   // max-width: 600px;
 }
 
-.file-upload {
-  //文件上传大容器
-  margin-left: 52px;
-  display: flex;
-  justify-content: space-between;
-  max-width: fit-content; //自适应宽度
-}
+
 
 .upload-demo {
   border: 2px dashed #409eff;
@@ -91,7 +85,13 @@
   color: #666;
 }
 
-
+.file-upload {
+  //文件上传大容器
+  margin-left: 30px;
+  display: flex;
+  justify-content: space-between;
+  max-width: fit-content; //自适应宽度
+}
 
 .UploadRemark {
   display: flex;
@@ -99,10 +99,22 @@
   align-items: center; /* 确保垂直居中 */
 }
 
-.UploadRemark{
-  display: flex;
-  margin-left: 35px;
-  flex-direction: row;
-  align-items: flex-end;
+.UploadRemark  {
+  margin: 0;
+  align-self: flex-end; /* 确保按钮在容器内对齐 */
 }
 
+.el-button{
+  margin-left: 10px; /* 添加左边距 */
+}
+
+.upload-history-form {
+  display: flex;
+  flex-wrap: wrap; /* 允许子元素换行 */
+  gap: 8px;
+  // max-width: 600px; /* 设置最大宽度 */
+}
+.el-table{
+  margin-left: 5px;
+  max-width: 90%;
+}

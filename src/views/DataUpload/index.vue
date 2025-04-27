@@ -44,10 +44,10 @@
                 <i class="el-icon-upload"></i>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
               </el-upload>
-            </el-form-item>
-            <el-form-item class="UploadRemark">
+              <el-form-item class="UploadRemark">
               <el-button type="default" @click="submit">重置</el-button>
               <el-button type="primary" @click="submit">上传到服务器</el-button>
+            </el-form-item>
             </el-form-item>
           </el-container>
         </el-container>
@@ -59,7 +59,7 @@
           <span>上传历史</span>
         </el-header>
         <el-container direction="horizontal" class="upload-history">
-          <el-form :inline="true" label-width="120px" class="upload-history-form">
+          <el-form :inline="true" label-width="80px" class="upload-history-form">
             <el-form-item label="文件名" class="form-item">
               <el-input v-model="uploadHistorySearch.fileName" placeholder="请输入文件名"></el-input>
             </el-form-item>
@@ -70,7 +70,7 @@
                 format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
             </el-form-item>
             <el-form-item label="状态" class="data-type-item">
-              <el-select v-model="uploadHistorySearch.status" placeholder="请选择状态" style="width: 200px;">
+              <el-select v-model="uploadHistorySearch.status" placeholder="请选择状态" style="width: 120px;">
                 <el-option label="成功" value="success"></el-option>
                 <el-option label="失败" value="fail"></el-option>
               </el-select>
@@ -78,9 +78,9 @@
                 已选择: {{ uploadIterm.data_type }}
               </span>
             </el-form-item>
+            <el-button type="primary" @click="submit">查询</el-button>
+            <el-button type="default" @click="submit">重置</el-button>
           </el-form>
-          <el-button type="primary" @click="submit">查询</el-button>
-          <el-button type="default" @click="submit">重置</el-button>
         </el-container>
         <el-table :data="uploadHistory" stripe>
           <el-table-column prop="fileName" label="文件名"></el-table-column>
