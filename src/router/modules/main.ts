@@ -1,5 +1,6 @@
 import { type RouteRecordRaw } from 'vue-router'
 import echartsRouter from './echarts'
+import LoginRoutes from './login'
 
 const ManageRoutes: Array<RouteRecordRaw> = [
   {
@@ -8,6 +9,7 @@ const ManageRoutes: Array<RouteRecordRaw> = [
     component: () => import('@/layout/ManagementSystem/index.vue'),
     meta: { title: '首页' },
     children: [
+      ...LoginRoutes,
       {
         path: '/home',
         name: 'ManagementHome',

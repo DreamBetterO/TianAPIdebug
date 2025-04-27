@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 
 // 1. 导入所有路由模块
-import LoginRoutes from './modules/login'
+
 import ManagementRoutes from './modules/main'
 
 
@@ -14,7 +14,7 @@ const routes: RouteRecordRaw[] = [
     meta: { title: '首页' },
   },
   // 登录模块
-  ...LoginRoutes,
+
   ...ManagementRoutes,
   // 404 页面（可选）
   {

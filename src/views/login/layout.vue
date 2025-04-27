@@ -1,8 +1,8 @@
 <template>
   <div>
-  <div class="extect-button">
+  <!-- <div class="extect-button">
     <el-button type="Info" :icon="House" @click="goToManagement">管理平台</el-button>
-  </div>
+  </div> -->
   <div class="layout-container">
 
     <router-view  v-slot="{ Component }">
@@ -23,15 +23,15 @@ export default {
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
-import { House } from '@element-plus/icons-vue';
-import router from '@/router';
+// import { House } from '@element-plus/icons-vue';
+// import router from '@/router';
 
 const layoutStyle = ref({});
 
 
-const goToManagement = () => {
-  router.push('/management-platform')
-}
+// const goToManagement = () => {
+//   router.push('/management-platform')
+// }
 
 onMounted(() => {
   const updateLayoutStyle = () => {
