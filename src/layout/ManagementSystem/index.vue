@@ -30,11 +30,11 @@
     </el-aside>
 
     <!-- 主内容区 -->
-    <main class="main-content">
+    <main class="main-content" >
       <header-component></header-component>
       <router-view v-slot="{ Component }">
         <transition name="slide-fade" mode="out-in">
-          <component :is="Component" :key="$route.path" />
+          <component :is="Component" :key="$route.path"  />
         </transition>
       </router-view>
     </main>
@@ -43,7 +43,7 @@
 
 <!-- 核心功能脚本 -->
 <script setup lang="ts">
-import { ref, watch, onUnmounted } from 'vue'
+import { ref, watch} from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import HeaderComponent from './header.vue';
 
@@ -70,9 +70,9 @@ const handleMenuSelect = (key: string) => {
 }
 
 // 清理事件监听器
-onUnmounted(() => {
-  console.log('组件卸载，清理资源');
-});
+// onUnmounted(() => {
+//   console.log('组件卸载，清理资源');
+// });
 </script>
 
 <!-- 组件配置 -->
@@ -87,4 +87,8 @@ export default {
 
 <style lang="scss" scoped>
 @import './index.scss';
+
+.no-scrollbar {
+  overflow-x: hidden; /* 禁用横向滚动条 */
+}
 </style>

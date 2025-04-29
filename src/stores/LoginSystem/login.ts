@@ -67,15 +67,15 @@ export const LoginStore = defineStore('login', {
       this.loginInfo = info
       console.log('LoginInfo updated:', this.loginInfo)
     },
-    clearLoginInfo(state: { loginInfo: LoginInfo | null }) {
-      state.loginInfo = null
+    clearLoginInfo() {
+      this.loginInfo = null
       console.log('LoginInfo cleared.')
     },
     setLoginResponse(response: LoginResponseData) {
       this.loginResponseDate = response
       console.log('LoginResponse updated:', this.loginResponseDate)
       if (this.loginResponseDate.id != 0) {
-        console.log('@@@@@@@',response.id)
+        console.log('@@@@@@@',response.username)
         //如果登录成功，设置登录状态
         this.islogin = true
         console.log('Login successful:', this.islogin)

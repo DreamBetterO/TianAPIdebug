@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>用户管理</h1>
     <el-button type="primary" @click="refreshUserList"
       style="margin-bottom: 20px; background-color: #409EFF; color: white; border-radius: 5px;">
       刷新用户列表
@@ -46,7 +45,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { Auditlist, AuditUser } from '@/stores/LoginSystem/userlist';
 
 const userListStore = Auditlist(); // 获取用户列表的 store
@@ -67,6 +66,12 @@ const auditUser = async (row: { id: number; status: number }) => {
     console.error('审核用户失败:', error);
   }
 };
+
+ onMounted(() => {
+  // 在组件挂载时获取用户列表
+  refreshUserList();
+});
+
 </script>
 
 <style scoped lang="scss">

@@ -56,31 +56,60 @@
     <el-container class="upload-history-container">
       <el-main class="main">
         <el-header class="header">
-          <span>上传历史</span>
+          <span>文件操作列表查询</span>
         </el-header>
         <el-container direction="horizontal" class="upload-history">
-          <el-form :inline="true" label-width="80px" class="upload-history-form">
-            <el-form-item label="文件名" class="form-item">
-              <el-input v-model="uploadHistorySearch.fileName" placeholder="请输入文件名"></el-input>
+          <el-form :inline = "true" label-width="120px" class="FileOperationList">
+            <el-form-item label ="文件名">
+              <el-input v-model="FileOperationListParams.filename" placeholder="请输入文件名"></el-input>
             </el-form-item>
-            <el-form-item label="上传时间" class="form-item">
-              <el-date-picker v-model="uploadHistorySearch.startUploadTime" type="datetime" placeholder="开始时间"
-                format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker><span>--</span>
-              <el-date-picker v-model="uploadHistorySearch.endUploadTime" type="datetime" placeholder="结束时间"
-                format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+            <el-form-item label ="操作用户名">
+              <el-input v-model="FileOperationListParams.operateUsername" placeholder="请输入操作用户名"></el-input>
             </el-form-item>
-            <el-form-item label="状态" class="data-type-item">
-              <el-select v-model="uploadHistorySearch.status" placeholder="请选择状态" style="width: 120px;">
-                <el-option label="成功" value="success"></el-option>
-                <el-option label="失败" value="fail"></el-option>
+            <el-form-item label = "更新用户">
+              <el-input v-model="FileOperationListParams.updateUser" placeholder="请输入更新用户"></el-input>
+            </el-form-item>
+            <el-form-item label = "文件大小">
+              <el-input v-model="FileOperationListParams.minSize" placeholder="请输入最小文件大小"></el-input>
+              <span style="margin: 0 5px;">~</span>
+              <el-input v-model="FileOperationListParams.maxSize" placeholder="请输入最大文件大小"></el-input>
+            </el-form-item>
+            <el-form-item label = "创建时间">
+              <el-date-picker v-model="FileOperationListParams.startCreateTime" type="datetime" placeholder="开始时间"
+                style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+              <span style="margin: 0 5px;">~</span>
+              <el-date-picker v-model="FileOperationListParams.endCreateTime" type="datetime" placeholder="结束时间"
+                style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+            </el-form-item>
+            <el-form-item label = "更新时间">
+              <el-date-picker v-model="FileOperationListParams.startUpdateTime" type="datetime" placeholder="开始时间"
+                style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+              <span style="margin: 0 5px;">~</span>
+              <el-date-picker v-model="FileOperationListParams.endUpdateTime" type="datetime" placeholder="结束时间"
+                style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+            </el-form-item>
+            <el-form-item label = "观测时间">
+              <el-date-picker v-model="FileOperationListParams.startObserveTime" type="datetime" placeholder="开始时间"
+                style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+              <span style="margin: 0 5px;">~</span>
+              <el-date-picker v-model="FileOperationListParams.endObserveTime" type="datetime" placeholder="结束时间"
+                style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+            </el-form-item>
+            <el-form-item label = "数据类型">
+              <el-select v-model="FileOperationListParams.dataType" placeholder="请选择数据类型" style="width: 200px;">
+                <el-option label="txt" value="txt"></el-option>
+                <el-option label="pdf" value="pdf"></el-option>
               </el-select>
-              <span v-if="uploadIterm.data_type" class="selected-data-type" style="margin-left: 10px;">
-                已选择: {{ uploadIterm.data_type }}
-              </span>
             </el-form-item>
-            <el-button type="primary" @click="submit">查询</el-button>
-            <el-button type="default" @click="submit">重置</el-button>
+            <el-form-item label = "观测设备">
+              <el-input v-model="FileOperationListParams.observeDevice" placeholder="请输入观测设备"></el-input>
+            </el-form-item>
+            <el-form-item>
+              <el-button type="primary" @click="submit">查询</el-button>
+              <el-button type="default" @click="submit">重置</el-button>
+            </el-form-item>
           </el-form>
+
         </el-container>
         <el-table :data="uploadHistory" stripe>
           <el-table-column prop="fileName" label="文件名"></el-table-column>
@@ -101,6 +130,7 @@ export default {
 <script setup lang="ts">
 
 import { ref } from 'vue';
+import { type FileOperationParams as FileOperationListParams , type FileOperationRecord } from '@/types/DocOperation';
 
 //******用于数据上传部分********//
 interface uploadFill {
@@ -121,19 +151,62 @@ const uploadIterm = ref<uploadFill>({
   path: '',
 });
 
-//******用于上传历史部分********//
-interface UploadHistorySearch {
-  fileName: string;
-  startUploadTime: string;
-  endUploadTime: string;
-  status: string;
-}
-const uploadHistorySearch = ref<UploadHistorySearch>({
-  fileName: '',
-  startUploadTime: '',
-  endUploadTime: '',
-  status: '',
-});
+//******文件操作列表查询参数********//
+const FileOperationListParams = ref<FileOperationListParams>(
+  {
+    filename: '',
+    operateUsername: '', //操作用户名
+    updateUser: '',  //更新用户
+    bucketName: '',  //存储桶名称
+    path: '',
+    minSize: 0,
+    maxSize: 0,
+    startCreateTime: '',
+    endCreateTime: '',
+    startUpdateTime: '',
+    endUpdateTime: '',
+    startObserveTime: '',
+    endObserveTime: '',
+    page: 0, //当前页码
+    size: 10, //每页显示的条数
+    dataType: '', //数据类型
+    observeDevice: '',
+  }
+);
+
+const FileListStore = ref<FileOperationRecord[]>([
+  {
+    id: 1,
+    operateUsername: '用户1',
+    operateType: '上传',
+    fileIndexId: 1,
+    filename: '数据文件1.csv',
+    size: 1024,
+    createTime: '2025-04-16 10:00',
+    updateTime: '2025-04-16 10:00',
+    uploadTime: '2025-04-16 10:00',
+    observeTime: '2025-04-16 10:00',
+    updateUser: '用户1',
+    bucketName: '存储桶1',
+    path: '/path/to/数据文件1.csv',
+    downloadUrl: 'http://example.com/download/数据文件1.csv',
+    observeObject: '观测对象1',
+    dataType: 'csv',
+    observeDevice: '设备1',
+  },])
+
+
+
+// const FileOperationList = ref<FileOperationRecord[]>([
+//   {
+//     filename
+//   }
+// ]);
+
+
+
+
+
 
 
 const dataType = ref('');

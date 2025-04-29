@@ -15,7 +15,7 @@ import type {
 // 1. 文件列表查询
 export const GetFiles = async (params: FileSearchParams): Promise<PaginationResponse> => {
   try {
-    const response = await request.post<PaginationResponse>('/api/file_index/search', params)
+    const response = await request.post<PaginationResponse>('/file_index/search', params)
     return response.data // 这里的data应该是一个对象，包含响应参数所有信息，即PaginationResponse内容
   } catch (error) {
     console.error('文件列表查询失败:', error)

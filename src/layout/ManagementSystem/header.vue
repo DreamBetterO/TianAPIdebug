@@ -31,19 +31,39 @@ export default {
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
 import { FullScreen } from '@element-plus/icons-vue'
-import { RegisterStore } from '@/stores/LoginSystem/login';
-import { onMounted,ref } from 'vue';
+import {LoginStore } from '@/stores/LoginSystem/login';
+import { onMounted, ref } from 'vue';
+import { watch } from 'vue';
 
 const router = useRouter();
-const userinfo = RegisterStore();
-const userName = userinfo.$state.registerInfo?.username;
-let ShowName = ref('未登录'); // 显示的用户名
+const userinfo = LoginStore(); // 获取用户信息的 store
+// const userName = userinfo.$state.loginResponseDate?.username // 获取用户名
+const ShowName = ref('未登录'); // 显示的用户名
 
-onMounted(() => {
-  if(userName!== undefined) {
-    ShowName = ref(userName);
+
+onMounted(()=>{
+  userinfo.clearLoginInfo() // 获取用户名
+});
+// 监听用户名变化
+
+
+// watch(() => userinfo.islogin, (newVal) => {
+//   console.log('用户登录状态变化:', newVal);
+//   console.log('用户名字:', userName);
+//   if (userName != undefined) {
+//     ShowName.value = userName;
+//   } else {
+//     ShowName.value = '未登录';
+//   }
+// });
+
+watch(() => userinfo.$state.loginResponseDate?.username, (newUserName) => {
+  console.log('用户名变化:', newUserName);
+  if (newUserName != undefined) {
+    ShowName.value = newUserName;
+  } else {
+    ShowName.value = '未登录';
   }
-
 });
 
 
@@ -66,6 +86,8 @@ const viewUserInfo = () => {
 
 // 退出登录
 const logout = () => {
+  userinfo.islogin = false; // 更新登录状态
+  userinfo.loginResponseDate = null; // 清除登录信息
   console.log('退出登录');
   router.push('/');
 };

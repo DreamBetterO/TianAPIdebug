@@ -13,16 +13,17 @@ export interface FileSearchParams extends PaginationParams {
   updateUser?: string // 创建和更新用户名
   bucketName?: string // 桶名
   path?: string // 文件路径
-  minSize?: number // 文件大小下限，需要转换为字节
-  maxSize?: number
-  startCreateTime?: string // 文件创建开始时间（ISO 8601格式）
+  minSize: number // 文件大小下限，需要转换为字节
+  maxSize: number
+  startCreateTime?: string // 文件创建开始时间（格式：YYYY-MM-DD HH:mm:ss）
   endCreateTime?: string
   startUploadTime?: string
   endUploadTime?: string
   startUpdateTime?: string
   endUpdateTime?: string
-  startObserveTime?: string // 观察时间开始时间（ISO 8601格式）
+  startObserveTime?: string // 观察时间开始时间（格式：YYYY-MM-DD HH:mm:ss）
   endObserveTime?: string
+  dataType?: string // 数据类型
   observeDevice?: string // 观察设备
 }
 
@@ -64,7 +65,7 @@ export interface FileInfoResponse {
   id: number
   filename: string
   size: number
-  createTime: string
+  createTime: string // 格式：YYYY-MM-DD HH:mm:ss
   uploadTime: string
   updateTime: string
   observeTime: string
@@ -95,14 +96,14 @@ export interface FileOperationParams extends PaginationParams {
   path?: string
   minSize?: number
   maxSize?: number
-  startCreateTime?: string
+  startCreateTime?: string // 格式：YYYY-MM-DD HH:mm:ss
   endCreateTime?: string
   startUploadTime?: string
   endUploadTime?: string
   startUpdateTime?: string
   endUpdateTime?: string
   startObserveTime?: string
-  endObserveTime?: string // 观察时间开始时间（ISO 8601格式）
+  endObserveTime?: string // 格式：YYYY-MM-DD HH:mm:ss
   dataType?: string
   observeDevice?: string
 }
@@ -180,9 +181,9 @@ export interface FileUploadData {
   bucketName: string
   path: string
   filename: string
-  observerTime: string // ISO 8601格式
+  observerTime: string // 格式：YYYY-MM-DD HH:mm:ss
   observerObject: string
-  createTime: string // ISO 8601格式
+  createTime: string // 格式：YYYY-MM-DD HH:mm:ss
   dataType: string
   observerDevice: string
   file: File

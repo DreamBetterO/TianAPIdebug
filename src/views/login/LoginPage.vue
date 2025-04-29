@@ -1,6 +1,6 @@
 <template>
   <div class="login-Item">
-    <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="auto" class="demo-ruleForm">
+    <el-form ref="ruleFormRef" :model="ruleForm" status-icon :rules="rules" label-width="120px" class="demo-ruleForm">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="ruleForm.username" autocomplete="off" />
       </el-form-item>
@@ -75,12 +75,11 @@ const submitForm = (formEl: FormInstance | undefined) => {
             resetForm();
             ;
           } else {
-            console.log('表单验证成功');
+            console.log('登录成功');
             router.push('/home');
           }
         })
         .catch((error) => {
-
           // 清空表单内容
           resetForm();
           console.error('登录请求失败:', error);

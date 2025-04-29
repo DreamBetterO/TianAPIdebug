@@ -1,6 +1,11 @@
 import { onUnmounted } from 'vue';
 import type { EChartsType } from 'echarts/core';
 import type { EChartsCoreOption } from 'echarts';
+import { LegendComponent } from 'echarts/components';
+import * as echarts from 'echarts/core';
+
+// 使用 LegendComponent
+echarts.use([LegendComponent]);
 
 /**
  * @description 使用 ECharts（添加图表响应式）
@@ -10,6 +15,15 @@ import type { EChartsCoreOption } from 'echarts';
 export const useEcharts = (myChart: EChartsType, option: EChartsCoreOption) => {
   if (option && typeof option === 'object') {
     // 设置图表的配置项和数据
+    if (option.yAxis) {
+      option.yAxis = {
+        ...option.yAxis,
+        min: 0,
+        max: 52000,
+        interval: 10000, // 设置刻度间隔，确保刻度标签可读
+        alignTicks: false, // 禁用 alignTicks，避免刻度对齐问题
+      };
+    }
     myChart.setOption(option);
   }
   const echartsResize = () => {
