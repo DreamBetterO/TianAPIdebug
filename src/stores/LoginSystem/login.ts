@@ -75,10 +75,8 @@ export const LoginStore = defineStore('login', {
       this.loginResponseDate = response
       console.log('LoginResponse updated:', this.loginResponseDate)
       if (this.loginResponseDate.id != 0) {
-        console.log('@@@@@@@',response.username)
         //如果登录成功，设置登录状态
         this.islogin = true
-        console.log('Login successful:', this.islogin)
       }
     },
     clearLoginStatus() {
@@ -102,7 +100,7 @@ export const LoginStore = defineStore('login', {
         //将注册响应存储到store中
         return response
       } catch (error) {
-        console.error('Registration failed:', error)
+        // console.error('Registration failed:', error)
         throw error
       }
     },

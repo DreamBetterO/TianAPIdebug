@@ -1,107 +1,116 @@
 <template>
   <div class="data-retrieval">
-  <el-container class="SearchMethod">
-    <el-form :inline="true" label-width="120px" class="search-form">
-      <el-row :gutter="20">
-      <el-col :span="8">
-        <el-form-item label="文件名称">
-        <el-input v-model="searchMethod.filename" placeholder="请输入文件名称" class = "IntergrityRow"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="上传用户">
-        <el-input v-model="searchMethod.updateUser" placeholder="请输入上传用户" class = "IntergrityRow"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="文件大小">
-        <el-input v-model="searchMethod.minSize" placeholder="最小值KB" class="MidRow" controls = "false"></el-input>
-        <span style="margin: 0 5px;">~</span>
-        <el-input v-model="searchMethod.maxSize" placeholder="最大值KB" class="MidRow" controls = "false"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="创建时间">
-        <el-date-picker v-model="searchMethod.startCreateTime" type="datetime" placeholder="开始时间"
-       style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
-        <span style="margin: 0 5px;">~</span>
-        <el-date-picker v-model="searchMethod.endCreateTime" type="datetime" placeholder="结束时间"
-        style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="更新时间">
-        <el-date-picker v-model="searchMethod.startUpdateTime" type="datetime" placeholder="开始时间"
-        style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
-        <span style="margin: 0 5px;">~</span>
-        <el-date-picker v-model="searchMethod.endUpdateTime" type="datetime" placeholder="结束时间"
-        style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="观测时间">
-        <el-date-picker v-model="searchMethod.startObserveTime" type="datetime" placeholder="开始时间"
-        style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
-        <span style="margin: 0 5px;">~</span>
-        <el-date-picker v-model="searchMethod.endObserveTime" type="datetime" placeholder="结束时间"
-        style="width: 115px;" format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="数据类型">
-        <el-select v-model="searchMethod.dataType" placeholder="请选择数据类型" class = "IntergrityRow">
-          <el-option label="txt" value="txt"></el-option>
-          <el-option label="pdf" value="pdf"></el-option>
-        </el-select>
+    <el-container class="SearchMethod">
+      <el-form :inline="true" label-width="120px" class="search-form">
+        <el-row :gutter="20">
+          <el-col :span="8">
+            <el-form-item label="文件名称">
+              <el-input v-model="searchMethod.filename" placeholder="请输入文件名称" class="IntergrityRow"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="上传用户">
+              <el-input v-model="searchMethod.updateUser" placeholder="请输入上传用户" class="IntergrityRow"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="文件大小">
+              <el-input v-model="searchMethod.minSize" placeholder="最小值KB" style="width: 75px;"
+                controls="false"></el-input>
+              <span style="margin: 0 5px;">~</span>
+              <el-input v-model="searchMethod.maxSize" placeholder="最大值KB" style="width: 75px;"
+                controls="false"></el-input>
+              <el-select v-model="SearchDataSize" placeholder="单位" style="  margin-left: 5px; width: 75px;">
+                <el-option label="B" value="1"></el-option>
+                <el-option label="KB" value="1024"></el-option>
+                <el-option label="MB" value="1048576"></el-option>
+                <el-option label="GB" value="1073741824"></el-option>
+              </el-select>
 
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="观测设备">
-        <el-input v-model="searchMethod.observeDevice" placeholder="请输入设备编号" class = "IntergrityRow"></el-input>
-        </el-form-item>
-      </el-col>
-      <el-col :span="8">
-        <el-form-item label="排序方式">
-        <el-select v-model="searchMethod.sort" placeholder="请选择排序方式" class = "IntergrityRow">
-          <el-option label="升序" value="asc"></el-option>
-          <el-option label="降序" value="desc"></el-option>
-        </el-select>
-        </el-form-item>
-      </el-col>
-      <el-col :span="24" class="form-actions">
-        <el-form-item style="margin-left: 50px ;">
-        <el-button type="primary" @click="submit">查询</el-button>
-        <el-button type="default" @click="reset">重置</el-button>
-        </el-form-item>
-      </el-col>
-      </el-row>
-    </el-form>
-  </el-container>
-  <el-container class="search-result">
-    <el-table :data="DataResponse" stripe style="width: 100%">
-      <el-table-column prop="filename" label="文件名称" width="180" sortable></el-table-column>
-      <el-table-column prop="size" label="文件大小(KB)" width="180" sortable></el-table-column>
-      <el-table-column prop="createTime" label="创建时间" width="180" sortable></el-table-column>
-      <el-table-column prop="uploadTime" label="上传时间" width="180" sortable></el-table-column>
-      <el-table-column prop="updateTime" label="更新时间" width="180" sortable></el-table-column>
-      <el-table-column prop="observeTime" label="观测时间" width="180" sortable></el-table-column>
-      <el-table-column prop="updateUser" label="上传用户" width="180" sortable></el-table-column>
-      <el-table-column prop="bucketName" label="存储桶名称" width="180" sortable></el-table-column>
-      <el-table-column prop="path" label="文件路径" width="180" sortable></el-table-column>
-      <el-table-column prop="downloadUrl" label="下载链接" width="180" sortable></el-table-column>
-      <el-table-column prop="observeObject" label="观测对象" width="180" sortable></el-table-column>
-      <el-table-column prop="dataType" label="数据类型" width="180" sortable></el-table-column>
-      <el-table-column prop="observeDevice" label="观测设备编号" width="180" sortable></el-table-column>
-      <el-table-column label="操作" width="180">
-        <template #default="scope">
-          <el-button link type="primary" @click="handleDownload(scope.row.downloadUrl)">下载</el-button>
-          <el-button link type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-  </el-container>
-</div>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="创建时间">
+              <el-date-picker v-model="searchMethod.startCreateTime" type="datetime" placeholder="开始时间"
+                style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+              <span style="margin: 0 5px;">~</span>
+              <el-date-picker v-model="searchMethod.endCreateTime" type="datetime" placeholder="结束时间"
+                style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="更新时间">
+              <el-date-picker v-model="searchMethod.startUpdateTime" type="datetime" placeholder="开始时间"
+                style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+              <span style="margin: 0 5px;">~</span>
+              <el-date-picker v-model="searchMethod.endUpdateTime" type="datetime" placeholder="结束时间"
+                style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="观测时间">
+              <el-date-picker v-model="searchMethod.startObserveTime" type="datetime" placeholder="开始时间"
+                style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+              <span style="margin: 0 5px;">~</span>
+              <el-date-picker v-model="searchMethod.endObserveTime" type="datetime" placeholder="结束时间"
+                style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="数据类型">
+              <el-select v-model="searchMethod.dataType" placeholder="请选择数据类型" class="IntergrityRow">
+                <el-option label="txt" value="txt"></el-option>
+                <el-option label="pdf" value="pdf"></el-option>
+              </el-select>
+
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="观测设备">
+              <el-input v-model="searchMethod.observeDevice" placeholder="请输入设备编号" class="IntergrityRow"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="8">
+            <el-form-item label="排序方式">
+              <el-select v-model="searchMethod.sort" placeholder="请选择排序方式" class="IntergrityRow">
+                <el-option label="升序" value="asc"></el-option>
+                <el-option label="降序" value="desc"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="24" class="form-actions">
+            <el-form-item style="margin-left: 50px ;">
+              <el-button type="primary" @click="submit">查询</el-button>
+              <el-button type="default" @click="reset">重置</el-button>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
+    </el-container>
+    <el-container class="search-result">
+      <el-table :data="DataResponse" stripe style="width: 100%">
+        <el-table-column prop="filename" label="文件名称" width="180" sortable></el-table-column>
+        <el-table-column prop="size" label="文件大小(KB)" width="180" sortable></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" width="180" sortable></el-table-column>
+        <el-table-column prop="uploadTime" label="上传时间" width="180" sortable></el-table-column>
+        <el-table-column prop="updateTime" label="更新时间" width="180" sortable></el-table-column>
+        <el-table-column prop="observeTime" label="观测时间" width="180" sortable></el-table-column>
+        <el-table-column prop="updateUser" label="上传用户" width="180" sortable></el-table-column>
+        <el-table-column prop="bucketName" label="存储桶名称" width="180" sortable></el-table-column>
+        <el-table-column prop="path" label="文件路径" width="180" sortable></el-table-column>
+        <el-table-column prop="downloadUrl" label="下载链接" width="180" sortable></el-table-column>
+        <el-table-column prop="observeObject" label="观测对象" width="180" sortable></el-table-column>
+        <el-table-column prop="dataType" label="数据类型" width="180" sortable></el-table-column>
+        <el-table-column prop="observeDevice" label="观测设备编号" width="180" sortable></el-table-column>
+        <el-table-column label="操作" width="180">
+          <template #default="scope">
+            <el-button link type="primary" @click="handleDownload(scope.row.downloadUrl)">下载</el-button>
+            <el-button link type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+    </el-container>
+  </div>
 </template>
 
 <script lang="ts">
@@ -113,10 +122,28 @@ export default {
 <script setup lang="ts">
 import type { FileSearchParams, FileInfoResponse } from '@/types/DocOperation';
 import { fileList as FileListStore } from '@/stores/DocSystem/fileStore';
-import { ref } from 'vue';
+import { ref, watch, computed } from 'vue';
 
 
-const SearchData = FileListStore().fileList;
+const SearchData = computed(() => FileListStore().fileList); // 绑定到 store 的 userList;创建响应式引用
+
+const searchMethodCrude = ref<FileSearchParams>({
+  filename: '',
+  updateUser: '',
+  minSize: 0,
+  maxSize: 0,
+  startCreateTime: '',
+  endCreateTime: '',
+  startUpdateTime: '',
+  endUpdateTime: '',
+  startObserveTime: '',
+  endObserveTime: '',
+  page: 0, //当前页码
+  size: 10, //每页显示的条数
+  dataType: '', //数据类型
+  observeDevice: '',
+  sort: '',
+});
 
 const searchMethod = ref<FileSearchParams>({
   filename: '',
@@ -135,6 +162,8 @@ const searchMethod = ref<FileSearchParams>({
   observeDevice: '',
   sort: '',
 });
+
+const SearchDataSize = ref(); //用作于搜索框中文件倍数选取
 
 const DataResponse = ref<FileInfoResponse[]>([
   {
@@ -171,17 +200,27 @@ const DataResponse = ref<FileInfoResponse[]>([
   },
 ]);
 
+watch(() => FileListStore().fileList, (newVal, oldVal) => {
+  console.log("查询成功")
+  if (newVal) { DataResponse.value = newVal; }
+}
+);
 
+watch(searchMethodCrude, (newVal) => {  //文件大小的单位转换
+  searchMethod.value = {
+    ...newVal,
+    minSize: newVal.minSize * SearchDataSize.value,
+    maxSize: newVal.maxSize * SearchDataSize.value,
+  };
+});
 
 
 
 const submit = () => {
   console.log('提交查询,查询信息为：', searchMethod.value);
-  FileListStore().fetchFileList(searchMethod.value);
-  console.log('@@@查询结果:', SearchData);
-  DataResponse.value = SearchData;
-  // 在这里添加查询逻辑
-};
+  FileListStore().fetchFileList(searchMethod.value)
+  console.log('查询结果:', SearchData);
+}
 
 const reset = () => {
   // 重置查询条件
@@ -221,31 +260,18 @@ const handleDelete = (id: number) => {
 
 <style scoped>
 @import './index.scss';
-span{
+
+span {
   color: black;
   width: 10px;
 }
 
-.IntergrityRow{
+.IntergrityRow {
   width: 250px;
 }
-.MidRow{
+
+.MidRow {
   width: 115px;
 
 }
-/* .MidRowTime{
-  width:100px;
-} */
-
-
-
-el-col{
- align-items: left;
-}
 </style>
-
-
-
-
-
-

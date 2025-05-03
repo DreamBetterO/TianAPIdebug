@@ -1,4 +1,5 @@
 import request from '@/utils/request' // 假设这是你的封装请求库
+import type { AxiosError } from 'axios';
 import type {
   FileSearchParams,
   // FileInfoResponse,
@@ -18,9 +19,16 @@ export const GetFiles = async (params: FileSearchParams): Promise<PaginationResp
     const response = await request.post<PaginationResponse>('/file_index/search', params)
     return response.data // 这里的data应该是一个对象，包含响应参数所有信息，即PaginationResponse内容
   } catch (error) {
+    const axiosError = error as AxiosError;
+    const { response } = axiosError;
+    switch (response?.status) {
+      case 400:
+        console.error('请求参数错误:', response.data)
+        break
+    }
     console.error('文件列表查询失败:', error)
     throw error
-  }
+}
 }
 
 // 2. 文件操作记录查询

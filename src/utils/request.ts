@@ -29,34 +29,32 @@ request.interceptors.response.use(
     console.log('请求成功') // 添加成功日志
     return response.data
   },
-  (error) => {
+  (error) =>
+    {
     const { response } = error
     if (response) {
       switch (response.status) {
-        case 200:
-          console.log('请求成功')
-          break // 添加 break，避免继续执行
-        case 400: //重复注册
-          ElMessageBox.alert('该用户已注册，请直接登录', '提示', {
-            confirmButtonText: '确定',
-            type: 'error',
-          })
-          console.error('用户已经注册请直接登录')
-          break
-        case 401:
-          ElMessageBox.alert('该用户未注册，请先注册', '提示', {
-            confirmButtonText: '确定',
-            type: 'error',
-          })
-          console.error('未授权，请重新登录')
-          break
-        case 403:
-          console.error('拒绝访问')
-          ElMessageBox.alert('拒绝访问，你没有此权限，请联系管理员', '提示', {
-            confirmButtonText: '确定',
-            type: 'error',
-          })
-          break
+        // case 400: //重复注册
+        //   ElMessageBox.alert('该用户已注册，请直接登录', '提示', {
+        //     confirmButtonText: '确定',
+        //     type: 'error',
+        //   })
+        //   console.error('用户已经注册请直接登录')
+        //   break
+        // case 401:
+        //   ElMessageBox.alert('该用户未注册，请先注册', '提示', {
+        //     confirmButtonText: '确定',
+        //     type: 'error',
+        //   })
+        //   console.error('未授权，请重新登录')
+        //   break
+        // case 403:
+        //   console.error('拒绝访问')
+        //   ElMessageBox.alert('拒绝访问，你没有此权限，请联系管理员', '提示', {
+        //     confirmButtonText: '确定',
+        //     type: 'error',
+        //   })
+        //   break
         case 404:
           console.error('请求地址不存在')
           break
@@ -72,6 +70,7 @@ request.interceptors.response.use(
         confirmButtonText: '确定',
         type: 'error',
       })
+
     }
     return Promise.reject(error)
   },

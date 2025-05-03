@@ -79,10 +79,10 @@ const submitForm = (formEl: FormInstance | undefined) => {
             router.push('/home');
           }
         })
-        .catch((error) => {
+        .catch(() => {
           // 清空表单内容
           resetForm();
-          console.error('登录请求失败:', error);
+          // console.error('登录请求失败:', error);
         });
 
     } else {

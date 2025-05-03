@@ -94,6 +94,7 @@
 }
 
 .UploadRemark {
+  margin-left: 20px;
   display: flex;
   justify-content: flex-end; /* 确保右对齐 */
   align-items: center; /* 确保垂直居中 */
@@ -104,9 +105,7 @@
   align-self: flex-end; /* 确保按钮在容器内对齐 */
 }
 
-.el-button{
-  margin-left: 10px; /* 添加左边距 */
-}
+
 
 .upload-history-form {
   display: flex;

@@ -36,9 +36,12 @@ export const fileList = defineStore('fileList', {
           page: response.pageable.pageNumber,
           pageSize: response.pageable.pageSize,
         }//分页信息存储
+        console.log('文件列表:', this.fileList)
+        return fileList
       } catch (error) {
         console.error('Failed to fetch file list:', error)
       }
+
     },
   },
   getters: {
