@@ -9,7 +9,7 @@ import type {
   FileDownloadRequest,
   FileOperationParams,
   // FileOperationRecord,
-  BucketListResponse,
+  // BucketListResponse,
   FileOperationResponse,
 } from '@/types/DocOperation' // 导入你的类型定义
 
@@ -37,7 +37,7 @@ export const GetFileOperations = async (
 ): Promise<FileOperationResponse> => {
   try {
     const response = await request.post<FileOperationResponse>(
-      '/api/file_operate/search',
+      '/file_operate/search',
       params,
     )
     return response.data // 这里的data应该是一个对象，包含响应参数所有信息，即PaginationResponse内容
@@ -48,9 +48,9 @@ export const GetFileOperations = async (
 }
 
 // 3. 桶列表查询
-export const GetBuckets = async (): Promise<BucketListResponse> => {
+export const GetBuckets = async () => {
   try {
-    const response = await request.post<BucketListResponse>('/buckets')
+    const response = await request.post('/buckets')
     return response.data
   } catch (error) {
     console.error('桶列表查询失败:', error)

@@ -5,20 +5,20 @@
         <el-row :gutter="20">
           <el-col :span="8">
             <el-form-item label="文件名称">
-              <el-input v-model="searchMethod.filename" placeholder="请输入文件名称" class="IntergrityRow"></el-input>
+              <el-input v-model="searchMethodCrude.filename" placeholder="请输入文件名称" class="IntergrityRow"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="上传用户">
-              <el-input v-model="searchMethod.updateUser" placeholder="请输入上传用户" class="IntergrityRow"></el-input>
+              <el-input v-model="searchMethodCrude.updateUser" placeholder="请输入上传用户" class="IntergrityRow"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="文件大小">
-              <el-input v-model="searchMethod.minSize" placeholder="最小值KB" style="width: 75px;"
+              <el-input v-model="searchMethodCrude.minSize" placeholder="最小值KB" style="width: 75px;"
                 controls="false"></el-input>
               <span style="margin: 0 5px;">~</span>
-              <el-input v-model="searchMethod.maxSize" placeholder="最大值KB" style="width: 75px;"
+              <el-input v-model="searchMethodCrude.maxSize" placeholder="最大值KB" style="width: 75px;"
                 controls="false"></el-input>
               <el-select v-model="SearchDataSize" placeholder="单位" style="  margin-left: 5px; width: 75px;">
                 <el-option label="B" value="1"></el-option>
@@ -31,34 +31,34 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="创建时间">
-              <el-date-picker v-model="searchMethod.startCreateTime" type="datetime" placeholder="开始时间"
+              <el-date-picker v-model="searchMethodCrude.startCreateTime" type="datetime" placeholder="开始时间"
                 style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
               <span style="margin: 0 5px;">~</span>
-              <el-date-picker v-model="searchMethod.endCreateTime" type="datetime" placeholder="结束时间"
+              <el-date-picker v-model="searchMethodCrude.endCreateTime" type="datetime" placeholder="结束时间"
                 style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="更新时间">
-              <el-date-picker v-model="searchMethod.startUpdateTime" type="datetime" placeholder="开始时间"
+              <el-date-picker v-model="searchMethodCrude.startUpdateTime" type="datetime" placeholder="开始时间"
                 style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
               <span style="margin: 0 5px;">~</span>
-              <el-date-picker v-model="searchMethod.endUpdateTime" type="datetime" placeholder="结束时间"
+              <el-date-picker v-model="searchMethodCrude.endUpdateTime" type="datetime" placeholder="结束时间"
                 style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="观测时间">
-              <el-date-picker v-model="searchMethod.startObserveTime" type="datetime" placeholder="开始时间"
+              <el-date-picker v-model="searchMethodCrude.startObserveTime" type="datetime" placeholder="开始时间"
                 style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
               <span style="margin: 0 5px;">~</span>
-              <el-date-picker v-model="searchMethod.endObserveTime" type="datetime" placeholder="结束时间"
+              <el-date-picker v-model="searchMethodCrude.endObserveTime" type="datetime" placeholder="结束时间"
                 style="width: 115px;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="数据类型">
-              <el-select v-model="searchMethod.dataType" placeholder="请选择数据类型" class="IntergrityRow">
+              <el-select v-model="searchMethodCrude.dataType" placeholder="请选择数据类型" class="IntergrityRow">
                 <el-option label="txt" value="txt"></el-option>
                 <el-option label="pdf" value="pdf"></el-option>
               </el-select>
@@ -67,12 +67,12 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="观测设备">
-              <el-input v-model="searchMethod.observeDevice" placeholder="请输入设备编号" class="IntergrityRow"></el-input>
+              <el-input v-model="searchMethodCrude.observeDevice" placeholder="请输入设备编号" class="IntergrityRow"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="排序方式">
-              <el-select v-model="searchMethod.sort" placeholder="请选择排序方式" class="IntergrityRow">
+              <el-select v-model="searchMethodCrude.sort" placeholder="请选择排序方式" class="IntergrityRow">
                 <el-option label="升序" value="asc"></el-option>
                 <el-option label="降序" value="desc"></el-option>
               </el-select>
@@ -209,15 +209,24 @@ watch(() => FileListStore().fileList, (newVal, oldVal) => {
 watch(searchMethodCrude, (newVal) => {  //文件大小的单位转换
   searchMethod.value = {
     ...newVal,
-    minSize: newVal.minSize * SearchDataSize.value,
-    maxSize: newVal.maxSize * SearchDataSize.value,
+    minSize: Math.ceil(newVal.minSize * SearchDataSize.value),
+    maxSize: Math.ceil(newVal.maxSize * SearchDataSize.value),
   };
 });
 
+function mergeData() {
+  // 合并数据
+  searchMethod.value = {
+    ...searchMethodCrude.value,
+    minSize: Math.ceil( searchMethodCrude.value.minSize * SearchDataSize.value),
+    maxSize: Math.ceil(searchMethodCrude.value.maxSize * SearchDataSize.value),
+  };
+}
 
 
 const submit = () => {
-  console.log('提交查询,查询信息为：', searchMethod.value);
+  mergeData()
+  console.log('提交查询信息为：', searchMethod.value);
   FileListStore().fetchFileList(searchMethod.value)
   console.log('查询结果:', SearchData);
 }
@@ -225,6 +234,23 @@ const submit = () => {
 const reset = () => {
   // 重置查询条件
   searchMethod.value = {
+    filename: '',
+    updateUser: '',
+    minSize: 0,
+    maxSize: 0,
+    startCreateTime: '',
+    endCreateTime: '',
+    startUpdateTime: '',
+    endUpdateTime: '',
+    startObserveTime: '',
+    endObserveTime: '',
+    page: 1,
+    size: 10,
+    dataType: '',
+    observeDevice: '',
+    sort: '',
+  };
+  searchMethodCrude.value = {
     filename: '',
     updateUser: '',
     minSize: 0,

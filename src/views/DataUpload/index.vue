@@ -12,9 +12,9 @@
               <el-input v-model="uploadIterm.observer_object" placeholder="请输入观测对象"></el-input>
             </el-form-item>
             <el-form-item label="观测时间">
-              <el-date-picker v-model="uploadIterm.observer_time" type="datetime" placeholder="选择观测时间"
+                <el-date-picker v-model="uploadIterm.observer_time" type="datetime" placeholder="选择观测时间"
                 format="YYYY-MM-DDTHH:mm:ssZ" value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
-            </el-form-item>
+              </el-form-item>
             <el-form-item label="设备编号">
               <el-input v-model="uploadIterm.observer__device" placeholder="请输入设备编号"></el-input>
             </el-form-item>
@@ -26,12 +26,10 @@
             </el-form-item>
             <el-form-item label="数据类型" class="data-type-item">
               <el-select v-model="uploadIterm.data_type" placeholder="请选择数据类型" style="width: 200px;">
+                <el-option label="temperature" value="temperature"></el-option>
                 <el-option label="txt" value="txt"></el-option>
                 <el-option label="pdf" value="pdf"></el-option>
               </el-select>
-              <span v-if="uploadIterm.data_type" class="selected-data-type" style="margin-left: 10px;">
-                已选择: {{ uploadIterm.data_type }}
-              </span>
             </el-form-item>
           </el-form>
           <el-container class="file-upload">
@@ -164,8 +162,8 @@
         <el-table :data="FileListStore" style="width: 100% ; max-height: 666px;" stripe>
           <el-table-column prop="filename" label="文件名" width="180"></el-table-column>
           <el-table-column prop="operateUsername" label="操作用户名" width="180"></el-table-column>
-          <el-table-column prop="operateType" label="操作类型" width="180" sortable ></el-table-column>
-          <el-table-column prop="createTime" label="创建时间" width="180" sortable ></el-table-column>
+          <el-table-column prop="operateType" label="操作类型" width="180" sortable></el-table-column>
+          <el-table-column prop="createTime" label="创建时间" width="180" sortable></el-table-column>
           <el-table-column prop="updateTime" label="更新时间" width="180" sortable></el-table-column>
           <el-table-column prop="observeTime" label="观测时间" width="180" sortable></el-table-column>
           <el-table-column prop="uploadTime" label="上传时间" width="180" sortable></el-table-column>
@@ -190,25 +188,25 @@
       </el-main>
     </el-container>
     <!--功能性展示-->
-    <el-container class="bucket-list-container">
+    <el-container class="Functional-display-container">
       <el-main class="main">
-        <el-header class="header">
-          <span>桶列表查询</span>
-        </el-header>
-        <el-button type="primary" @click="bucketList">查询存储桶列表</el-button>
-        <el-container direction="horizontal" class="FileOperationList">
+        <el-container direction="vertical" class="bucket-list-container">
+          <el-header class="header">
+            <span>桶列表查询</span>
+          </el-header>
+          <el-button type="primary" @click="GetbucketList">查询存储桶列表</el-button>
           <el-table :data="bucketListStore" style="width: 100% ; max-height: 666px;" stripe>
-            <el-table-column prop="bucketName" label="存储桶名称" width="180"></el-table-column>
-            <el-table-column prop="bucketSize" label="存储桶大小" width="180"></el-table-column>
-            <el-table-column prop="fileCount" label="文件数量" width="180"></el-table-column>
-            <el-table-column prop="createTime" label="创建时间" width="180"></el-table-column>
-            <el-table-column prop="updateTime" label="更新时间" width="180"></el-table-column>
+            <el-table-column prop="name" label="存储桶名称" width="180"></el-table-column>
+            <el-table-column prop="size" label="存储桶大小" width="180"></el-table-column>
+            <el-table-column prop="lastModified" label="最后修改时间" width="180"></el-table-column>
           </el-table>
         </el-container>
+        <el-container class="SingleFileDownload">
         <el-header class="header">
           <span>文件下载测试</span>
         </el-header>
         <el-input v-model="FileDownload" placeholder="/请输入文件下载内容"></el-input>
+      </el-container>
       </el-main>
     </el-container>
   </div>
@@ -223,9 +221,9 @@ export default {
 <script setup lang="ts">
 
 import { ref, watch } from 'vue';
-import type { FileOperationParams as FileOperationListParams, FileOperationRecord,BucketListData } from '@/types/DocOperation';
+import type { FileOperationParams as FileOperationListParams, FileOperationRecord, BucketListData } from '@/types/DocOperation';
 import { fileUpload, fileOperationList, } from '@/stores/DocSystem/fileStore'
-import {BucketStore} from '@/stores/DocSystem/fileStore'
+import { BucketStore } from '@/stores/DocSystem/fileStore'
 
 //******用于数据上传部分********//
 interface uploadFill {
@@ -307,6 +305,8 @@ const UploadToServer = () => {
 
 
 //******文件操作列表查询********//
+
+//查询参数
 const FileOperationListParams = ref<FileOperationListParams>(
   {
     filename: '',
@@ -352,14 +352,16 @@ const FileListStore = ref<FileOperationRecord[]>([
 
 watch(() => fileOperationList().fileOperationResList, (newVal) => { //文件操作列表查询信息写入
   console.log("查询成功")
-  if (newVal) { FileListStore.value = newVal; }
+  if (newVal!=null) { FileListStore.value = newVal; }
 }
 );
 
 
 const dataType = ref('');
-const remark = ref('');
 
+function OperationParamsMerge() {
+  FileOperationListParams.value.dataType = dataType.value;
+}
 
 
 
@@ -370,11 +372,18 @@ const handleChange = (file: File) => {
 
 
 const submit = () => {
-  console.log('提交数据:', { dataType: dataType.value, remark: remark.value });
+  OperationParamsMerge()
+  console.log('查询条件:', FileOperationListParams.value);
+  fileOperationList().fetchFileOperationList(FileOperationListParams.value);
 };
 
 const openDownloadUrl = (url: string) => {
-  window.open(url, '_blank');
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = ''; // 设置 download 属性以触发下载
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 
 const handleDelete = (id: number) => {
@@ -384,16 +393,18 @@ const handleDelete = (id: number) => {
 
 
 /////****功能性展示 **************////////
-const bucketListStore = ref< BucketListData[]>([]);
+const bucketListStore = ref<BucketListData[]>([]);
 watch(() => BucketStore().bucketList, (newVal) => { //文件操作列表查询信息写入
-  console.log("查询成功")
-  if (newVal) { bucketListStore.value = newVal; }
+  console.log("@@@@查询成功#",newVal)
+  bucketListStore.value = newVal;
 }
 );
 
-const bucketList = () => {
+const GetbucketList = () => {
   BucketStore().fetchBucketList();
 };
+
+
 
 const FileDownload = ref(''); //文件下载测试
 
@@ -421,5 +432,25 @@ const FileDownload = ref(''); //文件下载测试
 
 span {
   color: black;
+}
+
+.Functional-display-container{
+  margin-top: 20px;
+  padding: 20px;
+  background-color: #f9f9f900;
+  border-radius: 5px;
+}
+
+.bucket-list-container {
+  margin-top: 20px;
+  /* padding: 20px; */
+  background-color: #f9f9f900;
+  border-radius: 5px;
+}
+.SingleFileDownload {
+  margin-top: 20px;
+  /* padding: 20px; */
+  background-color: #f9f9f900;
+  border-radius: 5px;
 }
 </style>

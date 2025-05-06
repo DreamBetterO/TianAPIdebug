@@ -41,7 +41,7 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import router from '@/router'
-import { RegisterStore } from '@/stores/LoginSystem/login';
+import { RegisterStore,LoginStore } from '@/stores/LoginSystem/login';
 import { ElMessageBox } from 'element-plus';
 
 const registerFormRef = ref<FormInstance>() // 表单引用
@@ -54,6 +54,7 @@ const registerForm = reactive({ // 注册表单数据
   organization: '',
 })
 
+// 表单校验规则
 const rules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
@@ -78,6 +79,14 @@ const rules = {
 const authStore = RegisterStore(); // 注册内容
 
 
+
+//直接登录
+let UseLogin = {
+  username: '',
+  password: '',
+}
+
+//提交注册
 const submitRegisterForm = () => {
   // 校验表单
   registerFormRef.value?.validate((valid) => {
@@ -94,10 +103,35 @@ const submitRegisterForm = () => {
       // 将用户信息发送给后端
       authStore.SendRegisterInfo(user).then(() => {
         if(authStore.RegisterResponseStore!= null) {
-          ElMessageBox.alert('注册成功,请登录', '提示', {
-            confirmButtonText: '确定',
+          UseLogin = {
+            username: registerForm.username,
+            password: registerForm.password,
+          };
+
+            ElMessageBox.confirm('注册成功，是否使用注册账号直接登录？', '提示', {
+            confirmButtonText: '直接登录',
+            cancelButtonText: '取消',
             type: 'success',
-          });
+            }).then(() => {
+            // 如果用户选择直接登录
+            LoginStore().SendLoginInfo(UseLogin).then(() => {
+              if (LoginStore().islogin == true) {
+              router.push('/Home'); // 登录成功后跳转到主页
+              } else {
+              ElMessageBox.alert('登录失败，请重试', '错误', {
+                confirmButtonText: '确定',
+                type: 'error',
+              });
+              }
+            });
+            }).catch(() => {
+            // 如果用户选择取消
+            resetForm();
+            UseLogin = {
+              username: '',
+              password: '',
+            };
+            });
           console.log('注册成功：', authStore.RegisterResponseStore);
         } else {
           ElMessageBox.alert('注册失败，请重试', '错误', {
@@ -114,6 +148,9 @@ const submitRegisterForm = () => {
     }
   });
 };
+
+
+
 
 // 清空表单内容
 const resetForm = () => {

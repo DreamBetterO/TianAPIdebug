@@ -98,8 +98,9 @@ export const BucketStore = defineStore('bucketList', {
         console.log('开始请求桶列表')
         // 调用注册接口
         const response = await GetBuckets()
-        console.log('获取桶列表成功:', response)
-        this.bucketList = response.data // 设置返回值用户信息为二维数组
+        this.bucketList = response   // 设置返回值用户信息为二维数组
+        console.log('桶列表更新成功:', typeof(response))
+        console.log('桶列表:', this.bucketList)
       } catch (error) {
         console.error('Failed to fetch bucket list:', error)
       }
