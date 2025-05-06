@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!--数据上传-->
     <el-container class="data-upload-container">
       <el-main class="main">
         <el-header class="header">
@@ -7,9 +8,6 @@
         </el-header>
         <el-container direction="vertical" class="uploadContainer">
           <el-form :inline="true" label-width="120px" class="data-upload">
-            <el-form-item label="观测对象">
-              <el-input v-model="uploadIterm.observer_object" placeholder="请输入观测对象"></el-input>
-            </el-form-item>
             <el-form-item label="观测对象">
               <el-input v-model="uploadIterm.observer_object" placeholder="请输入观测对象"></el-input>
             </el-form-item>
@@ -38,16 +36,28 @@
           </el-form>
           <el-container class="file-upload">
             <el-form-item label="选择文件">
-              <el-upload class="upload-demo" drag action="/upload" :on-change="handleChange" :on-success="handleSuccess"
-                :on-error="handleError">
-                <!-- 这里可以添加上传的文件类型和大小限制 -->
-                <i class="el-icon-upload"></i>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
-              </el-upload>
+              <el-container class="upload-container" diection="vertical">
+                <el-upload class="upload-demo" drag action="/upload" :before-upload="handleBeforeUpload"
+                  :on-change="handleChange" :on-success="handleSuccess" :on-error="handleError" multiple>
+                  <i class="el-icon-upload"></i>
+                  <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                </el-upload>
+                <!--显示上传的文件-->
+                <el-container class="uploaded-files">
+                  <el-table :data="uploadedFiles" style="width: 100%">
+                    <el-table-column prop="name" label="文件名" width="180"></el-table-column>
+                    <el-table-column label="操作" width="100">
+                      <template #default="scope">
+                        <el-button type="danger" size="small" @click="removeFile(scope.$index)">删除</el-button>
+                      </template>
+                    </el-table-column>
+                  </el-table>
+                </el-container>
+              </el-container>
               <el-form-item class="UploadRemark">
                 <div style="margin-left: 20px;">
-                  <el-button type="default" @click="submit">重置</el-button>
-                  <el-button type="primary" @click="submit">上传到服务器</el-button>
+                  <el-button type="default" @click="DataReset">重置</el-button>
+                  <el-button type="primary" @click="UploadToServer">上传到服务器</el-button>
                 </div>
               </el-form-item>
             </el-form-item>
@@ -55,6 +65,7 @@
         </el-container>
       </el-main>
     </el-container>
+    <!--文件操作列表查询-->
     <el-container class="upload-history-container">
       <el-main class="main">
         <el-header class="header">
@@ -149,17 +160,15 @@
               </el-col>
             </el-row>
           </el-form>
-
         </el-container>
-
-        <el-table :data="FileListStore" style="width: 100%">
+        <el-table :data="FileListStore" style="width: 100% ; max-height: 666px;" stripe>
           <el-table-column prop="filename" label="文件名" width="180"></el-table-column>
           <el-table-column prop="operateUsername" label="操作用户名" width="180"></el-table-column>
-          <el-table-column prop="operateType" label="操作类型" width="180"></el-table-column>
-          <el-table-column prop="createTime" label="创建时间" width="180"></el-table-column>
-          <el-table-column prop="updateTime" label="更新时间" width="180"></el-table-column>
-          <el-table-column prop="observeTime" label="观测时间" width="180"></el-table-column>
-          <el-table-column prop="uploadTime" label="上传时间" width="180"></el-table-column>
+          <el-table-column prop="operateType" label="操作类型" width="180" sortable ></el-table-column>
+          <el-table-column prop="createTime" label="创建时间" width="180" sortable ></el-table-column>
+          <el-table-column prop="updateTime" label="更新时间" width="180" sortable></el-table-column>
+          <el-table-column prop="observeTime" label="观测时间" width="180" sortable></el-table-column>
+          <el-table-column prop="uploadTime" label="上传时间" width="180" sortable></el-table-column>
           <el-table-column prop="updateUser" label="更新用户" width="180"></el-table-column>
           <el-table-column prop="bucketName" label="存储桶名称" width="180"></el-table-column>
           <el-table-column prop="path" label="文件路径" width="180"></el-table-column>
@@ -180,6 +189,28 @@
         </el-table>
       </el-main>
     </el-container>
+    <!--功能性展示-->
+    <el-container class="bucket-list-container">
+      <el-main class="main">
+        <el-header class="header">
+          <span>桶列表查询</span>
+        </el-header>
+        <el-button type="primary" @click="bucketList">查询存储桶列表</el-button>
+        <el-container direction="horizontal" class="FileOperationList">
+          <el-table :data="bucketListStore" style="width: 100% ; max-height: 666px;" stripe>
+            <el-table-column prop="bucketName" label="存储桶名称" width="180"></el-table-column>
+            <el-table-column prop="bucketSize" label="存储桶大小" width="180"></el-table-column>
+            <el-table-column prop="fileCount" label="文件数量" width="180"></el-table-column>
+            <el-table-column prop="createTime" label="创建时间" width="180"></el-table-column>
+            <el-table-column prop="updateTime" label="更新时间" width="180"></el-table-column>
+          </el-table>
+        </el-container>
+        <el-header class="header">
+          <span>文件下载测试</span>
+        </el-header>
+        <el-input v-model="FileDownload" placeholder="/请输入文件下载内容"></el-input>
+      </el-main>
+    </el-container>
   </div>
 </template>
 
@@ -191,8 +222,10 @@ export default {
 
 <script setup lang="ts">
 
-import { ref } from 'vue';
-import type { FileOperationParams as FileOperationListParams, FileOperationRecord } from '@/types/DocOperation';
+import { ref, watch } from 'vue';
+import type { FileOperationParams as FileOperationListParams, FileOperationRecord,BucketListData } from '@/types/DocOperation';
+import { fileUpload, fileOperationList, } from '@/stores/DocSystem/fileStore'
+import {BucketStore} from '@/stores/DocSystem/fileStore'
 
 //******用于数据上传部分********//
 interface uploadFill {
@@ -213,7 +246,67 @@ const uploadIterm = ref<uploadFill>({
   path: '',
 });
 
-//******文件操作列表查询参数********//
+const uploadedFiles = ref<File[]>([]); // 存储上传的文件列表
+
+const handleBeforeUpload = (file: File) => {
+  uploadedFiles.value.push(file); // 将文件添加到列表中
+
+  /////////////////////////未完待续///////////////////////////////////
+
+  console.log('文件已准备好:', file.name);
+  return false; // 阻止默认上传行为
+};
+const handleSuccess = (response: unknown, file: File) => {
+  console.log('文件上传成功:', response);
+};
+const handleError = (error: unknown, file: File) => {
+  console.error('文件上传失败:', error);
+};
+
+const removeFile = (index: number) => {
+  uploadedFiles.value.splice(index, 1); // 从列表中删除文件
+  console.log('文件已删除:', index);
+};
+
+const DataReset = () => {
+  uploadIterm.value.filename = '';
+  uploadIterm.value.observer_object = '';
+  uploadIterm.value.observer_time = '';
+  uploadIterm.value.observer__device = '';
+  uploadIterm.value.data_type = '';
+  uploadIterm.value.path = '';
+};
+
+//上传数据合并
+function mergeData() {
+  fileUpload().fileUploadinfo.filename = uploadIterm.value.filename;
+  fileUpload().fileUploadinfo.observerObject = uploadIterm.value.observer_object;
+  fileUpload().fileUploadinfo.observerTime = uploadIterm.value.observer_time;
+  fileUpload().fileUploadinfo.observerDevice = uploadIterm.value.observer__device;
+  fileUpload().fileUploadinfo.dataType = uploadIterm.value.data_type;
+  fileUpload().fileUploadinfo.path = uploadIterm.value.path;
+}
+
+// watch(uploadIterm, (newVal) => {
+//   fileUpload().fileUploadinfo.filename = newVal.filename;
+//   fileUpload().fileUploadinfo.observerObject = newVal.observer_object;
+//   fileUpload().fileUploadinfo.observerTime = newVal.observer_time;
+//   fileUpload().fileUploadinfo.observerDevice = newVal.observer__device;
+//   fileUpload().fileUploadinfo.dataType = newVal.data_type;
+//   fileUpload().fileUploadinfo.path = newVal.path;
+//   console.log('uploadIterm:', newVal);
+// });
+
+
+const UploadToServer = () => {
+  mergeData(); // 合并数据
+  fileUpload().fileUploadinfo.files = uploadedFiles.value; // 将文件存储到变量中
+  const success = fileUpload().fetchFileUpload(fileUpload().fileUploadinfo);
+  DataReset();
+};
+
+
+//******文件操作列表查询********//
 const FileOperationListParams = ref<FileOperationListParams>(
   {
     filename: '',
@@ -257,49 +350,24 @@ const FileListStore = ref<FileOperationRecord[]>([
     observeDevice: '设备1',
   },])
 
-
-
-// const FileOperationList = ref<FileOperationRecord[]>([
-//   {
-//     filename
-//   }
-// ]);
-
-
-
-
-
+watch(() => fileOperationList().fileOperationResList, (newVal) => { //文件操作列表查询信息写入
+  console.log("查询成功")
+  if (newVal) { FileListStore.value = newVal; }
+}
+);
 
 
 const dataType = ref('');
 const remark = ref('');
-const uploadHistory = ref([
-  { fileName: '数据文件1.csv', uploadTime: '2025-04-16 10:00', status: '成功' },
-  { fileName: '数据文件2.xlsx', uploadTime: '2025-04-16 11:30', status: '失败' },
-  { fileName: '数据文件3.json', uploadTime: '2025-04-16 14:20', status: '成功' },
-]);
+
+
+
 
 const handleChange = (file: File) => {
   console.log('文件选择更改:', file.name);
 };
 
-const handleSuccess = (response: unknown, file: File) => {
-  console.log('上传成功:', file.name);
-  uploadHistory.value.push({
-    fileName: file.name,
-    uploadTime: new Date().toLocaleString(),
-    status: '成功',
-  });
-};
 
-const handleError = (error: unknown, file: File) => {
-  console.error('上传失败:', file.name);
-  uploadHistory.value.push({
-    fileName: file.name,
-    uploadTime: new Date().toLocaleString(),
-    status: '失败',
-  });
-};
 
 const submit = () => {
   console.log('提交数据:', { dataType: dataType.value, remark: remark.value });
@@ -315,6 +383,21 @@ const handleDelete = (id: number) => {
 };
 
 
+/////****功能性展示 **************////////
+const bucketListStore = ref< BucketListData[]>([]);
+watch(() => BucketStore().bucketList, (newVal) => { //文件操作列表查询信息写入
+  console.log("查询成功")
+  if (newVal) { bucketListStore.value = newVal; }
+}
+);
+
+const bucketList = () => {
+  BucketStore().fetchBucketList();
+};
+
+const FileDownload = ref(''); //文件下载测试
+
+
 </script>
 
 <style scoped>
@@ -325,6 +408,15 @@ const handleDelete = (id: number) => {
   /* display: flex;
   justify-content: space-between; */
 
+}
+
+.uploaded-files {
+  margin-top: 20px;
+  height: auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+  color: black;
 }
 
 span {

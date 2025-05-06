@@ -62,9 +62,9 @@ export const GetBuckets = async (): Promise<BucketListResponse> => {
 export const UploadFile = async (formData: FileUploadData): Promise<FileUploadResponse> => {
   try {
     const response = await request.post<FileUploadResponse>('/files/upload', formData, {
-      // headers: {
-      //   'Content-Type': 'multipart/form-data',
-      // },
+      headers: {
+        'Content-Type': 'multipart/form-data', // 关键配置：指定请求头为表单数据
+      },
     })
     return response.data
   } catch (error) {

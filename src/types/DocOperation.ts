@@ -186,14 +186,14 @@ export interface FileUploadData {
   createTime: string // 格式：YYYY-MM-DD HH:mm:ss
   dataType: string
   observerDevice: string
-  file: File
+  files: File[] | null
 }
 
 // 文件上传响应
 export interface FileUploadResponse {
   status: number
   message: string
-  data: string
+  data?: string
 }
 
 // 5. 文件下载

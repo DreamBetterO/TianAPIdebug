@@ -13,6 +13,7 @@ import type {
 import { GetFiles,GetFileOperations,GetBuckets,UploadFile } from '@/api/DocOperation' // 引入文件列表查询的API
 import {LoginStore} from '@/stores/LoginSystem/login' // 引入登录信息的store
 
+
 // 1. ⽂件列表（查询）
 export const fileList = defineStore('fileList', {
   state: () => ({
@@ -54,7 +55,7 @@ export const fileList = defineStore('fileList', {
 // 2. 文件操作记录（查询）
 export const fileOperationList= defineStore('fileOperationList', {
   state: () => ({
-    fileOperationList: [] as FileOperationRecord[], //文件操作查询响应列表“content”
+    fileOperationResList: [] as FileOperationRecord[], //文件操作查询响应列表“content”
     pagination:{  // 分页信息
       total: 0,
       page:0,
@@ -68,7 +69,7 @@ export const fileOperationList= defineStore('fileOperationList', {
         // 调用注册接口
         const response = await GetFileOperations(params)
         console.log('获取文件操作列表成功:', response)
-        this.fileOperationList = response.content // 设置返回值用户信息为二维数组
+        this.fileOperationResList = response.content // 设置返回值用户信息为二维数组
         this.pagination = {
           total: response.totalElements,
           page: response.pageable.pageNumber,
@@ -87,7 +88,7 @@ export const fileOperationList= defineStore('fileOperationList', {
 })
 
 //3. 桶列表（查询）
-export const bucketList = defineStore('bucketList', {
+export const BucketStore = defineStore('bucketList', {
   state: () => ({
     bucketList: [] as BucketListData[], // 桶列表
   }),
@@ -116,15 +117,16 @@ export const fileUpload = defineStore('fileUpload', {
     initFileUploadInfo() {
       const loginusername = LoginStore().loginInfo?.username||'testUser' // 获取登录信息
       this.fileUploadinfo.username = loginusername // 操作账号
-
+      this.fileUploadinfo.bucketName = 'sensor-data-bucket' // 文件名
     },
     async fetchFileUpload(formData: FileUploadData) {
       try {
-        console.log('开始请求文件上传')
         this.initFileUploadInfo() // 初始化文件上传信息
+        console.log('开始请求文件上传，请求内容为：', formData)
+        console.log('文件上传信息:', formData.filename)
         // 调用注册接口
-        const response = await UploadFile(formData)
-        console.log('获取文件上传成功:', response)
+        const response = await UploadFile(formData);
+        console.log('获取文件上传成功:', response);
         this.fileUploadRes = response // 设置返回值用户信息为二维数组
       } catch (error) {
         console.error('Failed to fetch file upload:', error)
