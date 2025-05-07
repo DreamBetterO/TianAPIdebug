@@ -87,10 +87,23 @@
 
 .file-upload {
   //文件上传大容器
-  margin-left: 30px;
-  display: flex;
-  justify-content: space-between;
-  max-width: fit-content; //自适应宽度
+  // margin-left: 30px;
+  // justify-content: space-between;
+  // max-width: fit-content; //自适应宽度
+  height: auto;
+  width: 100%;
+  margin-top: 20px;
+   padding: 0 20px 0px 20px;
+}
+
+.upload-container{
+  max-height: 40%;
+  width: 50%;
+}
+.uploaded-files-container{
+  margin-left: 20px;
+  width: 45%;
+  max-height: fit-content;
 }
 
 .UploadRemark {
@@ -103,6 +116,18 @@
 .UploadRemark  {
   margin: 0;
   align-self: flex-end; /* 确保按钮在容器内对齐 */
+}
+
+.upload-demo{
+  width: 100%;
+  height: auto;
+  font-size: 24px;
+  color: #409eff;
+}
+.el-icon--upload {
+  height: auto;
+  font-size: 50px;
+  color: #409eff;
 }
 
 

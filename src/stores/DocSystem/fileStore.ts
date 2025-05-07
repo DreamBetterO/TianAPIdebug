@@ -57,9 +57,11 @@ export const fileOperationList= defineStore('fileOperationList', {
   state: () => ({
     fileOperationResList: [] as FileOperationRecord[], //文件操作查询响应列表“content”
     pagination:{  // 分页信息
-      total: 0,
-      page:0,
-      pageSize:0,
+      totalPages: 0,
+      totalElements: 0,
+      page:1,
+      pageSize:10,
+
     }, //分页存储
   }),
   actions: {
@@ -71,7 +73,8 @@ export const fileOperationList= defineStore('fileOperationList', {
         console.log('获取文件操作列表成功:', response)
         this.fileOperationResList = response.content // 设置返回值用户信息为二维数组
         this.pagination = {
-          total: response.totalElements,
+          totalPages: response.totalPages,
+          totalElements: response.totalElements,
           page: response.pageable.pageNumber,
           pageSize: response.pageable.pageSize,
         }//分页信息存储
@@ -82,7 +85,7 @@ export const fileOperationList= defineStore('fileOperationList', {
   },
   getters: {
     totalPages(): number {  //计算属性：总页数
-      return Math.ceil(this.pagination.total / this.pagination.pageSize);
+      return Math.ceil(this.pagination.totalElements / this.pagination.pageSize);
     }
   },
 })

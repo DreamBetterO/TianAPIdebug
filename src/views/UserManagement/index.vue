@@ -1,9 +1,6 @@
 <template>
   <div>
-    <el-button type="primary" @click="refreshUserList"
-      style="margin-bottom: 20px; background-color: #409EFF; color: white; border-radius: 5px;">
-      刷新用户列表
-    </el-button>
+    <el-button type="primary" size="small" style="margin: 40px 20px  20px 0px;" @click="refreshUserList">刷新用户列表</el-button>
     <el-table :data="userList" style="width: 100%">
       <el-table-column prop="id" label="用户ID" width="100" />
       <el-table-column prop="username" label="用户名" width="150" />

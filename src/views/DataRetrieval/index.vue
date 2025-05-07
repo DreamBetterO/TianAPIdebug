@@ -20,7 +20,7 @@
               <span style="margin: 0 5px;">~</span>
               <el-input v-model="searchMethodCrude.maxSize" placeholder="最大值KB" style="width: 75px;"
                 controls="false"></el-input>
-              <el-select v-model="SearchDataSize" placeholder="单位" style="  margin-left: 5px; width: 75px;">
+              <el-select v-model="SearchDataSize" placeholder="单位" class="UnitSelect">
                 <el-option label="B" value="1"></el-option>
                 <el-option label="KB" value="1024"></el-option>
                 <el-option label="MB" value="1048576"></el-option>
@@ -67,7 +67,8 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="观测设备">
-              <el-input v-model="searchMethodCrude.observeDevice" placeholder="请输入设备编号" class="IntergrityRow"></el-input>
+              <el-input v-model="searchMethodCrude.observeDevice" placeholder="请输入设备编号"
+                class="IntergrityRow"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -218,7 +219,7 @@ function mergeData() {
   // 合并数据
   searchMethod.value = {
     ...searchMethodCrude.value,
-    minSize: Math.ceil( searchMethodCrude.value.minSize * SearchDataSize.value),
+    minSize: Math.ceil(searchMethodCrude.value.minSize * SearchDataSize.value),
     maxSize: Math.ceil(searchMethodCrude.value.maxSize * SearchDataSize.value),
   };
 }
@@ -284,7 +285,7 @@ const handleDelete = (id: number) => {
 
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 @import './index.scss';
 
 span {
@@ -299,5 +300,17 @@ span {
 .MidRow {
   width: 115px;
 
+}
+
+.UnitSelect {
+  margin-left: 5px;
+  width: 75px;
+  color: blue;
+  background-color: blue;
+  border: 1px solid blue;
+}
+
+.UnitSelect input::placeholder {
+  color: blue;
 }
 </style>
