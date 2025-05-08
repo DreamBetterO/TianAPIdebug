@@ -1,13 +1,12 @@
 <template>
-  <div>
+  <div class="DataUpload-DataDownload">
     <!--数据上传-->
     <el-container class="data-upload-container">
-      <el-main class="main">
         <el-header class="header">
           <span>数据上传</span>
         </el-header>
         <el-container direction="vertical" class="uploadContainer">
-          <el-form :inline="true" label-width="120px" class="data-upload">
+          <el-form :inline="true" label-width="120px" class="data-upload-form">
             <el-row gitter="12">
               <el-col :span="6">
                 <el-form-item label="观测对象">
@@ -17,12 +16,12 @@
               <el-col :span="6">
                 <el-form-item label="观测时间">
                   <el-date-picker v-model="uploadIterm.observer_time" type="datetime" placeholder="选择观测时间"
-                    format="YYYY-MM-DD HH:mm:ss " value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
+                    format="YYYY-MM-DD HH:mm:ss " value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
                 <el-form-item label="设备编号">
-                  <el-input v-model="uploadIterm.observer__device" placeholder="请输入设备编号"></el-input>
+                  <el-input v-model="uploadIterm.observer_device" placeholder="请输入设备编号"></el-input>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -57,12 +56,11 @@
                 </el-form-item>
               </el-col>
               <el-col :span="6">
-                <el-form-item class="UploadRemark">
-                  <div style="margin-left: 20px;">
-                    <el-button type="default" @click="DataReset">重置</el-button>
-                    <el-button type="primary" @click="UploadToServer">上传到服务器</el-button>
-                  </div>
+                <el-form-item label="文件创建时间" style="max-width: 314px;">
+                  <el-date-picker v-model="uploadIterm.createTime" type="datetime" placeholder="选择观测时间"
+                    format="YYYY-MM-DD HH:mm:ss " value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
                 </el-form-item>
+
               </el-col>
             </el-row>
           </el-form>
@@ -78,8 +76,8 @@
               <el-container v-if="uploadProgress > 0" class="progress-container">
                 <el-progress :percentage="uploadProgress" status="success"></el-progress>
               </el-container>
-              <!--显示上传的文件-->
-              <el-container class="uploaded-files-container">
+              <!--显示上传的文件和上传按钮-->
+              <el-container class="uploaded-files-container" direction="vertical">
                 <el-table :data="uploadedFiles" style="width: 100%">
                   <el-table-column prop="name" label="文件名" width="180"></el-table-column>
                   <el-table-column label="操作" width="100">
@@ -88,11 +86,16 @@
                     </template>
                   </el-table-column>
                 </el-table>
+
+                  <div style="margin: 20px;">
+                    <el-button type="default" @click="DataReset">重置</el-button>
+                    <el-button type="primary" @click="UploadToServer">上传到服务器</el-button>
+                  </div>
+
               </el-container>
             </el-container>
           </el-container>
         </el-container>
-      </el-main>
     </el-container>
     <!--文件操作列表查询-->
     <el-container class="upload-history-container">
@@ -138,7 +141,7 @@
                   <span style="margin: 0 5px;">~</span>
                   <el-date-picker v-model="FileOperationListParams.endCreateTime" type="datetime" placeholder="结束时间"
                     style="width: 100px;" format="YYYY-MM-DD HH:mm:ss"
-                    value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                    value-format="YYYY-MM-DDTHH:mm:ssZ"></el-date-picker>
                 </el-form-item>
               </el-col>
               <el-col :span="6">
@@ -202,7 +205,7 @@
         </el-container>
         <!--分页测试-->
         <el-container class="FileOperationListTable" direction="vertical">
-          <el-table :data="FileListStore" max-height = "600px" style="width: 100%; padding: 20px; margin-left: 40px;" >
+          <el-table :data="FileListStore" stripe style="width: 100%">
             <el-table-column prop="filename" label="文件名" width="180"></el-table-column>
             <el-table-column prop="operateUsername" label="操作用户名" width="180"></el-table-column>
             <el-table-column prop="operateType" label="操作类型" width="180" sortable></el-table-column>
@@ -283,20 +286,22 @@ interface uploadFill {
   filename: string; //存储显示⽂件名
   observer_object: string; //观测对象标识
   observer_time: string;//观测时间(ISO8601格式)
-  observer__device: string; //测设备编号
+  observer_device: string; //测设备编号
   data_type: string; //数据类型标识
   path: string;
   bucketName: string; //存储桶名称
+  createTime: string; //文件创建时间
 }
 
 const uploadIterm = ref<uploadFill>({
   filename: '',
   observer_object: '',
   observer_time: '',
-  observer__device: '',
+  observer_device: '',
   data_type: '',
   path: '',
   bucketName: '',
+  createTime: '',
 });
 ///////上传进度调展示
 const uploadProgress = ref(0); // 存储上传进度
@@ -333,19 +338,21 @@ const DataReset = () => {
   uploadIterm.value.filename = '';
   uploadIterm.value.observer_object = '';
   uploadIterm.value.observer_time = '';
-  uploadIterm.value.observer__device = '';
+  uploadIterm.value.observer_device = '';
   uploadIterm.value.data_type = '';
   uploadIterm.value.path = '';
 };
 
 //上传数据合并
 function mergeData() {
+  fileUpload().fileUploadinfo.bucket_name = uploadIterm.value.bucketName;
   fileUpload().fileUploadinfo.filename = uploadIterm.value.filename;
-  fileUpload().fileUploadinfo.observerObject = uploadIterm.value.observer_object;
-  fileUpload().fileUploadinfo.observerTime = uploadIterm.value.observer_time;
-  fileUpload().fileUploadinfo.observerDevice = uploadIterm.value.observer__device;
-  fileUpload().fileUploadinfo.dataType = uploadIterm.value.data_type;
+  fileUpload().fileUploadinfo.observer_object = uploadIterm.value.observer_object;
+  fileUpload().fileUploadinfo.observer_time = uploadIterm.value.observer_time;
+  fileUpload().fileUploadinfo.observer_device = uploadIterm.value.observer_device;
+  fileUpload().fileUploadinfo.data_type = uploadIterm.value.data_type;
   fileUpload().fileUploadinfo.path = uploadIterm.value.path;
+  fileUpload().fileUploadinfo.create_time = uploadIterm.value.createTime;
 }
 
 // watch(uploadIterm, (newVal) => {
@@ -364,7 +371,7 @@ const handleChange = (file: File) => {
 
 const UploadToServer = () => {
   mergeData(); // 合并数据
-  fileUpload().fileUploadinfo.files = uploadedFiles.value; // 将文件存储到变量中
+  fileUpload().fileUploadinfo.file = uploadedFiles.value[1]; // 将文件存储到变量中
   const success = fileUpload().fetchFileUpload(fileUpload().fileUploadinfo);
   DataReset();
 };

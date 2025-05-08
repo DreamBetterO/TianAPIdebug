@@ -178,15 +178,15 @@ export interface BucketListData {
 // 4. 文件上传请求参数
 export interface FileUploadData {
   username: string
-  bucketName: string
+  bucket_name: string
   path: string
   filename: string
-  observerTime: string // 格式：YYYY-MM-DD HH:mm:ss
-  observerObject: string
-  createTime: string // 格式：YYYY-MM-DD HH:mm:ss
-  dataType: string
-  observerDevice: string
-  files: File[] | null
+  observer_time: string // 格式：YYYY-MM-DD HH:mm:ss
+  observer_object: string
+  create_time: string // 格式：YYYY-MM-DD HH:mm:ss
+  data_type: string
+  observer_device: string
+  file: File
 }
 
 // 文件上传响应

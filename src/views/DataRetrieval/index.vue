@@ -81,14 +81,14 @@
           </el-col>
           <el-col :span="24" class="form-actions">
             <el-form-item style="margin-left: 50px ;">
-              <el-button type="primary" @click="submit">查询</el-button>
-              <el-button type="default" @click="reset">重置</el-button>
+              <el-button type="primary" @click="FilesListSearchSubmit">查询</el-button>
+              <el-button type="default" @click="FilesListSearchReset">重置</el-button>
             </el-form-item>
           </el-col>
         </el-row>
       </el-form>
     </el-container>
-    <el-container class="search-result">
+    <el-container class="search-result" direction="vertical">
       <el-table :data="DataResponse" stripe style="width: 100%">
         <el-table-column prop="filename" label="文件名称" width="180" sortable></el-table-column>
         <el-table-column prop="size" label="文件大小(KB)" width="180" sortable></el-table-column>
@@ -110,6 +110,17 @@
           </template>
         </el-table-column>
       </el-table>
+      <div style="margin: 20px 180px 0px; display: flex; justify-content: flex-end;">
+            <el-pagination v-if="FileListStore.length > 0"
+              :current-page="(searchMethod.page+1)"
+              :page-sizes="[10, 20, 30, 40]"
+              :page-size="searchMethod.size"
+              :total="totalElements"
+              :page-count="pagecount"
+              @current-change="handlePageChange" layout="prev, pager, next, jumper, total,slot"
+              class="pagination-container">
+              <template #slot> </template><span style="margin-left: 12px;">共 {{ pagecount }} 页</span></el-pagination>
+          </div>
     </el-container>
   </div>
 </template>
@@ -165,6 +176,20 @@ const searchMethod = ref<FileSearchParams>({
 });
 
 const SearchDataSize = ref(); //用作于搜索框中文件倍数选取
+
+const pagecount = computed({  //总页数获取
+  get:() => FileListStore().pagination.pagecount,
+  set:(value) => {
+    FileListStore().pagination.pagecount = value;
+  },
+})
+
+const totalElements = computed({  //总条数获取
+  get:() => FileListStore().pagination.totalElements,
+  set:(value) => {
+    FileListStore().pagination.totalElements = value;
+  },
+})
 
 const DataResponse = ref<FileInfoResponse[]>([
   {
@@ -224,15 +249,26 @@ function mergeData() {
   };
 }
 
+const handlePageChange = (page: number) => {
+  if(page<1||page>pagecount.value){
+    console.log("页码不合法")
+    return
+  }
+  searchMethod.value.page = page - 1;
+  console.log('页码改变，提交查询信息为：', searchMethod.value);
+  FileListStore().fetchFileList(searchMethod.value)
 
-const submit = () => {
+}
+
+
+const FilesListSearchSubmit = () => {
   mergeData()
   console.log('提交查询信息为：', searchMethod.value);
   FileListStore().fetchFileList(searchMethod.value)
   console.log('查询结果:', SearchData);
 }
 
-const reset = () => {
+const FilesListSearchReset = () => {
   // 重置查询条件
   searchMethod.value = {
     filename: '',

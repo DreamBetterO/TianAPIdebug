@@ -13,11 +13,21 @@ export const RegisterUser = async (userData: RegisterInfo): Promise<RegisterResp
   } catch (error) {
     const axiosError = error as AxiosError
     const { response } = axiosError
-    if (response?.status === 400) {
-      ElMessageBox.alert('该用户已注册，请直接登录', '提示', {
-        confirmButtonText: '确定',
-        type: 'error',
-      })
+    if (response) {
+      switch (response.status) {
+        case 400:
+          ElMessageBox.alert('该用户已注册，请直接登录', '提示', {
+            confirmButtonText: '确定',
+            type: 'error',
+          })
+          break
+        case 401:
+          ElMessageBox.alert('该用户未注册，请先注册', '提示', {
+            confirmButtonText: '确定',
+            type: 'error',
+          })
+          break
+      }
     }
     console.error('注册失败:', error)
     throw error
@@ -42,5 +52,3 @@ export const LoginUser = async (logininfo: LoginInfo): Promise<LoginResponseData
     throw error
   }
 }
-
-

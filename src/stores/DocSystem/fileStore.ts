@@ -19,7 +19,8 @@ export const fileList = defineStore('fileList', {
   state: () => ({
     fileList: [] as FileInfoResponse[], // 文件查询返回""content""的内容
     pagination:{  // 分页信息
-      total: 0,
+      pagecount: 0,
+      totalElements: 0,
       page:0,
       pageSize:0,
     }, //分页存储
@@ -33,7 +34,8 @@ export const fileList = defineStore('fileList', {
         console.log('获取文件列表成功:', response)
         this.fileList = response.content // 设置返回值用户信息为二维数组
         this.pagination = {
-          total: response.totalElements,
+          pagecount: response.totalPages,
+          totalElements: response.totalElements,
           page: response.pageable.pageNumber,
           pageSize: response.pageable.pageSize,
         }//分页信息存储
@@ -47,7 +49,7 @@ export const fileList = defineStore('fileList', {
   },
   getters: {
     totalPages(): number {  //计算属性：总页数
-      return Math.ceil(this.pagination.total / this.pagination.pageSize);
+      return Math.ceil(this.pagination.totalElements / this.pagination.pageSize);
     }
   },
 })
@@ -121,13 +123,11 @@ export const fileUpload = defineStore('fileUpload', {
     initFileUploadInfo() {
       const loginusername = LoginStore().loginInfo?.username||'testUser' // 获取登录信息
       this.fileUploadinfo.username = loginusername // 操作账号
-      this.fileUploadinfo.bucketName = 'sensor-data-bucket' // 文件名
     },
     async fetchFileUpload(formData: FileUploadData) {
       try {
         this.initFileUploadInfo() // 初始化文件上传信息
         console.log('开始请求文件上传，请求内容为：', formData)
-        console.log('文件上传信息:', formData.filename)
         // 调用注册接口
         const response = await UploadFile(formData);
         console.log('获取文件上传成功:', response);

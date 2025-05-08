@@ -2,7 +2,7 @@
 <template>
   <div class="layout-container">
     <!-- 侧边菜单 -->
-    <el-aside width="200px" class="sidebar">
+    <el-aside  class="sidebar">
       <div class="logo">天球数据库</div>
       <el-menu v-model="activeMenu" class="el-menu-vertical-demo" background-color="#0a192f" text-color="#fff"
         active-text-color="#409EFF" :collapse="isCollapse" @select="handleMenuSelect">
