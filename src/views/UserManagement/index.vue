@@ -56,9 +56,8 @@ const auditUser = async (row: { id: number; status: number }) => {
   try {
     console.log("审核用户");
     // 调用审核接口
-    auditUserStore.AuditUncheckUser({id:row.id,status:1});
+    auditUserStore.AuditUncheckUser({id:row.id,status:1}); // 审核用户+刷新用户列表
     // 刷新用户列表
-    refreshUserList();
   } catch (error) {
     console.error('审核用户失败:', error);
   }

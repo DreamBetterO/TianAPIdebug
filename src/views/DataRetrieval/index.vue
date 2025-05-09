@@ -4,7 +4,7 @@
       <el-form :inline="true" label-width="120px" class="search-form">
         <el-row :gutter="20">
           <el-col :span="8">
-            <el-form-item label="文件名称">
+            <el-form-item label="文件名称" required="true">
               <el-input v-model="searchMethodCrude.filename" placeholder="请输入文件名称" class="IntergrityRow"></el-input>
             </el-form-item>
           </el-col>
@@ -20,7 +20,7 @@
               <span style="margin: 0 5px;">~</span>
               <el-input v-model="searchMethodCrude.maxSize" placeholder="最大值KB" style="width: 75px;"
                 controls="false"></el-input>
-              <el-select v-model="SearchDataSize" placeholder="单位" class="UnitSelect">
+              <el-select v-model="SearchDataSize" placeholder="单位" class="UnitSelect" required="true">
                 <el-option label="B" value="1"></el-option>
                 <el-option label="KB" value="1024"></el-option>
                 <el-option label="MB" value="1048576"></el-option>
@@ -57,7 +57,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="数据类型">
+            <el-form-item label="数据类型" required="true">
               <el-select v-model="searchMethodCrude.dataType" placeholder="请选择数据类型" class="IntergrityRow">
                 <el-option label="txt" value="txt"></el-option>
                 <el-option label="pdf" value="pdf"></el-option>
@@ -89,28 +89,28 @@
       </el-form>
     </el-container>
     <el-container class="search-result" direction="vertical">
-      <el-table :data="DataResponse" stripe style="width: 100%">
-        <el-table-column prop="filename" label="文件名称" width="180" sortable></el-table-column>
-        <el-table-column prop="size" label="文件大小(KB)" width="180" sortable></el-table-column>
-        <el-table-column prop="createTime" label="创建时间" width="180" sortable></el-table-column>
-        <el-table-column prop="uploadTime" label="上传时间" width="180" sortable></el-table-column>
-        <el-table-column prop="updateTime" label="更新时间" width="180" sortable></el-table-column>
-        <el-table-column prop="observeTime" label="观测时间" width="180" sortable></el-table-column>
-        <el-table-column prop="updateUser" label="上传用户" width="180" sortable></el-table-column>
-        <el-table-column prop="bucketName" label="存储桶名称" width="180" sortable></el-table-column>
-        <el-table-column prop="path" label="文件路径" width="180" sortable></el-table-column>
-        <el-table-column prop="downloadUrl" label="下载链接" width="180" sortable></el-table-column>
-        <el-table-column prop="observeObject" label="观测对象" width="180" sortable></el-table-column>
-        <el-table-column prop="dataType" label="数据类型" width="180" sortable></el-table-column>
-        <el-table-column prop="observeDevice" label="观测设备编号" width="180" sortable></el-table-column>
-        <el-table-column label="操作" width="180">
+      <el-table :data="DataResponse" stripe style="width: 100%" table-layout="fixed">
+        <el-table-column prop="filename" label="文件名称" width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="createTime" label="创建时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="uploadTime" label="上传时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="updateTime" label="更新时间" width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="observeTime" label="观测时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="updateUser" label="上传用户" width="110px" ></el-table-column>
+        <el-table-column prop="bucketName" label="存储桶名称" width="120px" sortable></el-table-column>
+        <el-table-column prop="path" label="文件路径"  width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="downloadUrl" label="下载链接"  width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="observeObject" label="观测对象"  width="120px" sortable></el-table-column>
+        <el-table-column prop="size" label="文件大小/KB"  width="130px" sortable></el-table-column>
+        <el-table-column prop="dataType" label="数据类型"  width="120px" sortable></el-table-column>
+        <el-table-column prop="observeDevice" label="设备编号"  width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作"  width="110px">
           <template #default="scope">
             <el-button link type="primary" @click="handleDownload(scope.row.downloadUrl)">下载</el-button>
             <el-button link type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <div style="margin: 20px 180px 0px; display: flex; justify-content: flex-end;">
+      <div style="margin: 5px 40px 5px 0px; display: flex; justify-content: flex-end;">
             <el-pagination v-if="FileListStore.length > 0"
               :current-page="(searchMethod.page+1)"
               :page-sizes="[10, 20, 30, 40]"

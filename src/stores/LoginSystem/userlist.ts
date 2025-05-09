@@ -51,12 +51,10 @@ export const AuditUser = defineStore('auditUser', {
       try {
         this.clearUser();
         this.setUser(info);
-        console.log('开始审核用户')
-        // 调用审核接口
-        console.log("后端审核信息为：",this.audituser)
         const response = await DoAuditUser(this.audituser)
         console.log('审核用户成功:', response)
         this.setUser(response) // 设置返回值用户信息为 AuditUserRequest 类型的单个对象
+        Auditlist().fetchUncheckUserList() // 重新拉取未审核用户列表
       } catch (error) {
         console.error('Failed to fetch user:', error)
       }
