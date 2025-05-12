@@ -19,8 +19,9 @@ export const useEcharts = (myChart: EChartsType, option: EChartsCoreOption) => {
       option.yAxis = {
         ...option.yAxis,
         min: 0,
-        max: 52000,
-        interval: 10000, // 设置刻度间隔，确保刻度标签可读
+        max: 400, // 设置最大值为 2000
+        splitNumber: 5, // 设置分割数为 5
+        interval: 40, // 设置刻度间隔，确保刻度标签可读
         alignTicks: false, // 禁用 alignTicks，避免刻度对齐问题
       };
     }

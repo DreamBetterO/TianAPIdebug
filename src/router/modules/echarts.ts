@@ -36,7 +36,7 @@ const echartsRouter: Array<RouteRecordRaw> = [
       {
         path: '/echarts/lineChart',
         name: 'lineChart',
-        component: () => import('@/views/echarts/lineChart/index.vue'),
+        component: () => import('@/views/echarts/VisitStatistics/index.vue'),
         meta: {
           keepAlive: false,
           requiresAuth: true,

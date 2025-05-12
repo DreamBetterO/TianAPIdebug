@@ -18,34 +18,33 @@ onMounted(() => {
     // 设置图表的配置项和数据
     const option: ECOption = {
       title: {
-        text: 'Basic Radar Chart'
+        text: '数据下载统计',
+        left: 'center',
+        top: 'top'
       },
       legend: {
-        data: ['Allocated Budget', 'Actual Spending']
+        data: ['下载次数'],
+        top: 'bottom',
+        left:"center"
       },
       radar: {
         // shape: 'circle',
         indicator: [
-          { name: 'Sales', max: 6500 },
-          { name: 'Administration', max: 16000 },
-          { name: 'Information Technology', max: 30000 },
-          { name: 'Customer Support', max: 38000 },
-          { name: 'Development', max: 52000 },
-          { name: 'Marketing', max: 25000 }
+          { name: 'zip', max: 6500 },
+          { name: 'txt', max: 16000 },
+          { name: 'png', max: 30000 },
+          { name: 'video', max: 38000 },
+
         ]
       },
       series: [
         {
-          name: 'Budget vs spending',
+          name: '下载量',
           type: 'radar',
           data: [
             {
-              value: [4200, 3000, 20000, 35000, 50000, 18000],
-              name: 'Allocated Budget'
-            },
-            {
-              value: [5000, 14000, 28000, 26000, 42000, 21000],
-              name: 'Actual Spending'
+              value: [4200, 3000, 20000, 35000],
+              name: '下载量'
             }
           ]
         }
@@ -67,5 +66,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../index.scss";
+@use"../index.scss";
 </style>

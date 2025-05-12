@@ -18,7 +18,7 @@ onMounted(() => {
     // 设置图表的配置项和数据
     const option: ECOption = {
       title: {
-    text: 'Referer of a Website',
+    text: '行为占比',
     subtext: 'Fake Data',
     left: 'center'
   },
@@ -35,11 +35,11 @@ onMounted(() => {
       type: 'pie',
       radius: '50%',
       data: [
-        { value: 1048, name: 'Search Engine' },
-        { value: 735, name: 'Direct' },
-        { value: 580, name: 'Email' },
-        { value: 484, name: 'Union Ads' },
-        { value: 300, name: 'Video Ads' }
+        { value: 1048, name: '下载' },
+        { value: 735, name: '查看' },
+        { value: 580, name: '分享' },
+        { value: 484, name: '删除' },
+        { value: 300, name: '上传' }
       ],
       emphasis: {
         itemStyle: {

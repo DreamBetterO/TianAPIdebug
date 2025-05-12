@@ -370,7 +370,7 @@ const handleChange = (file: File) => {
 
 const UploadToServer = () => {
   mergeData(); // 合并数据
-  fileUpload().fileUploadinfo.file = uploadedFiles.value[1]; // 将文件存储到变量中
+  fileUpload().fileUploadinfo.file = uploadedFiles.value[0]; // 将文件存储到变量中
   const success = fileUpload().fetchFileUpload(fileUpload().fileUploadinfo);
   DataReset();
 };

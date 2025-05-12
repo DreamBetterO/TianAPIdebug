@@ -2,15 +2,12 @@
   <el-container class="Overall">
     <el-container class="echart-container">
       <el-container class="Echart" direction="vertical">
-        <span>这是近一周访问数据统计</span><br>
         <lineChart />
       </el-container>
-      <el-container class="Echart">
-        <span>数据下载统计</span><br>
+      <el-container class="Echart" direction="vertical">
         <radarchart />
       </el-container>
-      <el-container class="Echart">
-        <span>各种行为占比</span><br>
+      <el-container class="Echart" direction="vertical">
         <piechart />
       </el-container>
 
@@ -37,7 +34,7 @@ export default {
 </script>
 
 <script setup lang="ts">
-import lineChart from '@/views/echarts/lineChart/index.vue'
+import lineChart from '@/views/echarts/VisitStatistics/index.vue'
 import radarchart from '@/views/echarts/radarChart/index.vue'
 import piechart from '@/views/echarts/pieChart/index.vue'
 import roleFilter from './roleFilter.vue';
