@@ -17,22 +17,27 @@ onMounted(() => {
 
     // 设置图表的配置项和数据
     const option: ECOption = {
-  title: {
-    text: '数据下载统计',
-    left: 'center'
-  },
+      title: {
+      text: '数据下载统计',
+      left: 'center',
+      top: '3%'
+      },
       xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
       },
       yAxis: {
-        type: 'value'
+      type: 'value'
       },
       series: [
-        {
-          data: [150, 230, 224, 218, 135, 147, 260],
-          type: 'line'
+      {
+        data: [150, 230, 224, 218, 135, 147, 260],
+        type: 'line',
+        label: {
+        show: true, // 显示数值
+        position: 'top' // 数值显示在顶部
         }
+      }
       ]
     };
 

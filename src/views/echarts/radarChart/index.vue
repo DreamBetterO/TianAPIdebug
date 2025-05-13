@@ -18,36 +18,37 @@ onMounted(() => {
     // 设置图表的配置项和数据
     const option: ECOption = {
       title: {
-        text: '数据下载统计',
-        left: 'center',
-        top: 'top'
+      text: '数据下载统计',
+      left: 'center',
+      top: '3%',
+      padding: [0, 0, 0, 0] // 增加与后面内容的间距
       },
       legend: {
-        data: ['下载次数'],
-        top: 'bottom',
-        left:"center"
+      data: ['数据下载量'],
+      top: 'bottom'
       },
       radar: {
-        // shape: 'circle',
-        indicator: [
-          { name: 'zip', max: 6500 },
-          { name: 'txt', max: 16000 },
-          { name: 'png', max: 30000 },
-          { name: 'video', max: 38000 },
-
-        ]
+      indicator: [
+        { name: 'zip', max: 6500 },
+        { name: 'txt', max: 16000 },
+        { name: 'png', max: 30000 },
+        { name: 'video', max: 38000 }
+      ]
       },
       series: [
+      {
+        name: 'Budget vs spending',
+        type: 'radar',
+        label: {
+        show: true, // 显示数据值
+        },
+        data: [
         {
-          name: '下载量',
-          type: 'radar',
-          data: [
-            {
-              value: [4200, 3000, 20000, 35000],
-              name: '下载量'
-            }
-          ]
+          value: [4200, 3000, 20000, 35000],
+          name: '数据下载量'
         }
+        ]
+      }
       ]
     };
     // 使用封装的 useEcharts
@@ -66,5 +67,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@use"../index.scss";
+@import "../index.scss";
 </style>

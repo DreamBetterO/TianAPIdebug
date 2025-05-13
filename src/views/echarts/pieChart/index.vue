@@ -20,7 +20,8 @@ onMounted(() => {
       title: {
     text: '行为占比',
     subtext: 'Fake Data',
-    left: 'center'
+    left: 'center',
+    top: '3%'
   },
   tooltip: {
     trigger: 'item'

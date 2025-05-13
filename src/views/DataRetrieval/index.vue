@@ -26,7 +26,6 @@
                 <el-option label="MB" value="1048576"></el-option>
                 <el-option label="GB" value="1073741824"></el-option>
               </el-select>
-
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -95,18 +94,20 @@
         <el-table-column prop="uploadTime" label="上传时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
         <el-table-column prop="updateTime" label="更新时间" width="120px" sortable show-overflow-tooltip></el-table-column>
         <el-table-column prop="observeTime" label="观测时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="updateUser" label="上传用户" width="110px" ></el-table-column>
-        <el-table-column prop="bucketName" label="存储桶名称" width="120px" sortable></el-table-column>
+        <el-table-column prop="updateUser" label="上传用户" width="90px" ></el-table-column>
+        <el-table-column prop="bucketName" label="存储桶名称" width="100px"></el-table-column>
         <el-table-column prop="path" label="文件路径"  width="120px" sortable show-overflow-tooltip></el-table-column>
         <el-table-column prop="downloadUrl" label="下载链接"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="observeObject" label="观测对象"  width="120px" sortable></el-table-column>
-        <el-table-column prop="size" label="文件大小/KB"  width="130px" sortable></el-table-column>
-        <el-table-column prop="dataType" label="数据类型"  width="120px" sortable></el-table-column>
+        <el-table-column prop="observeObject" label="观测对象"  width="100px"></el-table-column>
+        <el-table-column prop="size" label="大小/KB"  width="82px"></el-table-column>
+        <el-table-column prop="dataType" label="数据类型"  width="108px" sortable></el-table-column>
         <el-table-column prop="observeDevice" label="设备编号"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作"  width="110px">
+        <el-table-column label="操作"  width="200px">
           <template #default="scope">
             <el-button link type="primary" @click="handleDownload(scope.row.downloadUrl)">下载</el-button>
             <el-button link type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
+            <el-button link type="success" @click="handleCheck(scope.row.downloadUrl)">查看</el-button>
+            <el-button link type="info" @click="handleShare(scope.row.downloadUrl)">分享</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -311,7 +312,12 @@ const FilesListSearchReset = () => {
 const handleDownload = (url: string) => {
   // 处理下载逻辑
   console.log('下载链接:', url);
-  // 在这里添加下载逻辑
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = ''; // 可选：设置下载文件名
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 };
 const handleDelete = (id: number) => {
   // 处理删除逻辑
@@ -319,6 +325,16 @@ const handleDelete = (id: number) => {
   // 在这里添加删除逻辑
 };
 
+const handleCheck = (url: string) => {
+  // 处理查看逻辑
+  console.log('查看链接:', url);
+  // 在这里添加查看逻辑
+};
+const handleShare = (url: string) => {
+  // 处理分享逻辑
+  console.log('分享链接:', url);
+  // 在这里添加分享逻辑
+};
 </script>
 
 <style lang="scss" scoped>

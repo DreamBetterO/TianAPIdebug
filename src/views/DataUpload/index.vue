@@ -210,21 +210,21 @@
               table-layout="fixed">
               <el-table-column prop="filename" label="文件名" width="120" show-overflow-tooltip></el-table-column>
               <el-table-column prop="operateUsername" label="操作用户名" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="operateType" label="操作类型" width="120" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="operateType" label="操作类型" width="100" show-overflow-tooltip></el-table-column>
               <el-table-column prop="createTime" label="创建时间" width="120" show-overflow-tooltip></el-table-column>
               <el-table-column prop="updateTime" label="更新时间" width="120" show-overflow-tooltip></el-table-column>
               <el-table-column prop="observeTime" label="观测时间" width="120" show-overflow-tooltip></el-table-column>
               <el-table-column prop="uploadTime" label="上传时间" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="updateUser" label="更新用户" width="90" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="updateUser" label="更新用户" width="80" show-overflow-tooltip></el-table-column>
               <el-table-column prop="bucketName" label="存储桶名称" width="100" show-overflow-tooltip></el-table-column>
               <el-table-column prop="observeObject" label="观测对象" width="100" show-overflow-tooltip></el-table-column>
               <el-table-column prop="dataType" label="数据类型" width="80" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="observeDevice" label="观测设备编号" width="120" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="observeDevice" label="设备编号" width="100" show-overflow-tooltip></el-table-column>
               <el-table-column prop="path" label="文件路径" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="downloadUrl" label="下载链接" width="140" show-overflow-tooltip>
+              <el-table-column prop="downloadUrl" label="操作" width="180" show-overflow-tooltip>
                 <template #default="scope">
-                  <el-button size="small" @click="openDownloadUrl(scope.row.downloadUrl)">下载</el-button>
-                  <el-button size="small" @click="() => handleDelete(scope.row.id)">删除</el-button>
+                  <el-button type="primary" size="small" @click="openDownloadUrl(scope.row.downloadUrl)">下载</el-button>
+                  <el-button type="warning" size="small" @click="() => handleDelete(scope.row.id)">分享</el-button>
                 </template>
               </el-table-column>
             </el-table>

@@ -39,6 +39,11 @@ const ManageRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/UserManagement/index.vue'),
         meta: { title: '用户管理' },
       },
+      {
+        path: '/data-inspection',
+        name: 'DataInspection',
+        component: () => import('@/views/DataInspection/index.vue'),
+      },
       ...echartsRouter,
     ],
     redirect: { name: 'ManagementHome' },

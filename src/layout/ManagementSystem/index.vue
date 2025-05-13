@@ -22,6 +22,10 @@
           <i class="el-icon-search"></i>
           <template #title>数据检索</template>
         </el-menu-item>
+        <el-menu-item index="/data-inspection">
+          <i class="el-icon-check"></i>
+          <template #title>数据监控</template>
+        </el-menu-item>
         <el-menu-item index="/user-management">
           <i class="el-icon-user"></i>
           <template #title>用户管理</template>

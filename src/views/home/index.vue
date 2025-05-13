@@ -40,8 +40,8 @@
         </div>
       </section>
       <section class="action-section">
-        <el-button link type="primary" class="action-button">了解更多</el-button>
-        <el-button link type="success" class="action-button">立即开始</el-button>
+        <el-button @click = "LearnMore" type="primary" class="action-button">了解更多</el-button>
+        <el-button @click = "StarRightnow" type="success" class="action-button">立即开始</el-button>
       </section>
     </main>
   </div>
@@ -51,6 +51,19 @@
 export default {
   name: 'DashboardPage',
 };
+</script>
+
+<script lang="ts" setup>
+import router from '@/router';
+
+const LearnMore = () => {
+  router.push('/data-inspection');
+};
+const StarRightnow = () => {
+  router.push('/data-upload');
+};
+
+
 </script>
 
 <style scoped>
