@@ -15,17 +15,22 @@ echarts.use([LegendComponent]);
 export const useEcharts = (myChart: EChartsType, option: EChartsCoreOption) => {
   if (option && typeof option === 'object') {
     // 设置图表的配置项和数据
-    if (option.yAxis) {
-      option.yAxis = {
-        ...option.yAxis,
-        min: 0,
-        max: 400, // 设置最大值为 2000
-        splitNumber: 5, // 设置分割数为 5
-        interval: 40, // 设置刻度间隔，确保刻度标签可读
-        alignTicks: false, // 禁用 alignTicks，避免刻度对齐问题
+    if (option.yAxis && typeof option.yAxis === 'object') {
+      const updatedOption = {
+        ...option,
+        yAxis: {
+          ...option.yAxis,
+          min: 0,
+          max: 400, // 设置最大值为 2000
+          splitNumber: 5, // 设置分割数为 5
+          interval: 40, // 设置刻度间隔，确保刻度标签可读
+          alignTicks: false, // 禁用 alignTicks，避免刻度对齐问题
+        },
       };
+      myChart.setOption(updatedOption);
+    } else {
+      myChart.setOption(option);
     }
-    myChart.setOption(option);
   }
   const echartsResize = () => {
     // 解决图表在窗口大小改变时不自动适应的问题

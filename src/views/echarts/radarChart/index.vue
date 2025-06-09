@@ -29,10 +29,10 @@ onMounted(() => {
       },
       radar: {
       indicator: [
-        { name: 'zip', max: 6500 },
-        { name: 'txt', max: 16000 },
-        { name: 'png', max: 30000 },
-        { name: 'video', max: 38000 }
+        { name: 'zip' },
+        { name: 'txt'},
+        { name: 'png'},
+        { name: 'video'}
       ]
       },
       series: [
@@ -67,5 +67,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../index.scss";
+@use "../index.scss";
 </style>

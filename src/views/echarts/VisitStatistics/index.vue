@@ -56,7 +56,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../index.scss";
+@use "../index.scss";
 
 .content-box {
   display: flex;

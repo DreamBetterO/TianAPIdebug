@@ -340,6 +340,7 @@ const DataReset = () => {
   uploadIterm.value.observer_device = '';
   uploadIterm.value.data_type = '';
   uploadIterm.value.path = '';
+  uploadedFiles.value = []; // 清空上传的文件列表
 };
 
 //上传数据合并
@@ -570,7 +571,7 @@ onMounted(() => {
 </script>
 
 <style scoped lang="scss">
-@import './index.scss';
+@use './index.scss';
 
 /* 修改 placeholder 的字体颜色 */
 ::v-deep(.el-select .el-input__inner)::placeholder {

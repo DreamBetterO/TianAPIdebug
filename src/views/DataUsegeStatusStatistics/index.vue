@@ -41,6 +41,6 @@ import roleFilter from './roleFilter.vue';
 import statusMonitor from './statusMonitor.vue';
 </script>
 
-<style>
-@import './index.scss';
+<style scoped lang="scss">
+@use './index.scss';
 </style>

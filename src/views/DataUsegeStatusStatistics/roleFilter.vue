@@ -138,7 +138,6 @@ const handleSort = (sort: { prop: string; order: string }) => {
   padding: 20px;
   border-radius: 8px;
   background-color: aliceblue;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .el-form{

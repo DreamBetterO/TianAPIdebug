@@ -90,7 +90,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './index.scss';
+@use './index.scss';
 
 .no-scrollbar {
   overflow-x: hidden; /* 禁用横向滚动条 */
