@@ -17,12 +17,12 @@ onMounted(() => {
 
     // 设置图表的配置项和数据
     const option: ECOption = {
-      title: {
-    text: '行为占比',
-    subtext: 'Fake Data',
-    left: 'center',
-    top: '3%'
-  },
+  //     title: {
+  //   text: '行为占比',
+  //   subtext: 'Fake Data',
+  //   left: 'center',
+  //   top: '3%'
+  // },
   tooltip: {
     trigger: 'item'
   },

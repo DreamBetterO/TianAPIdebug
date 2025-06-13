@@ -1,31 +1,85 @@
+.data-retrieval {
+  display: flex;
+  flex-direction: column;
+  max-height: 100%;
+  gap: 16px;
+  margin: 24px;
+}
+
 .SearchMethod {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 35px 20px 0 20px;
-  margin-bottom: 20px;
-  background-color: aliceblue;
-  border-radius: 8px;
-  height: 30%;
-}
+  width: 1872px;
+  height: 164px;
+  padding: 16px 24px;
+  background:
+    linear-gradient(173deg, rgba(157, 163, 193, 0.18) 0%, rgba(157, 163, 193, 0) 100%),
+    linear-gradient(156deg, rgba(157, 163, 193, 0) 0%, rgba(157, 163, 193, 0.18) 100%),
+    rgba(7, 14, 59, 0.48);
+  border-radius: 8px 8px 8px 8px;
+  border: 1px solid;
+  border-image: linear-gradient(165deg, rgba(157, 163, 193, 1), rgba(157, 163, 193, 0.24)) 1 1;
 
-.SearchResult {
-  background-color: #f5f5f5;
+  background-image: url('@/assets/images/CutImages_2x/块_数据检索1_bg2x.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+
+.search-form {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  height: 65%;
-}
-.search-result{
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f5f5f5;
+  gap: 16px;
+  width: 100%;
+  height: 100%;
+
+  .el-select {
+    --el-select-width: 346px;
+    --el-select-height: 32px;
+  }
+    .el-input {
+    --el-input-width: 346px;
+    --el-input-height: 32px;
+  }
+
 }
 
-el-select{
-  background-color: aqua;
-  border-radius: 8px;
+
+
 }
+
+
+
+.search-result {
+  width: 1872px;
+  max-height: 736px;
+
+  .result-table {
+    width: 1872px;
+    max-height: 646px;
+    background:
+      linear-gradient(173deg, rgba(157, 163, 193, 0.18) 0%, rgba(157, 163, 193, 0) 100%),
+      linear-gradient(156deg, rgba(157, 163, 193, 0) 0%, rgba(157, 163, 193, 0.18) 100%),
+      rgba(7, 14, 59, 0.48);
+    border-radius: 8px 8px 8px 8px;
+    border: 1px solid;
+    border-image: linear-gradient(165deg, rgba(157, 163, 193, 1), rgba(157, 163, 193, 0.24)) 1 1;
+
+    background-image: url('@/assets/images/CutImages_2x/块_数据检索2_bg2x.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+}
+// .search-result {
+//   padding: 20px;
+//   border-radius: 8px;
+//   background-color: #f5f5f500;
+// }
+
+// el-select {
+//   background-color: aqua;
+//   border-radius: 8px;
+// }

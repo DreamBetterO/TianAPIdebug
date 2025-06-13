@@ -1,0 +1,67 @@
+.el-table {
+  --el-table-tr-bg-color: #ffffff00 !important; /* 设置表格行背景色 */
+  --el-table-border-color: #ebeef500 !important; /* 设置表格边框颜色 */
+  --el-table-header-bg-color: rgba(75, 85, 99, 0.42) !important; /* 设置表头背景色 */
+  --el-table-row-hover-bg-color: rgba(122, 160, 220, 0.571) !important; /* 设置行悬停背景色 */
+  --el-table-text-color: #ffffff !important; /* 设置表格文本颜色 */
+}
+
+.el-pagination button.is-disabled,
+.el-pagination button:disabled {
+  background-color: #37415100 !important; /* 设置禁用按钮背景色 */
+  color: #ffffff !important; /* 设置禁用按钮文字颜色 */
+}
+
+/*表格交叉项*/
+.el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
+  // background: #fafafa !important; /* 设置斑马纹背景色 */
+  background: #374151 100% !important; /* 设置斑马纹背景色为透明 */
+  // border-radius: 0px 0px 0px 0px;
+  // border: 1px solid #374151 !important;
+}
+
+//表格其它部分填充颜色
+.el-table {
+  background-color: #37415100 !important;
+}
+
+// .tech-table {
+//   font-family: 'Orbitron', 'Segoe UI', sans-serif;
+//   color: #ffffff;
+//   // --gradient-bg: linear-gradient(to right, #446777, #203a43, #2c5364);
+// }
+
+/* ✅ 表头整行渐变背景设置 */
+// thead tr {
+//   background: rgba(75, 85, 99, 0.42) !important;
+//   border-radius: 0px 0px 0px 0px;
+//   border: 1px solid #374151 !important;
+// }
+
+/* ✅ 表头单元格透明 + 文字样式 */
+// .el-table__header th {
+//   background-color: transparent !important;
+//   color: #ffffff !important;
+//   font-weight: bold;
+//   font-size: 16px;
+//   text-align: center;
+//   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+// }
+
+/* ✅ 数据区样式：深蓝底 + 亮青文字 */
+// .el-table__body td {
+//   background-color: rgba(12, 20, 40, 0.85);
+//   color: #ffffff;
+//   text-align: center;
+//   font-weight: 500;
+//   font-size: 15px;
+// }
+
+/* ✅ hover 效果 */
+// .el-table__row:hover td {
+//   background-color: rgba(7, 7, 7, 0.571) !important;
+// }
+
+// .el-table td.el-table__cell {
+//   border-bottom: none !important;
+// }

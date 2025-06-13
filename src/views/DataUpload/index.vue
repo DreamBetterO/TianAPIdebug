@@ -4,7 +4,7 @@
       <!--数据上传-->
       <el-container class="data-upload-container">
         <el-header class="header">
-          <span>数据上传</span>
+          数据上传
         </el-header>
         <el-container direction="vertical" class="uploadContainer">
           <el-form :inline="true" label-width="120px" class="data-upload-form">
@@ -67,9 +67,9 @@
           </el-form>
           <el-container class="file-upload" direction="horizontal">
             <el-container class="upload-container" diection="vertical">
-              <el-upload style="width: 45%; height: 100px; border: 2px;" drag action="/upload" :before-upload="handleBeforeUpload"
-                :on-change="handleChange" :on-success="handleSuccess" :on-error="handleError"
-                :on-progress="handleProgress" multiple>
+              <el-upload style="width: 45%; height: 100px; border: 2px;" drag action="/upload"
+                :before-upload="handleBeforeUpload" :on-change="handleChange" :on-success="handleSuccess"
+                :on-error="handleError" :on-progress="handleProgress" multiple>
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
                 <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
               </el-upload>
@@ -98,10 +98,10 @@
       </el-container>
       <!--文件操作列表查询-->
       <el-container class="upload-history-container">
+        <el-header class="header">
+          文件操作列表查询
+        </el-header>
         <el-main class="main">
-          <el-header class="header">
-            <span>文件操作列表查询</span>
-          </el-header>
           <el-container direction="horizontal" class="FileOperationList">
             <el-form :inline="true" label-align="left" class="FileOperationList">
               <el-row :gutter="12">
@@ -229,14 +229,18 @@
               </el-table-column>
             </el-table>
             <!-- 分页组件 -->
-            <div style="margin: 20px 20px 0px; display: flex; justify-content: flex-end;">
-              <el-pagination v-if="FileListStore.length > 0" :current-page="currentPage"
-                :page-size="FileOperationListParams.size" :total="totalElements" :page-count="pagecount"
-                @current-change="handlePageChange" layout="prev, pager, next, jumper, total,slot"
-                class="pagination-container">
-                <template #slot> </template><span style="margin-left: 12px;">共 {{ pagecount }} 页</span></el-pagination>
+            <div class="table-page">
+              <span style="color: white; font-weight: lighter; font-size: medium;">共 {{ pagecount }} 页</span>
+              <div style="margin: 20px 20px 0px; display: flex; justify-content: flex-end;">
+                <el-pagination v-if="FileListStore.length > 0" :current-page="currentPage"
+                  :page-size="FileOperationListParams.size" :total="totalElements" :page-count="pagecount"
+                  @current-change="handlePageChange" layout="prev, pager, next, jumper, total,slot"
+                  class="pagination-container">
+                  <template #slot> </template></el-pagination>
+              </div>
             </div>
           </el-container>
+
         </el-main>
       </el-container>
       <!--功能性展示-->

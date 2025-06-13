@@ -1,13 +1,18 @@
 <template>
   <el-container class="Overall">
+    <header class="theme-title">| 数据下载统计</header>
     <el-container class="echart-container">
+
       <el-container class="Echart" direction="vertical">
+        <header class="card-header">数据下载量统计</header>
         <lineChart />
       </el-container>
       <el-container class="Echart" direction="vertical">
+        <header class="card-header">数据下载类型统计</header>
         <radarchart />
       </el-container>
       <el-container class="Echart" direction="vertical">
+        <header class="card-header">行为占比</header>
         <piechart />
       </el-container>
 
@@ -15,9 +20,11 @@
 
     <el-container class="table-container">
       <el-container class="RoleScreening" direction="vertical">
+         <header class="card-header">数据角色筛选</header>
         <roleFilter />
       </el-container>
       <el-container class="StatusMonitoring">
+        <header class="card-header">数据状态监测</header>
         <statusMonitor />
       </el-container>
     </el-container>

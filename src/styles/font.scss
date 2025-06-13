@@ -1,0 +1,8 @@
+.theme-gradient{
+  text-transform: none; /* 不转换大小写 */
+  background: linear-gradient(90deg, #b3daff 0%, #80c1ff 100%); /* 渐变背景 */
+  -webkit-background-clip: text; /* 文字背景裁剪 */
+  -webkit-text-fill-color: transparent; /* 文字填充透明 */
+  background-clip: text; /* 文字背景裁剪 */
+  color: transparent; /* 文字颜色透明 */
+}

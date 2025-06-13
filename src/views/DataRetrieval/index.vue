@@ -1,19 +1,138 @@
 <template>
   <div class="data-retrieval">
+    <header class="theme-title">| 数据检索</header>
     <el-container class="SearchMethod">
-      <el-form :inline="true" label-width="120px" class="search-form">
-        <el-row :gutter="20">
-          <el-col :span="8">
+      <!--数据检索表单-->
+      <el-form :inline="true" class="search-form">
+        <div class="search-form-row">
+          <div class="search-form-item">
+            <div><span style="color: red; margin-left: 2px;">*</span>文件名称</div>
+            <el-form-item required="true">
+              <el-input v-model="searchMethodCrude.filename" placeholder="请输入文件名称"></el-input>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div>上传用户</div>
+            <el-form-item>
+              <el-input v-model="searchMethodCrude.updateUser" placeholder="请输入上传用户"></el-input>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div>文件大小</div>
+            <el-form-item>
+              <div class="mul-input">
+                <el-input v-model="searchMethodCrude.minSize" placeholder="最小值KB" style="width: 110px;"
+                  controls="false"></el-input>
+                至
+                <el-input v-model="searchMethodCrude.maxSize" placeholder="最大值KB" style="width: 110px;"
+                  controls="false"></el-input>
+                <el-select v-model="SearchDataSize" placeholder="单位" class="UnitSelect" required="true">
+                  <el-option label="B" value="1"></el-option>
+                  <el-option label="KB" value="1024"></el-option>
+                  <el-option label="MB" value="1048576"></el-option>
+                  <el-option label="GB" value="1073741824"></el-option>
+                </el-select>
+              </div>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div>创建时间</div>
+            <el-form-item>
+              <div class="mul-input">
+                <el-date-picker v-model="searchMethodCrude.startCreateTime" type="datetime" placeholder="开始时间"
+                  style="width: 160px;" format="YYYY-MM-DD HH:mm:ss"
+                  value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                至
+                <el-date-picker v-model="searchMethodCrude.endCreateTime" type="datetime" placeholder="结束时间"
+                  style="width: 160px;" format="YYYY-MM-DD HH:mm:ss"
+                  value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+              </div>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div>更新时间</div>
+
+            <el-form-item>
+              <div class="mul-input">
+                <el-date-picker v-model="searchMethodCrude.startUpdateTime" type="datetime" placeholder="开始时间"
+                  style="width: 160px;" format="YYYY-MM-DD HH:mm:ss"
+                  value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                至
+                <el-date-picker v-model="searchMethodCrude.endUpdateTime" type="datetime" placeholder="结束时间"
+                  style="width: 160px;" format="YYYY-MM-DD HH:mm:ss"
+                  value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+
+              </div>
+            </el-form-item>
+          </div>
+        </div>
+        <div class="search-form-row">
+          <div class="search-form-item">
+            <div>观测时间</div>
+            <el-form-item>
+              <div class="mul-input">
+                <el-date-picker v-model="searchMethodCrude.startObserveTime" type="datetime" placeholder="开始时间"
+                  style="width: 160px;" format="YYYY-MM-DD HH:mm:ss"
+                  value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                至
+                <el-date-picker v-model="searchMethodCrude.endObserveTime" type="datetime" placeholder="结束时间"
+                  style="width: 160px;" format="YYYY-MM-DD HH:mm:ss"
+                  value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+              </div>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div><span style="color: red; margin-left: 2px;">*</span>数据类型</div>
+            <el-form-item required="true">
+              <el-select v-model="searchMethodCrude.dataType" placeholder="请选择数据类型">
+                <el-option label="txt" value="txt"></el-option>
+                <el-option label="pdf" value="pdf"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div>观测设备</div>
+            <el-form-item>
+              <el-input v-model="searchMethodCrude.observeDevice" placeholder="请输入设备编号"
+                class="IntergrityRow"></el-input>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div>排序方式</div>
+            <el-form-item>
+              <el-select v-model="searchMethodCrude.sort" placeholder="请选择排序方式" class="IntergrityRow">
+                <el-option label="升序" value="asc"></el-option>
+                <el-option label="降序" value="desc"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+          <div class="search-form-item">
+            <div class="form-button">
+              <el-button type="primary" @click="FilesListSearchSubmit"  ><svg t="1749787554812" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4252" width="200" height="200"><path d="M448 170.666667a277.333333 277.333333 0 1 0 194.048 475.477333l1.92-2.176a30.549333 30.549333 0 0 1 2.133333-1.962667A277.333333 277.333333 0 0 0 448 170.666667z m0-85.333334a362.666667 362.666667 0 0 1 284.885333 587.136l193.28 193.365334a42.624 42.624 0 1 1-60.330666 60.330666l-193.365334-193.28A362.666667 362.666667 0 1 1 448 85.333333z" fill="#ffffff" p-id="4253"></path></svg>查询</el-button>
+              <el-button type="default" @click="FilesListSearchReset"><svg t="1749787598937" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5303" width="200" height="200"><path d="M948.712714 504.692147a35.363315 35.363315 0 1 0-70.2422 11.626295 364.290584 364.290584 0 0 1 4.84429 59.584763 371.072589 371.072589 0 0 1-633.63309 262.076071A371.072589 371.072589 0 0 1 511.757786 204.346187h12.595153L443.453301 285.245825a35.363315 35.363315 0 1 0 48.442897 48.442896l134.186824-134.186824a35.363315 35.363315 0 0 0 0-48.442896L493.833914 17.356605a35.363315 35.363315 0 1 0-48.442897 48.442897L509.335641 133.135129a442.283647 442.283647 0 0 0-169.550139 850.172838 442.768076 442.768076 0 0 0 581.314761-234.94805 444.221363 444.221363 0 0 0 29.065738-242.214483z" fill="#5E5C5C" p-id="5304"></path></svg>重置</el-button>
+            </div>
+          </div>
+        </div>
+        <!-- <el-row :gutter="24">
+          <el-col :span="4.8">
             <el-form-item label="文件名称" required="true">
               <el-input v-model="searchMethodCrude.filename" placeholder="请输入文件名称" class="IntergrityRow"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="4.8">
+            <el-form-item label="数据类型" required="true">
+              <el-select v-model="searchMethodCrude.dataType" placeholder="请选择数据类型" class="IntergrityRow">
+                <el-option label="txt" value="txt"></el-option>
+                <el-option label="pdf" value="pdf"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="4.8">
             <el-form-item label="上传用户">
               <el-input v-model="searchMethodCrude.updateUser" placeholder="请输入上传用户" class="IntergrityRow"></el-input>
             </el-form-item>
           </el-col>
-          <el-col :span="8">
+          <el-col :span="4.8">
             <el-form-item label="文件大小">
               <el-input v-model="searchMethodCrude.minSize" placeholder="最小值KB" style="width: 75px;"
                 controls="false"></el-input>
@@ -28,6 +147,16 @@
               </el-select>
             </el-form-item>
           </el-col>
+          <el-col :span="4.8">
+            <el-form-item label="数据类型" required="true">
+              <el-select v-model="searchMethodCrude.dataType" placeholder="请选择数据类型" class="IntergrityRow">
+                <el-option label="txt" value="txt"></el-option>
+                <el-option label="pdf" value="pdf"></el-option>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row>
           <el-col :span="8">
             <el-form-item label="创建时间">
               <el-date-picker v-model="searchMethodCrude.startCreateTime" type="datetime" placeholder="开始时间"
@@ -61,7 +190,6 @@
                 <el-option label="txt" value="txt"></el-option>
                 <el-option label="pdf" value="pdf"></el-option>
               </el-select>
-
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -84,25 +212,26 @@
               <el-button type="default" @click="FilesListSearchReset">重置</el-button>
             </el-form-item>
           </el-col>
-        </el-row>
+        </el-row> -->
       </el-form>
     </el-container>
     <el-container class="search-result" direction="vertical">
-      <el-table :data="DataResponse" stripe style="width: 100%" table-layout="fixed">
+      <el-table :data="DataResponse" stripe class="result-table">
         <el-table-column prop="filename" label="文件名称" width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="createTime" label="创建时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="uploadTime" label="上传时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="createTime" label="创建时间" width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="uploadTime" label="上传时间" width="120px" sortable show-overflow-tooltip></el-table-column>
         <el-table-column prop="updateTime" label="更新时间" width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="observeTime" label="观测时间"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="updateUser" label="上传用户" width="90px" ></el-table-column>
+        <el-table-column prop="observeTime" label="观测时间" width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="updateUser" label="上传用户" width="90px"></el-table-column>
         <el-table-column prop="bucketName" label="存储桶名称" width="100px"></el-table-column>
-        <el-table-column prop="path" label="文件路径"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="downloadUrl" label="下载链接"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column prop="observeObject" label="观测对象"  width="100px"></el-table-column>
-        <el-table-column prop="size" label="大小/KB"  width="82px"></el-table-column>
-        <el-table-column prop="dataType" label="数据类型"  width="108px" sortable></el-table-column>
-        <el-table-column prop="observeDevice" label="设备编号"  width="120px" sortable show-overflow-tooltip></el-table-column>
-        <el-table-column label="操作"  width="200px">
+        <el-table-column prop="path" label="文件路径" width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="downloadUrl" label="下载链接" width="120px" sortable show-overflow-tooltip></el-table-column>
+        <el-table-column prop="observeObject" label="观测对象" width="100px"></el-table-column>
+        <el-table-column prop="size" label="大小/KB" width="82px"></el-table-column>
+        <el-table-column prop="dataType" label="数据类型" width="108px" sortable></el-table-column>
+        <el-table-column prop="observeDevice" label="设备编号" width="120px" sortable
+          show-overflow-tooltip></el-table-column>
+        <el-table-column label="操作" width="200px">
           <template #default="scope">
             <el-button link type="primary" @click="handleDownload(scope.row.downloadUrl)">下载</el-button>
             <el-button link type="danger" @click="handleDelete(scope.row.id)">删除</el-button>
@@ -112,16 +241,12 @@
         </el-table-column>
       </el-table>
       <div style="margin: 5px 40px 5px 0px; display: flex; justify-content: flex-end;">
-            <el-pagination v-if="FileListStore.length > 0"
-              :current-page="(searchMethod.page+1)"
-              :page-sizes="[10, 20, 30, 40]"
-              :page-size="searchMethod.size"
-              :total="totalElements"
-              :page-count="pagecount"
-              @current-change="handlePageChange" layout="prev, pager, next, jumper, total,slot"
-              class="pagination-container">
-              <template #slot> </template><span style="margin-left: 12px;">共 {{ pagecount }} 页</span></el-pagination>
-          </div>
+        <el-pagination v-if="FileListStore.length > 0" :current-page="(searchMethod.page + 1)"
+          :page-sizes="[10, 20, 30, 40]" :page-size="searchMethod.size" :total="totalElements" :page-count="pagecount"
+          @current-change="handlePageChange" layout="prev, pager, next, jumper, total,slot"
+          class="pagination-container">
+          <template #slot> </template><span style="margin-left: 12px;">共 {{ pagecount }} 页</span></el-pagination>
+      </div>
     </el-container>
   </div>
 </template>
@@ -136,6 +261,7 @@ export default {
 import type { FileSearchParams, FileInfoResponse } from '@/types/DocOperation';
 import { fileList as FileListStore } from '@/stores/DocSystem/fileStore';
 import { ref, watch, computed } from 'vue';
+import '@/assets/iconfont/iconfont.js'
 
 
 const SearchData = computed(() => FileListStore().fileList); // 绑定到 store 的 userList;创建响应式引用
@@ -179,15 +305,15 @@ const searchMethod = ref<FileSearchParams>({
 const SearchDataSize = ref(); //用作于搜索框中文件倍数选取
 
 const pagecount = computed({  //总页数获取
-  get:() => FileListStore().pagination.pagecount,
-  set:(value) => {
+  get: () => FileListStore().pagination.pagecount,
+  set: (value) => {
     FileListStore().pagination.pagecount = value;
   },
 })
 
 const totalElements = computed({  //总条数获取
-  get:() => FileListStore().pagination.totalElements,
-  set:(value) => {
+  get: () => FileListStore().pagination.totalElements,
+  set: (value) => {
     FileListStore().pagination.totalElements = value;
   },
 })
@@ -251,7 +377,7 @@ function mergeData() {
 }
 
 const handlePageChange = (page: number) => {
-  if(page<1||page>pagecount.value){
+  if (page < 1 || page > pagecount.value) {
     console.log("页码不合法")
     return
   }
@@ -339,15 +465,16 @@ const handleShare = (url: string) => {
 
 <style lang="scss" scoped>
 @use './index.scss';
+@use '@/styles/icon.scss';
 
 span {
   color: black;
   width: 10px;
 }
 
-.IntergrityRow {
-  width: 250px;
-}
+// .IntergrityRow {
+//   width: 346px;
+// }
 
 .MidRow {
   width: 115px;
@@ -355,14 +482,63 @@ span {
 }
 
 .UnitSelect {
-  margin-left: 5px;
-  width: 75px;
-  color: blue;
-  background-color: blue;
-  border: 1px solid blue;
+  // margin-left: 5px;
+  width: 100px;
+  background-color: rgba(240, 248, 255, 0.185);
+  color: rgb(255, 255, 255);
+  // color: blue;
+  // background-color: blue;
+  // border: 1px solid blue;
 }
 
-.UnitSelect input::placeholder {
-  color: blue;
+.search-form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  justify-content: space-between;
+  width: 1824px;
+  height: 56px;
+  border: none;
+  padding: 0px;
+}
+
+.search-form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 346px;
+  height: 56px;
+  background-color: rgba(127, 255, 212, 0);
+  // gap: 8px;
+  /*字体 */
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 14px;
+  color: #E5E7EB;
+  text-align: left;
+  font-style: normal;
+  text-transform: none;
+}
+
+.mul-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4px;
+
+  background: #111827;
+  border-radius: 4px 4px 4px 4px;
+  border: 1px solid #4B5563;
+}
+
+.form-button{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 24px;
+  gap: 16px;
 }
 </style>

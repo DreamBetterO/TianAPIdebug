@@ -1,6 +1,16 @@
 <template>
   <div class="register-container">
-    <el-form ref="registerFormRef" :model="registerForm" :rules="rules" label-width="120px">
+    <div class="title-Item">
+      <ThemeFont :size="36">注册</ThemeFont>
+      <a class="ArrowRegister" href="/Login">
+        前往登录
+        <el-icon>
+          <ArrowRightBold />
+        </el-icon>
+      </a>
+    </div>
+    <el-form ref="registerFormRef" :model="registerForm" :rules="rules" label-width="80px"
+      style="background-color: rgba(255, 255, 255, 0); box-shadow: none;">
       <el-form-item label="用户名" prop="username">
         <el-input v-model="registerForm.username" autocomplete="off" />
       </el-form-item>
@@ -23,26 +33,25 @@
       <el-form-item label="注册机构" prop="organization">
         <el-input v-model="registerForm.organization" autocomplete="off" />
       </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="submitRegisterForm">注册</el-button>
-        <el-button @click="goBack">返回</el-button>
-      </el-form-item>
+      <el-button type="primary" @click="submitRegisterForm" class="register-button">注册</el-button>
     </el-form>
   </div>
 </template>
 
 <script lang="ts">
-  export default {
-    name: 'RegisterPage',
-  }
+export default {
+  name: 'RegisterPage',
+}
 </script>
 
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance } from 'element-plus'
 import router from '@/router'
-import { RegisterStore,LoginStore } from '@/stores/LoginSystem/login';
+import { RegisterStore, LoginStore } from '@/stores/LoginSystem/login';
 import { ElMessageBox } from 'element-plus';
+import ThemeFont from '@/components/font/index.vue';
+import { ArrowRightBold } from '@element-plus/icons-vue';
 
 const registerFormRef = ref<FormInstance>() // 表单引用
 const registerForm = reactive({ // 注册表单数据
@@ -102,36 +111,36 @@ const submitRegisterForm = () => {
       };
       // 将用户信息发送给后端
       authStore.SendRegisterInfo(user).then(() => {
-        if(authStore.RegisterResponseStore!= null) {
+        if (authStore.RegisterResponseStore != null) {
           UseLogin = {
             username: registerForm.username,
             password: registerForm.password,
           };
 
-            ElMessageBox.confirm('注册成功，是否使用注册账号直接登录？', '提示', {
+          ElMessageBox.confirm('注册成功，是否使用注册账号直接登录？', '提示', {
             confirmButtonText: '直接登录',
             cancelButtonText: '取消',
             type: 'success',
-            }).then(() => {
+          }).then(() => {
             // 如果用户选择直接登录
             LoginStore().SendLoginInfo(UseLogin).then(() => {
               if (LoginStore().islogin == true) {
-              router.push('/Home'); // 登录成功后跳转到主页
+                router.push('/Home'); // 登录成功后跳转到主页
               } else {
-              ElMessageBox.alert('登录失败，请重试', '错误', {
-                confirmButtonText: '确定',
-                type: 'error',
-              });
+                ElMessageBox.alert('登录失败，请重试', '错误', {
+                  confirmButtonText: '确定',
+                  type: 'error',
+                });
               }
             });
-            }).catch(() => {
+          }).catch(() => {
             // 如果用户选择取消
             resetForm();
             UseLogin = {
               username: '',
               password: '',
             };
-            });
+          });
           console.log('注册成功：', authStore.RegisterResponseStore);
         } else {
           ElMessageBox.alert('注册失败，请重试', '错误', {
@@ -163,20 +172,49 @@ const resetForm = () => {
   registerFormRef.value?.clearValidate();
 };
 
-const goBack = () => {
-  router.push('/Login')
-}
+
 </script>
 
 <style scoped>
 .register-container {
-  display: grid;
-  place-items: center;
-  /* 使用grid的place-items属性实现水平和垂直居中 */
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 30px 80px;
+  width: 560px;
+  font-size: 14px;
+  height: auto;
+  background: linear-gradient(173deg, rgba(157, 163, 193, 0.18) 0%, rgba(157, 163, 193, 0) 100%), linear-gradient(156deg, rgba(157, 163, 193, 0) 0%, rgba(157, 163, 193, 0.18) 100%), rgba(7, 14, 59, 0.48);
+  border-radius: 12px;
+  border: 1px solid;
+  /* border-image: linear-gradient(165deg, rgba(157, 163, 193, 1), rgba(157, 163, 193, 0.24)) 1 1; */
+}
+
+.title-Item {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  width: 400px;
+  height: 43px;
+  margin-bottom: 24px;
+  flex-wrap: nowrap;
+}
+
+.ArrowRegister {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  text-decoration: none;
+  width: 100px;
+  height: 20px;
+  font-family: Alibaba PuHuiTi 2.0, Alibaba PuHuiTi 20;
+  font-weight: normal;
+  font-size: 14px;
+  color: #3DA1FF;
+  text-align: left;
+  font-style: normal;
+  text-transform: none;
 }
 
 .el-form {
@@ -185,5 +223,10 @@ const goBack = () => {
   background: white;
   border-radius: 8px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+}
+
+.register-button {
+  width: 100%;
+  margin-top: 20px;
 }
 </style>

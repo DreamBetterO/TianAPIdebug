@@ -1,17 +1,11 @@
 <template>
-  <div>
-  <!-- <div class="extect-button">
-    <el-button type="Info" :icon="House" @click="goToManagement">管理平台</el-button>
-  </div> -->
   <div class="layout-container">
-
-    <router-view  v-slot="{ Component }">
+    <router-view v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component" :key="$route.path" />
       </transition>
     </router-view>
   </div>
-</div>
 </template>
 
 
@@ -58,11 +52,12 @@ onMounted(() => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  max-height: 100%;
 }
 
 .extect-button {
-  z-index: 1000; /*层级*/
+  z-index: 1000;
+  /*层级*/
   position: fixed;
   height: 100px;
   /* 高度 */

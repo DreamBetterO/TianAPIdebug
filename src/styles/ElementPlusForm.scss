@@ -1,0 +1,46 @@
+.el-form-item {
+  background: #111827;
+  border-radius: 4px 4px 4px 4px;
+  border: 1px solid #4b5563;
+}
+
+.el-form-item:hover {
+  border-color: #3da1ff;
+  box-shadow: 0 0 0 2px rgba(61, 161, 255, 0.2);
+}
+
+.el-form-item__label{
+  justify-content: space-around !important;
+}
+
+.el-input {
+  --el-input-bg-color: #ffffff00 !important;
+  --el-input-border-color: #dcdfe600 !important;
+}
+
+.el-input__wrapper {
+  background-color: #ffffff00 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.el-input__wrapper:hover{
+  box-shadow: 0 0 0 2px rgba(61, 161, 255, 0) !important;
+}
+
+
+.el-select__wrapper{
+  background-color: #ffffff00 !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.el-select__wrapper.is-focus .el-input__inner {
+  border-color: #3da1ff00 !important;
+  box-shadow: 0 0 0 2px rgba(61, 161, 255, 0) !important;
+  border: none !important;
+}
+
+.el-select__wrapper.is-hoving:not(.is-focused){
+  box-shadow: none !important;
+}

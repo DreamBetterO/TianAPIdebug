@@ -17,11 +17,7 @@ onMounted(() => {
 
     // 设置图表的配置项和数据
     const option: ECOption = {
-      title: {
-      text: '数据下载统计',
-      left: 'center',
-      top: '3%'
-      },
+
       xAxis: {
       type: 'category',
       data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']

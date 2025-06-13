@@ -12,7 +12,8 @@
 :global(body) {
   margin: 0;
   height: 100vh;
-  background-image: url('/images/MainBackground.jpg');
+  background-image: url('@/assets/images/CutImages_2x/背景BG2x.png');
+
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;

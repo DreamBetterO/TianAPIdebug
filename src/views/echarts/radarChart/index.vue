@@ -17,12 +17,7 @@ onMounted(() => {
 
     // 设置图表的配置项和数据
     const option: ECOption = {
-      title: {
-      text: '数据下载统计',
-      left: 'center',
-      top: '3%',
-      padding: [0, 0, 0, 0] // 增加与后面内容的间距
-      },
+
       legend: {
       data: ['数据下载量'],
       top: 'bottom'

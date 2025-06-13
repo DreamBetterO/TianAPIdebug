@@ -44,6 +44,11 @@ const ManageRoutes: Array<RouteRecordRaw> = [
         name: 'DataInspection',
         component: () => import('@/views/DataInspection/index.vue'),
       },
+      {
+        path: '/file-directories',
+        name: 'FileDirectories',
+        component: () => import('@/views/FileDirectories/index.vue'),
+      },
       ...echartsRouter,
     ],
     redirect: { name: 'ManagementHome' },

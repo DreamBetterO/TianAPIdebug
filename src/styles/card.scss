@@ -1,0 +1,36 @@
+.card-header {
+  display: flex;
+  height: 46px;
+  background: linear-gradient(90deg, rgba(156, 163, 175, 0.36) 0%, rgba(156, 163, 175, 0.08) 100%);
+  border-radius: 0px 0px 0px 0px;
+  border: 1px solid #374151;
+  width: auto;
+  padding: 11px 16px 10px 16px;
+  font-family:
+    PingFang SC,
+    PingFang SC;
+  font-weight: 500;
+  font-size: 18px;
+  color: #e5e7eb;
+  text-align: left;
+  font-style: normal;
+  text-transform: none;
+}
+
+.theme-title {
+  display: flex;
+  justify-content: flex-start;
+  width: auto;
+  height: 43px;
+  margin: 24px 32px;
+  font-family:
+    Noto Serif SC,
+    Noto Serif SC;
+  font-weight: bold;
+  font-size: 36px;
+  color: #ffffff;
+  text-shadow: 0px 4px 8px rgba(11, 12, 19, 0.82);
+  text-align: left;
+  font-style: normal;
+  text-transform: none;
+}

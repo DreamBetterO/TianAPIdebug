@@ -2,90 +2,43 @@
 .layout-container {
   display: flex;
   height: 100vh;
-  background: url('@/assets/images/MainBackground.jpg') no-repeat center center fixed;
-  background-size: cover;
-  color: #fff;
-  font-family: 'Roboto', sans-serif;
+  width: 100%;
 
-  .sidebar {
-    width: 10%;
-    transition: width 0.3s;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
-    background-color: rgba(10, 25, 47, 0.9);
-    color: #ffffff00;
-
-    .logo {
-      padding: 20px 0;
-      text-align: center;
-      font-size: 24px;
-      font-weight: bold;
-      border-bottom: 1px solid #16213e;
-      color: #00d8ff;
-      text-shadow: 0 0 10px #00d8ff;
-    }
-
-    .el-menu {
-      border-right: none;
-      background: transparent;
-
-      .el-menu-item {
-        height: 50px;
-        line-height: 50px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-direction: column;
-        transition: all 0.3s;
-        color: #fff;
-        font-size: 16px;
-
-        i {
-          margin-bottom: 5px;
-          font-size: 20px;
-          color: #00d8ff;
-        }
-
-        &.is-active {
-          background-color: rgba(0, 216, 255, 0.3);
-          box-shadow: inset 4px 0 0 0 #409eff;
-          color: #00d8ff;
-        }
-
-        &:hover {
-          background-color: rgba(0, 216, 255, 0.2);
-          color: #00d8ff;
-        }
-      }
-    }
-  }
-
-  .main-content {
-    flex: 1; // Fill the remaining space
-    padding: 0px;
-    margin-left: 8px;
-    overflow-y: auto;
-    overflow-x: hidden; /* 禁用横向滚动条 */
-    background: rgba(10, 25, 47, 0);
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0);
-    transition: margin-left 0.3s;
-    opacity: 1;
-
-    .router-view-wrapper {
-      position: relative;
-      height: calc(100vh - 60px);
-    }
-  }
-
-  header-component {
-    background-color: rgba(10, 25, 47, 0.9);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
-    padding: 10px 20px;
-    color: #fff;
+  .header {
+    /* 顶部导航栏 */
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-content: space-between;
+    width: 1920px;
+    height: 64px;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(157, 163, 193, 0) 0%,
+        rgba(157, 163, 193, 0.1) 78%,
+        rgba(157, 163, 193, 0.18) 100%
+      ),
+      rgba(7, 14, 59, 0.48);
+    box-shadow: inset 0px -4px 12px -10px rgba(206, 209, 224, 0.6);
+    border-radius: 0px 0px 0px 0px;
+    border: 1px solid;
+    border-image: linear-gradient(
+        270deg,
+        rgba(157, 163, 193, 0),
+        rgba(157, 163, 193, 0),
+        rgba(157, 163, 193, 1),
+        rgba(157, 163, 193, 0)
+      )
+      1 1;
   }
 
   // 过渡动画
-  .slide-fade-enter-active, .slide-fade-leave-active {
-    transition: opacity 0.5s, transform 0.5s;
+  .slide-fade-enter-active,
+  .slide-fade-leave-active {
+    transition:
+      opacity 0.5s,
+      transform 0.5s;
   }
 
   .slide-fade-enter-from,
@@ -93,8 +46,99 @@
     opacity: 0;
     transform: translateX(10px);
   }
+  .logo {
+    /*天球数据库图标*/
+    display: flex;
+    align-items: center; /*交叉轴居中*/
+    flex-wrap: nowrap; /*不换行*/
+    width: 242px;
+    height: 64px;
+    border-radius: 0px 0px 0px 0px;
+    background-color: #80c2ff00;
+    .image-icon {
+      margin: 11px 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 0px 0px 0px 0px;
+      color: #ffffff;
+      .icon_my {
+        width: 100%;
+        height: 100%;
+        // padding: 2px 0px 2px 0px;
+        padding: 4px 3px 5px 2px;
+        /* 使用渐变色填充图标本身 */
+        background: none;
+        border-radius: 0px 0px 0px 0px;
+        /* 让svg或字体图标内容渐变 */
+        color: transparent;
+        background: linear-gradient(180deg, #b3daff 0%, #80c1ff 100%);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+        vertical-align: -0.15em;
+        fill: currentColor;
+        overflow: hidden;
+      }
+    }
+    .loge-text {
+      display: flex;
+      align-items: center; /*交叉轴居中*/
+      margin: 2px 0px 2px 0px;
+      width: 160px;
+      height: 38px;
+      font-family:
+        Noto Serif SC,
+        Noto Serif SC;
+      font-weight: bold;
+      font-size: 32px;
+      text-align: left;
+      font-style: normal;
+      /*设置字体为渐变色*/
+      text-transform: none; /* 不转换大小写 */
+      background: linear-gradient(90deg, #b3daff 0%, #80c1ff 100%); /* 渐变背景 */
+      -webkit-background-clip: text; /* 文字背景裁剪 */
+      -webkit-text-fill-color: transparent; /* 文字填充透明 */
+      background-clip: text; /* 文字背景裁剪 */
+      color: transparent; /* 文字颜色透明 */
+    }
+  }
+  .el-menu-vertical-demo {
+    /*菜单栏*/
+    display: flex;
+    width: 100%;
+    flex-wrap: nowrap; /* 不换行 */
+    margin-left: 48px;
+    font-family:
+      PingFang SC,
+      PingFang SC;
+    font-weight: 400;
+    font-size: 16px;
+    color: #ffffff;
+    text-align: left;
+    font-style: normal;
+    text-transform: none;
+    background-color: #80c2ff00;
+    border: none !important;
+    text-decoration: none !important;
+  }
 }
 
-.el-menu--collapse {
-  width: 64px !important;
+.el-menu-vertical-demo .el-menu-item.is-active {
+  background: linear-gradient(180deg, rgba(179, 218, 255, 0.35) 10%, rgba(128, 193, 255, 0.55) 80%) !important;
+  // color: #409EFF !important; // 激活时的文字颜色
+}
+
+.el-menu-vertical-demo .el-menu-item:hover {
+  background-color: rgba(128, 193, 255, 0.15) !important;
+}
+
+.main-content {
+  flex: 1; // Fill the remaining space
+  padding: 0px;
+  overflow-y: auto;
+  overflow-x: hidden; /* 禁用横向滚动条 */
+  background: rgba(255, 255, 255, 0);
+  transition: margin-left 0.15s;
+  opacity: 1;
+  height: calc(100vh - 64px); // 减去 header 的高度
 }

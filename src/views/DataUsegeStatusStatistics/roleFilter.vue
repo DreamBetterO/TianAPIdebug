@@ -1,6 +1,5 @@
 <template>
   <el-container class="RoleScreening" direction="vertical">
-    <h3>数据角色筛选</h3>
     <el-form  :inline = 'true' :model="roleFilter" label-width="80px">
       <el-form-item label="时间范围">
         <el-select v-model="roleFilter.TimeScope" placeholder="请选择时间范围" style="width: 200px;">
@@ -133,15 +132,15 @@ const handleSort = (sort: { prop: string; order: string }) => {
 .RoleScreening {
   margin: 0px;
   display: flex;
-  flex-wrap: wrap;
+  /* flex-wrap: wrap; */
   width: 100%;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: aliceblue;
+  padding: 16px 24px;
+  /* border-radius: 8px;
+  background-color: rgba(240, 248, 255, 0); */
 }
 
 .el-form{
-  margin: 20px 0 0 0;
+  /* margin: 20px 0 0 0; */
   display: flex;
   /* justify-content: center; 水平居中 */
   align-items: center; /* 垂直居中 */
