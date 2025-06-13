@@ -101,50 +101,57 @@
         <el-header class="header">
           文件操作列表查询
         </el-header>
-        <el-main class="main">
-          <el-container direction="horizontal" class="FileOperationList">
-            <el-form :inline="true" label-align="left" class="FileOperationList">
-              <el-row :gutter="12">
-                <el-col :span="6">
-                  <el-form-item label="文件名" required="true">
-                    <el-input v-model="FileOperationListParams.filename" placeholder="请输入文件名"
-                      style="margin-left: 12px; width: 218px ;"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="操作用户名">
-                    <el-input v-model="FileOperationListParams.operateUsername" placeholder="请输入操作用户名"
-                      style="width: 216px;"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="更新用户">
-                    <el-input v-model="FileOperationListParams.updateUser" placeholder="请输入更新用户"
-                      style="width: 216px;"></el-input>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="观测设备">
-                    <el-input v-model="FileOperationListParams.observeDevice" placeholder="请输入观测设备"
-                      style="width: 216px;"></el-input>
-                  </el-form-item>
-
-                </el-col>
-              </el-row>
-              <el-row :gutter="12">
-                <el-col :span="6">
-                  <el-form-item label="创建时间">
+        <el-main class="enquiry-main">
+          <!--查询表单-->
+          <el-form class="enquiry-form">
+            <div class="search-form-row">
+              <div class="search-form-item">
+                <div><span style="color: red; margin-left: 2px;">*</span>文件名称</div>
+                <el-form-item :required="true">
+                  <el-input v-model="FileOperationListParams.filename" placeholder="请输入文件名"></el-input>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>操作用户名</div>
+                <el-form-item>
+                  <el-input v-model="FileOperationListParams.operateUsername" placeholder="请输入操作用户名"></el-input>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>更新用户名</div>
+                <el-form-item>
+                  <el-input v-model="FileOperationListParams.updateUser" placeholder="请输入更新用户"></el-input>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>观测设备</div>
+                <el-form-item>
+                  <el-input v-model="FileOperationListParams.observeDevice" placeholder="请输入更新用户"></el-input>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>
+                  创建时间
+                </div>
+                <el-form-item>
+                  <div class="mul-input">
                     <el-date-picker v-model="FileOperationListParams.startCreateTime" type="datetime" placeholder="开始时间"
                       style="width:35%;" format="YYYY-MM-DD HH:mm:ss"
                       value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
-                    <span style="margin: 0 5px;">~</span>
+                    <span style="margin: 0 5px; color: aliceblue;">至</span>
                     <el-date-picker v-model="FileOperationListParams.endCreateTime" type="datetime" placeholder="结束时间"
                       style="width:35%;" format="YYYY-MM-DD HH:mm:ss"
                       value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="更新时间">
+                  </div>
+                </el-form-item>
+              </div>
+            </div>
+
+            <div class="search-form-row">
+              <div class="search-form-item">
+                <div>更新时间</div>
+                <el-form-item>
+                  <div class="mul-input">
                     <el-date-picker v-model="FileOperationListParams.startUpdateTime" type="datetime" placeholder="开始时间"
                       style="width:35%; margin-left: 12px;" format="YYYY-MM-DD HH:mm:ss"
                       value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
@@ -152,75 +159,183 @@
                     <el-date-picker v-model="FileOperationListParams.endUpdateTime" type="datetime" placeholder="结束时间"
                       style="width:35%;" format="YYYY-MM-DD HH:mm:ss"
                       value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="观测时间">
+                  </div>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>观测时间</div>
+                <el-form-item>
+                  <div class="mul-input">
                     <el-date-picker v-model="FileOperationListParams.startObserveTime" type="datetime"
                       placeholder="开始时间" style="width:35%;" format="YYYY-MM-DD HH:mm:ss"
                       value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
-                    <span style="margin: 0 5px;">~</span>
+                    <span style="margin: 0 5px; color: white;">至</span>
                     <el-date-picker v-model="FileOperationListParams.endObserveTime" type="datetime" placeholder="结束时间"
                       style="width:35%;" format="YYYY-MM-DD HH:mm:ss"
                       value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="文件大小" required="true">
+                  </div>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div><span style="color: red; margin-left: 2px;">*</span>文件大小</div>
+                <el-form-item :required="true">
+                  <div class="mul-input">
                     <el-input v-model="FileOperationListParams.minSize" placeholder="最小值"
                       style="width: 37%;"></el-input>
                     <span style="margin: 0 5px;">~</span>
                     <el-input v-model="FileOperationListParams.maxSize" placeholder="最大值"
                       style="width: 37%;"></el-input>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-              <el-row :gutter="12">
-                <el-col :span="6">
-                  <el-form-item label="存储桶名称" required="true">
-                    <el-select v-model="FileOperationListParams.bucketName" placeholder="请输入存储桶名称" style="width: 204px;"
-                      class="custom-placeholder">
-                      <el-option v-for="item in bucketListStore" :key="item.name" :label="item.name" :value="item.name">
-                        {{ item.name }}
-                      </el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-                <el-col :span="6">
-                  <el-form-item label="数据类型" required="true">
-                    <el-select v-model="FileOperationListParams.dataType" placeholder="请选择数据类型" style="width: 220px;">
-                      <el-option label="txt" value="txt"></el-option>
-                      <el-option label="pdf" value="pdf"></el-option>
-                    </el-select>
-                  </el-form-item>
-                </el-col>
+                  </div>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div><span style="color: red; margin-left: 2px;">*</span>存储桶名称</div>
+                <el-form-item :required="true">
+                  <el-select v-model="FileOperationListParams.bucketName" placeholder="请输入存储桶名称"
+                    class="custom-placeholder">
+                    <el-option v-for="item in bucketListStore" :key="item.name" :label="item.name" :value="item.name">
+                      {{ item.name }}
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div><span style="color: red; margin-left: 2px;">*</span>数据类型</div>
+                <el-form-item :required="true">
+                  <el-select v-model="dataType" placeholder="请选择数据类型">
+                    <el-option label="txt" value="txt"></el-option>
+                    <el-option label="pdf" value="pdf"></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+            </div>
+          </el-form>
+          <!-- <el-form :inline="true" label-align="left" class="FileOperationList">
+            <el-row :gutter="12">
+              <el-col :span="6">
+                <el-form-item label="文件名" required="true">
+                  <el-input v-model="FileOperationListParams.filename" placeholder="请输入文件名"
+                    style="margin-left: 12px; width: 218px ;"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="操作用户名">
+                  <el-input v-model="FileOperationListParams.operateUsername" placeholder="请输入操作用户名"
+                    style="width: 216px;"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="更新用户">
+                  <el-input v-model="FileOperationListParams.updateUser" placeholder="请输入更新用户"
+                    style="width: 216px;"></el-input>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="观测设备">
+                  <el-input v-model="FileOperationListParams.observeDevice" placeholder="请输入观测设备"
+                    style="width: 216px;"></el-input>
+                </el-form-item>
 
-                <el-col :span="6">
-                  <el-form-item>
-                    <el-button type="primary" @click="FilesOperationListSubmit">查询</el-button>
-                    <el-button type="default" @click="FilesOperationListReset">重置</el-button>
-                  </el-form-item>
-                </el-col>
-              </el-row>
-            </el-form>
-          </el-container>
-          <!--分页表格-->
+              </el-col>
+            </el-row>
+            <el-row :gutter="12">
+              <el-col :span="6">
+                <el-form-item label="创建时间">
+                  <el-date-picker v-model="FileOperationListParams.startCreateTime" type="datetime" placeholder="开始时间"
+                    style="width:35%;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                  <span style="margin: 0 5px;">~</span>
+                  <el-date-picker v-model="FileOperationListParams.endCreateTime" type="datetime" placeholder="结束时间"
+                    style="width:35%;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="更新时间">
+                  <el-date-picker v-model="FileOperationListParams.startUpdateTime" type="datetime" placeholder="开始时间"
+                    style="width:35%; margin-left: 12px;" format="YYYY-MM-DD HH:mm:ss"
+                    value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                  <span style="margin: 0 5px;">~</span>
+                  <el-date-picker v-model="FileOperationListParams.endUpdateTime" type="datetime" placeholder="结束时间"
+                    style="width:35%;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="观测时间">
+                  <el-date-picker v-model="FileOperationListParams.startObserveTime" type="datetime" placeholder="开始时间"
+                    style="width:35%;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                  <span style="margin: 0 5px;">~</span>
+                  <el-date-picker v-model="FileOperationListParams.endObserveTime" type="datetime" placeholder="结束时间"
+                    style="width:35%;" format="YYYY-MM-DD HH:mm:ss" value-format="YYYY-MM-DD HH:mm:ss"></el-date-picker>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="文件大小" required="true">
+                  <el-input v-model="FileOperationListParams.minSize" placeholder="最小值" style="width: 37%;"></el-input>
+                  <span style="margin: 0 5px;">~</span>
+                  <el-input v-model="FileOperationListParams.maxSize" placeholder="最大值" style="width: 37%;"></el-input>
+                </el-form-item>
+              </el-col>
+            </el-row>
+            <el-row :gutter="12">
+              <el-col :span="6">
+                <el-form-item label="存储桶名称" required="true">
+                  <el-select v-model="FileOperationListParams.bucketName" placeholder="请输入存储桶名称" style="width: 204px;"
+                    class="custom-placeholder">
+                    <el-option v-for="item in bucketListStore" :key="item.name" :label="item.name" :value="item.name">
+                      {{ item.name }}
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+              <el-col :span="6">
+                <el-form-item label="数据类型" required="true">
+                  <el-select v-model="FileOperationListParams.dataType" placeholder="请选择数据类型" style="width: 220px;">
+                    <el-option label="txt" value="txt"></el-option>
+                    <el-option label="pdf" value="pdf"></el-option>
+                  </el-select>
+                </el-form-item>
+              </el-col>
+
+              <el-col :span="6">
+                <el-form-item>
+                  <el-button type="primary" @click="FilesOperationListSubmit">查询</el-button>
+                  <el-button type="default" @click="FilesOperationListReset">重置</el-button>
+                </el-form-item>
+              </el-col>
+            </el-row>
+          </el-form> -->
+          <!--查询按钮-->
+          <div class="enquiry-form-button">
+            <el-button type="primary" @click="FilesOperationListSubmit"><svg t="1749787554812" class="icon"
+                viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4252" width="200"
+                height="200">
+                <path
+                  d="M448 170.666667a277.333333 277.333333 0 1 0 194.048 475.477333l1.92-2.176a30.549333 30.549333 0 0 1 2.133333-1.962667A277.333333 277.333333 0 0 0 448 170.666667z m0-85.333334a362.666667 362.666667 0 0 1 284.885333 587.136l193.28 193.365334a42.624 42.624 0 1 1-60.330666 60.330666l-193.365334-193.28A362.666667 362.666667 0 1 1 448 85.333333z"
+                  fill="#ffffff" p-id="4253"></path>
+              </svg>查询</el-button>
+            <el-button type="default" @click="FilesOperationListReset"><svg t="1749787598937" class="icon"
+                viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5303" width="200"
+                height="200">
+                <path
+                  d="M948.712714 504.692147a35.363315 35.363315 0 1 0-70.2422 11.626295 364.290584 364.290584 0 0 1 4.84429 59.584763 371.072589 371.072589 0 0 1-633.63309 262.076071A371.072589 371.072589 0 0 1 511.757786 204.346187h12.595153L443.453301 285.245825a35.363315 35.363315 0 1 0 48.442897 48.442896l134.186824-134.186824a35.363315 35.363315 0 0 0 0-48.442896L493.833914 17.356605a35.363315 35.363315 0 1 0-48.442897 48.442897L509.335641 133.135129a442.283647 442.283647 0 0 0-169.550139 850.172838 442.768076 442.768076 0 0 0 581.314761-234.94805 444.221363 444.221363 0 0 0 29.065738-242.214483z"
+                  fill="#5E5C5C" p-id="5304"></path>
+              </svg>重置</el-button>
+          </div>
+          <!--结果表格-->
           <el-container direction="vertical">
-            <el-table :data="FileListStore" stripe style="width: 98%; padding: 5px;margin: 5px 20px;"
-              table-layout="fixed">
-              <el-table-column prop="filename" label="文件名" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="operateUsername" label="操作用户名" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="operateType" label="操作类型" width="100" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="createTime" label="创建时间" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="updateTime" label="更新时间" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="observeTime" label="观测时间" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="uploadTime" label="上传时间" width="120" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="updateUser" label="更新用户" width="80" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="bucketName" label="存储桶名称" width="100" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="observeObject" label="观测对象" width="100" show-overflow-tooltip></el-table-column>
+            <el-table :data="FileListStore" stripe table-layout="fixed" fit="ture">
+              <el-table-column prop="filename" label="文件名" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="operateUsername" label="操作用户名" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="operateType" label="操作类型" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="createTime" label="创建时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="updateTime" label="更新时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="observeTime" label="观测时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="uploadTime" label="上传时间" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="updateUser" label="更新用户" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="bucketName" label="存储桶名称" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="observeObject" label="观测对象" show-overflow-tooltip></el-table-column>
               <el-table-column prop="dataType" label="数据类型" width="80" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="observeDevice" label="设备编号" width="100" show-overflow-tooltip></el-table-column>
-              <el-table-column prop="path" label="文件路径" width="120" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="observeDevice" label="设备编号" show-overflow-tooltip></el-table-column>
+              <el-table-column prop="path" label="文件路径" show-overflow-tooltip></el-table-column>
               <el-table-column prop="downloadUrl" label="操作" width="180" show-overflow-tooltip>
                 <template #default="scope">
                   <el-button type="primary" size="small" @click="openDownloadUrl(scope.row.downloadUrl)">下载</el-button>
@@ -229,7 +344,19 @@
               </el-table-column>
             </el-table>
             <!-- 分页组件 -->
-            <div class="table-page">
+
+            <div style="display: flex;  margin: 18px 0px 5px 0px;  justify-content: space-between;">
+              <div><span style=" color: #606266;">共 {{ pagecount }} 页/ {{ totalElements
+              }}条</span>
+              </div>
+              <el-pagination v-if="FileListStore.length > 0" :current-page="(FileOperationListParams.page + 1)"
+                :page-sizes="[10, 20, 30, 40]" :page-size="FileOperationListParams.size" :page-count="pagecount"
+                @current-change="handlePageChange" layout="prev, pager, next, jumper">
+              </el-pagination>
+            </div>
+
+
+            <!-- <div class="table-page">
               <span style="color: white; font-weight: lighter; font-size: medium;">共 {{ pagecount }} 页</span>
               <div style="margin: 20px 20px 0px; display: flex; justify-content: flex-end;">
                 <el-pagination v-if="FileListStore.length > 0" :current-page="currentPage"
@@ -238,33 +365,11 @@
                   class="pagination-container">
                   <template #slot> </template></el-pagination>
               </div>
-            </div>
+            </div> -->
           </el-container>
 
         </el-main>
       </el-container>
-      <!--功能性展示-->
-      <!-- <el-container class="Functional-display-container">
-      <el-main class="main">
-        <el-container direction="vertical" class="bucket-list-container">
-          <el-header class="header">
-            <span>桶列表查询</span>
-          </el-header>
-          <el-button type="primary" @click="GetbucketList">查询存储桶列表</el-button>
-          <el-table :data="bucketListStore" style="width: 100% ; max-height: 666px;" stripe>
-            <el-table-column prop="name" label="存储桶名称" width="180"></el-table-column>
-            <el-table-column prop="size" label="存储桶大小" width="180"></el-table-column>
-            <el-table-column prop="lastModified" label="最后修改时间" width="180"></el-table-column>
-          </el-table>
-        </el-container>
-        <el-container class="SingleFileDownload">
-          <el-header class="header">
-            <span>文件下载测试</span>
-          </el-header>
-          <el-input v-model="FileDownload" placeholder="/请输入文件下载内容"></el-input>
-        </el-container>
-      </el-main>
-    </el-container> -->
 
     </el-scrollbar>
   </div>
@@ -283,6 +388,7 @@ import type { FileOperationParams as FileOperationListParams, FileOperationRecor
 import { fileUpload, fileOperationList, } from '@/stores/DocSystem/fileStore'
 import { BucketStore } from '@/stores/DocSystem/fileStore'
 import { UploadFilled } from '@element-plus/icons-vue'
+import '@/assets/iconfont/iconfont.js'
 
 //******用于数据上传部分********//
 interface uploadFill {
@@ -576,6 +682,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 @use './index.scss';
+@use '@/styles/icon.scss';
 
 /* 修改 placeholder 的字体颜色 */
 ::v-deep(.el-select .el-input__inner)::placeholder {
@@ -585,13 +692,13 @@ onMounted(() => {
   /* 确保颜色不被透明度影响 */
 }
 
-.FileOperationList {
-  padding: 0 20px;
-  /* display: flex;
-  justify-content: space-between; */
+// .FileOperationList {
+//   padding: 0 20px;
+//   /* display: flex;
+//   justify-content: space-between; */
 
 
-}
+// }
 
 /* 仅针对 class 为 custom-placeholder 的输入框 */
 .custom-placeholder::placeholder {
@@ -635,4 +742,52 @@ span {
   background-color: #f9f9f900;
   border-radius: 5px;
 }
-</style>
+
+
+.search-form-row {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  justify-content: space-between;
+  width: 1824px;
+  height: 56px;
+  border: none;
+  padding: 0px;
+}
+
+.search-form-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 346px;
+  height: 56px;
+  background-color: rgba(127, 255, 212, 0);
+  // gap: 8px;
+  /*字体 */
+  font-family: PingFang SC, PingFang SC;
+  font-weight: 400;
+  font-size: 14px;
+  color: #E5E7EB;
+  text-align: left;
+  font-style: normal;
+  text-transform: none;
+}
+
+.mul-input {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  gap: 4px;
+
+  background: #111827;
+  border-radius: 4px 4px 4px 4px;
+  border: 1px solid #4B5563;
+}
+
+// .enquiry-form-button{
+//   display: flex;
+//   justify-content: flex-end;
+//   margin: 20px 20px 0px;
+// }</style>
