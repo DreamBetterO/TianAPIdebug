@@ -63,7 +63,7 @@
               d="M832 128H192a64.19 64.19 0 0 0-64 64v640a64.19 64.19 0 0 0 64 64h640a64.19 64.19 0 0 0 64-64V192a64.19 64.19 0 0 0-64-64z m0 703.89l-0.11 0.11H192.11l-0.11-0.11V768h640zM832 544H720L605.6 696.54 442.18 435.07 333.25 544H192v-64h114.75l147.07-147.07L610.4 583.46 688 480h144z m0-288H192v-63.89l0.11-0.11h639.78l0.11 0.11z"
               p-id="5757" fill="#ffffff"></path>
           </svg>
-          <template #title>数据监控</template>
+          <template #title>系统监控</template>
         </el-menu-item>
         <el-menu-item index="/user-management">
           <svg t="1749524968830" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"

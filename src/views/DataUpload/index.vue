@@ -7,7 +7,82 @@
           数据上传
         </el-header>
         <el-container direction="vertical" class="uploadContainer">
-          <el-form :inline="true" label-width="120px" class="data-upload-form">
+          <!--上传表单-->
+          <el-form class="upload-form">
+
+
+            <div class="upload-form-row">
+              <!--表单子项共用-->
+              <div class="search-form-item">
+                <div>观测对象</div>
+                <el-form-item>
+                  <el-input v-model="uploadIterm.observer_object" placeholder="请输入观测对象"></el-input>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>观测时间</div>
+                <el-form-item>
+                  <el-date-picker v-model="uploadIterm.observer_time" type="datetime" placeholder="选择观测时间"
+                    format="YYYY-MM-DD HH:mm:ss " value-format="YYYY-MM-DD HH:mm:ss"
+                    style="width:346px;"></el-date-picker>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>设备编号</div>
+                <el-form-item>
+                  <el-input v-model="uploadIterm.observer_device" placeholder="请输入设备编号"></el-input>
+                </el-form-item>
+              </div>
+            </div>
+            <div class="upload-form-row">
+              <!--表单子项共用-->
+              <div class="search-form-item">
+                <div>文件名称</div>
+                <el-form-item>
+                  <el-input v-model="uploadIterm.filename" placeholder="请输入文件名"></el-input>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>文件路径</div>
+                <el-form-item>
+                  <el-input v-model="uploadIterm.path" placeholder="请输入文件路径"></el-input>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>数据类型</div>
+                <el-form-item>
+                  <el-select v-model="uploadIterm.data_type" placeholder="请选择数据类型">
+                    <el-option label="temperature" value="temperature"></el-option>
+                    <el-option label="txt" value="txt"></el-option>
+                    <el-option label="pdf" value="pdf"></el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+            </div>
+            <div class="upload-form-row">
+              <!--表单子项共用-->
+              <div class="search-form-item">
+                <div>桶名称</div>
+                <el-form-item :required="true">
+                  <el-select v-model="uploadIterm.bucketName" placeholder="请输入储存桶名称" style="width: 346px;">
+                    <el-option v-for="item in bucketListStore" :key="item.name" :label="item.name" :value="item.name">
+                      {{ item.name }}
+                    </el-option>
+                  </el-select>
+                </el-form-item>
+              </div>
+              <div class="search-form-item">
+                <div>创建时间</div>
+                <el-form-item>
+                  <el-date-picker v-model="uploadIterm.createTime" type="datetime" placeholder="选择观测时间"
+                    format="YYYY-MM-DD HH:mm:ss " value-format="YYYY-MM-DD HH:mm:ss"
+                    style="width:346px;"></el-date-picker>
+                </el-form-item>
+              </div>
+            </div>
+          </el-form>
+
+          <!-- <el-form :inline="true" label-align="left" class="upload-form">
             <el-row gitter="12">
               <el-col :span="6">
                 <el-form-item label="观测对象">
@@ -64,22 +139,21 @@
 
               </el-col>
             </el-row>
-          </el-form>
-          <el-container class="file-upload" direction="horizontal">
-            <el-container class="upload-container" diection="vertical">
-              <el-upload style="width: 45%; height: 100px; border: 2px;" drag action="/upload"
-                :before-upload="handleBeforeUpload" :on-change="handleChange" :on-success="handleSuccess"
-                :on-error="handleError" :on-progress="handleProgress" multiple>
+          </el-form> -->
+
+          <!--上传文件容器-->
+          <div class="file-upload">
+            <div class="upload-container">
+              <el-upload drag action="/upload" :before-upload="handleBeforeUpload" :on-change="handleChange"
+                :on-success="handleSuccess" :on-error="handleError" :on-progress="handleProgress" multiple>
                 <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+                <div>将文件拖到此处，或<em style="color: #3DA1FF 60%">点击上传</em></div>
+                <div>上传单个文件</div>
               </el-upload>
-              <!-- 显示上传进度 -->
-              <el-container v-if="uploadProgress > 0" class="progress-container">
-                <el-progress :percentage="uploadProgress" status="success"></el-progress>
-              </el-container>
-              <!--显示上传的文件和上传按钮-->
-              <el-container class="uploaded-files-container" direction="vertical">
-                <el-table :data="uploadedFiles" style="width: 100%">
+            </div>
+            <div class="upload-files-div">
+              <div class="upload-file-list">
+                <el-table :data="uploadedFiles">
                   <el-table-column prop="name" label="文件名" width="180"></el-table-column>
                   <el-table-column label="操作" width="100">
                     <template #default="scope">
@@ -87,13 +161,21 @@
                     </template>
                   </el-table-column>
                 </el-table>
-                <div style="margin: 20px;">
-                  <el-button type="default" @click="DataReset">重置</el-button>
-                  <el-button type="primary" @click="UploadToServer">上传到服务器</el-button>
-                </div>
-              </el-container>
-            </el-container>
-          </el-container>
+              </div>
+              <div class="upload-button-div">
+                <el-button type="default" @click="DataReset"><svg t="1749787598937" class="icon" viewBox="0 0 1024 1024"
+                    version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="5303" width="200" height="200">
+                    <path
+                      d="M948.712714 504.692147a35.363315 35.363315 0 1 0-70.2422 11.626295 364.290584 364.290584 0 0 1 4.84429 59.584763 371.072589 371.072589 0 0 1-633.63309 262.076071A371.072589 371.072589 0 0 1 511.757786 204.346187h12.595153L443.453301 285.245825a35.363315 35.363315 0 1 0 48.442897 48.442896l134.186824-134.186824a35.363315 35.363315 0 0 0 0-48.442896L493.833914 17.356605a35.363315 35.363315 0 1 0-48.442897 48.442897L509.335641 133.135129a442.283647 442.283647 0 0 0-169.550139 850.172838 442.768076 442.768076 0 0 0 581.314761-234.94805 444.221363 444.221363 0 0 0 29.065738-242.214483z"
+                      fill="#5E5C5C" p-id="5304"></path>
+                  </svg>重置</el-button>
+                <el-button type="primary" @click="UploadToServer">上传到服务器</el-button>
+              </div>
+            </div>
+          </div>
+
+
+
         </el-container>
       </el-container>
       <!--文件操作列表查询-->
@@ -353,7 +435,7 @@
 
             <div style="display: flex;  margin: 18px 0px 5px 0px;  justify-content: space-between;">
               <div><span style=" color: #606266;">共 {{ pagecount }} 页/ {{ totalElements
-                  }}条</span>
+              }}条</span>
               </div>
               <el-pagination v-if="FileListStore.length > 0" :current-page="(FileOperationListParams.page + 1)"
                 :page-sizes="[10, 20, 30, 40]" :page-size="FileOperationListParams.size" :page-count="pagecount"
@@ -774,8 +856,9 @@ span {
   justify-content: space-between;
   width: 346px;
   height: 56px;
+
   background-color: rgba(127, 255, 212, 0);
-  // gap: 8px;
+  gap: 2px;
   /*字体 */
   font-family: PingFang SC, PingFang SC;
   font-weight: 400;
@@ -798,8 +881,14 @@ span {
   border: 1px solid #4B5563;
 }
 
-// .enquiry-form-button{
+// .upload-files-div {
+//   /* 上传的文件列表 + 按钮 */
+//   width: 475px;
+//   height: 211px;
+//   padding: 0px 0px 0px 16px;
 //   display: flex;
-//   justify-content: flex-end;
-//   margin: 20px 20px 0px;
+//   flex-direction: column;
+//   justify-content: space-between;
+//   gap: 8px;
+//   background-color: rgb(255, 255, 255) !important;
 // }</style>

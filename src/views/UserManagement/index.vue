@@ -1,11 +1,12 @@
 <template>
-  <div>
-    <el-button type="primary" size="small" style="margin: 40px 20px  20px 0px;" @click="refreshUserList">刷新用户列表</el-button>
-    <el-table :data="userList" style="width: 100%">
-      <el-table-column prop="id" label="用户ID" width="100" />
-      <el-table-column prop="username" label="用户名" width="150" />
-      <el-table-column prop="email" label="邮箱" width="200" />
-      <el-table-column prop="status" label="审核状态" width="120">
+  <div class="user-management">
+    <!-- <el-button type="primary" size="small" style="margin: 40px 20px  20px 0px;" @click="refreshUserList">刷新用户列表</el-button> -->
+    <header class="theme-title">| 用户管理</header>
+    <el-table :data="userList" class="users-table" >
+      <el-table-column prop="id" label="用户ID" />
+      <el-table-column prop="username" label="用户名"  />
+      <el-table-column prop="email" label="邮箱"  />
+      <el-table-column prop="status" label="审核状态" width="400">
         <template #default="{ row }">
           <el-tag :type="row.status === 1 ? 'success' : 'warning'">
             {{ row.status === 1 ? '审核成功' : '需要审核' }}
@@ -71,6 +72,18 @@ const auditUser = async (row: { id: number; status: number }) => {
 </script>
 
 <style scoped lang="scss">
+
+.user-management{
+  padding: 0px 24px 24px 24px;
+  max-height: 100vh;
+  gap: 24px;
+}
+.users-table {
+  width: 1827px;
+
+
+}
+
 .content-box {
   width: 100%;
   height: 400px;

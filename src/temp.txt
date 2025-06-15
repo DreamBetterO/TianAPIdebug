@@ -1,0 +1,32 @@
+          <el-container class="file-upload" direction="horizontal">
+            <el-container class="upload-container" diection="vertical">
+              <el-upload style="width: 45%; height: 100px; border: 2px;" drag action="/upload"
+                :before-upload="handleBeforeUpload" :on-change="handleChange" :on-success="handleSuccess"
+                :on-error="handleError" :on-progress="handleProgress" multiple>
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div class="el-upload__text">将文件拖到此处，或<em>点击上传</em></div>
+              </el-upload>
+              <!-- 显示上传进度 -->
+              <el-container v-if="uploadProgress > 0" class="progress-container">
+                <el-progress :percentage="uploadProgress" status="success"></el-progress>
+              </el-container>
+              <!--显示上传的文件和上传按钮-->
+              <el-container class="uploaded-files-container" direction="vertical">
+                <el-table :data="uploadedFiles" style="width: 100%">
+                  <el-table-column prop="name" label="文件名" width="180"></el-table-column>
+                  <el-table-column label="操作" width="100">
+                    <template #default="scope">
+                      <el-button type="danger" size="small" @click="removeFile(scope.$index)">删除</el-button>
+                    </template>
+                  </el-table-column>
+                </el-table>
+                <div style="margin: 20px;">
+                  <el-button type="default" @click="DataReset">重置</el-button>
+                  <el-button type="primary" @click="UploadToServer">上传到服务器</el-button>
+                </div>
+              </el-container>
+            </el-container>
+          </el-container>
+
+
+          此部分用于“src\views\DataUpload\index.vue”中的上传文件容器

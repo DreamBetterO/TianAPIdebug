@@ -17,10 +17,14 @@ onMounted(() => {
 
     // 设置图表的配置项和数据
     const option: ECOption = {
-
       legend: {
       data: ['数据下载量'],
-      top: 'bottom'
+      right: 0,
+      bottom: 0,
+      textStyle: {
+        color: 'white', // 设置图例文字颜色
+        fontSize: 14 // 设置图例文字大小
+      }
       },
       radar: {
       indicator: [
@@ -28,19 +32,40 @@ onMounted(() => {
         { name: 'txt'},
         { name: 'png'},
         { name: 'video'}
-      ]
+      ],
+      splitLine: {
+        lineStyle: {
+        color: 'rgba(0,0,0,0.1)' // 降低背景线条透明度
+        }
+      },
+      // splitArea: {
+      //   areaStyle: {
+      //   opacity: 0 // 可选：去除分割区域填充色
+      //   }
+      // },
+      // axisLine: {
+      //   lineStyle: {
+      //   color: 'rgba(0,0,0,0.2)' // 轴线也可降低透明度
+      //   }
+      // }
       },
       series: [
       {
-        name: 'Budget vs spending',
+        name: '下载类别',
         type: 'radar',
         label: {
         show: true, // 显示数据值
         },
+        lineStyle: {
+        color: '#FF5722' // 设置数据线条颜色
+        },
         data: [
         {
           value: [4200, 3000, 20000, 35000],
-          name: '数据下载量'
+          name: '数据下载量',
+          lineStyle: {
+          color: '#FF5722' // 单独设置该数据线条颜色
+          }
         }
         ]
       }

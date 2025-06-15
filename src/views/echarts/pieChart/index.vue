@@ -17,40 +17,44 @@ onMounted(() => {
 
     // 设置图表的配置项和数据
     const option: ECOption = {
-  //     title: {
-  //   text: '行为占比',
-  //   subtext: 'Fake Data',
-  //   left: 'center',
-  //   top: '3%'
-  // },
-  tooltip: {
-    trigger: 'item'
-  },
-  legend: {
-    orient: 'vertical',
-    left: 'left'
-  },
-  series: [
-    {
-      name: 'Access From',
-      type: 'pie',
-      radius: '50%',
-      data: [
-        { value: 1048, name: '下载' },
-        { value: 735, name: '查看' },
-        { value: 580, name: '分享' },
-        { value: 484, name: '删除' },
-        { value: 300, name: '上传' }
-      ],
-      emphasis: {
-        itemStyle: {
-          shadowBlur: 10,
-          shadowOffsetX: 0,
-          shadowColor: 'rgba(0, 0, 0, 0.5)'
+      //     title: {
+      //   text: '行为占比',
+      //   subtext: 'Fake Data',
+      //   left: 'center',
+      //   top: '3%'
+      // },
+      tooltip: {
+        trigger: 'item'
+      },
+      legend: {
+        orient: 'vertical',
+        right: 20,
+        top: 'center',
+        textStyle: {
+          color: '#fff'
         }
-      }
-    }
-  ]
+      },
+      series: [
+        {
+          name: 'Access From',
+          type: 'pie',
+          radius: '50%',
+          data: [
+            { value: 1048, name: '下载' },
+            { value: 735, name: '查看' },
+            { value: 580, name: '分享' },
+            { value: 484, name: '删除' },
+            { value: 300, name: '上传' }
+          ],
+          emphasis: {
+            itemStyle: {
+              shadowBlur: 10,
+              shadowOffsetX: 0,
+              shadowColor: 'rgba(0, 0, 0, 0.5)'
+            }
+          }
+        }
+      ]
     };
 
     // 使用封装的 useEcharts

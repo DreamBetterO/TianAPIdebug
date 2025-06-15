@@ -127,7 +127,7 @@
         </div>
       </el-form>
     </el-container>
-    <el-container class="search-result" direction="vertical" highlight-current-row="true" fit="ture">
+    <el-container class="search-result" direction="vertical" highlight-current-row="true">
       <el-table :data="DataResponse" stripe class="result-table">
         <el-table-column prop="filename" label="文件名称" align="center" sortable show-overflow-tooltip></el-table-column>
         <el-table-column prop="createTime" label="创建时间" :resizable="true" sortable

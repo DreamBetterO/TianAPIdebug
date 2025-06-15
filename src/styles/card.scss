@@ -34,3 +34,37 @@
   font-style: normal;
   text-transform: none;
 }
+
+.el-card {
+  position: relative;
+  border-radius: 8px !important;
+  border: 1px solid transparent !important;
+  background-image: url('@/assets/images/CutImages_2x/块_数据上传2_bg2x.png') !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important;
+  background-position: center !important;
+  background-clip: padding-box !important;
+  overflow: hidden;
+
+  --el-card-bg-color: #ffffff00 !important;
+
+  // 渐变边框用伪元素实现
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 8px;
+    padding: 1px; // 边框宽度
+    background: linear-gradient(165deg, rgba(157, 163, 193, 1), rgba(157, 163, 193, 0.24));
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 1;
+  }
+}

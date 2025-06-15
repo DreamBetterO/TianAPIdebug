@@ -3,44 +3,205 @@
   width: 100%;
   background-color: #f5f7fa00;
   margin: 0 auto;
-  padding: 20px;
+  padding: 24px;
   color: white;
-}
-.top-cards .card-content,
-.middle-cards .card-content {
+
+  font-family:
+    PingFang SC,
+    PingFang SC;
+  font-weight: 600;
+  font-size: 20px;
+  color: #e5e7eb;
+  text-align: left;
+  font-style: normal;
+  text-transform: none;
   text-align: center;
+  .top-cards {
+    display: flex;
+    flex-direction: row;
+    // justify-content: space-between;
+    flex-wrap: nowrap;
+    height: 400px;
+    width: 1872px;
+    gap: 16px;
+    background-color: #f5f7fa00;
+    .card-block-tops {
+      display: flex;
+      flex-direction: column;
+      //顶部每列俩卡片
+      gap: 16px;
+
+      .card-block-top {
+        //每列每个卡片
+        width: 613x;
+        height: 190px;
+        margin: 0px;
+        padding: 0px;
+
+        background-color: #f5f7fa00;
+        /*卡片颜色填充*/
+
+        ////////////
+        .card-header-this {
+          display: flex;
+          justify-content: space-between;
+          font-weight: bold;
+          margin-bottom: 10px;
+          align-items: center;
+          font-family:
+            PingFang SC,
+            PingFang SC;
+          font-weight: 600;
+          font-size: 20px;
+          color: #e5e7eb;
+          text-align: left;
+          font-style: normal;
+          text-transform: none;
+          background-color: #fbfcff00;
+          .card-title {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 4px;
+            color: white;
+          }
+        }
+      }
+    }
+
+    .card-report-usage {
+      width: 613px;
+      height: 396px;
+      //使用报告卡片
+      .card-content {
+        /*用于使用报告的子样式*/
+        width: 100%;
+        height: 100%;
+        .usage-display {
+          width: 565px;
+          height: 116px;
+          gap: 15px;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          // background-color: aqua;
+          .usage-display-item {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 275px;
+            height: 116px;
+          }
+        }
+      }
+    }
+  }
+  .ServerInfo {
+    min-width: 1872px;
+    max-width: 1872px;
+    height: 400px;
+    margin-top: 16px;
+    padding: 0px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .card-block-server {
+      //服务器信息卡片
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 24px;
+      width: 1824px;
+      height: 80px;
+      background: linear-gradient(
+        156deg,
+        rgba(157, 163, 193, 0) 0%,
+        rgba(157, 163, 193, 0.18) 100%
+      );
+      font-family:
+        PingFang SC,
+        PingFang SC;
+      font-weight: 600;
+      font-size: 20px;
+      color: #ffffff;
+      text-align: left;
+      font-style: normal;
+      text-transform: none;
+      border-radius: 4px 4px 4px 4px;
+      border: 1px solid rgba(157, 163, 193, 0.2);
+      .server-header {
+        //服务器信息卡片头部
+        width: 330px;
+        height: 80px;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+      .server-metrics {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 612px;
+        height: 80px;
+      }
+      .version-text {
+        display: flex;
+        height: 80px;
+        align-items: center;
+      }
+    }
+    .drive-list-header {
+      display: flex;
+      color: black;
+      margin: 20px 0px 5px 0px;
+      font-family:
+        Alibaba PuHuiTi 2,
+        Alibaba PuHuiTi 20;
+      font-weight: normal;
+      font-size: 20px;
+      color: #ffffff;
+      text-align: left;
+      font-style: normal;
+      text-transform: none;
+    }
+    .card-block {
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+      // height: 275px;
+      margin-top: 20px;
+      font-family:
+        PingFang SC,
+        PingFang SC;
+      font-weight: 500;
+      font-size: 16px;
+      color: #ffffff;
+      text-align: center;
+      font-style: normal;
+      text-transform: none;
+      .drive-chart {
+        display: flex;
+        width: 25%;
+        // width: 275px;
+        // height: 275px;
+      }
+      .drive-info-details{
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        padding: 10px;
+        // height: 275px;
+      }
+    }
+  }
 }
 
-.top-cards {
-  height: 40%;
-  width: 100%;
-}
-
-.card-block-top{ //顶部单个卡片
-  height: 40%;
-  width: 100%;
-  margin: 0% 0% 5% 0%;
-}
-
-.ReportedIterm{ //Reported Usage 卡片三个小横条
-  background-color: #eae8e86e;
-  padding: 5px;
-  border-radius: 3px;
-  color: #67C23A;
-}
-
-
-.card-header {
-  display: flex;
-  justify-content: space-between;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-.stat-number {
-  font-size: 2em;
-  font-weight: bold;
-  margin: 10px 0;
-}
 .status-dot {
   display: inline-block;
   margin-right: 6px;
@@ -50,10 +211,26 @@
   vertical-align: middle;
 }
 .success {
-  background-color: #67C23A;
+  background-color: #67c23a;
 }
+
+.ReportedIterm {
+  //Reported Usage 卡片三个小横条
+  background-color: #eae8e800;
+  padding: 5px;
+  border-radius: 3px;
+  color: #67c23a;
+}
+
+.stat-number {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 10px 0;
+  color: #e5e7eb;
+}
+
 .error {
-  background-color: #F56C6C;
+  background-color: #f56c6c;
 }
 .status-counts {
   display: flex;
@@ -62,7 +239,7 @@
 .info-row {
   margin-top: 2px;
   background-color: #ffffff00;
-  padding:  0px;
+  padding: 0px;
   border-radius: 4px;
 }
 .info-item {
@@ -71,7 +248,7 @@
   padding: 5px;
   background-color: #eae8e86e;
   align-items: center;
-  color: #67C23A;
+  color: #67c23a;
   font-weight: 500;
   border-radius: 3px;
 }
@@ -80,21 +257,10 @@
   color: #606266;
   font-weight: normal;
 }
-.card-block {
-  margin-top: 20px;
-}
-.ServerInfo{
-  width: 100%;
-  height: 40%;
-}
+// .card-block {
+//   margin-top: 20px;
+// }
 
-.server-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-weight: 500;
-  margin-bottom: 10px;
-}
 .server-metrics {
   display: flex;
   justify-content: space-around;
@@ -103,12 +269,6 @@
   font-size: 0.9em;
   color: #909399;
 }
-.chart-container {
-  width: 100px;
-  height: 100px;
-  margin: auto;
-}
-
 
 .drive-name {
   font-weight: 500;
@@ -127,6 +287,6 @@
 }
 .status-value {
   margin-left: auto;
-  color: #67C23A;
+  color: #67c23a;
   font-weight: 500;
 }
