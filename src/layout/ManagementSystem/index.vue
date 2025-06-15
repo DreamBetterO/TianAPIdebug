@@ -166,6 +166,7 @@ const logout = () => {
 const viewUserInfo = () => {
   console.log('查看用户信息');
   // 这里可以添加查看用户信息的逻辑
+  router.push('/CurrentUseinfo');
 };
 
 // 导航方法

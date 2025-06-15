@@ -25,6 +25,11 @@ const LoginRoutes: Array<RouteRecordRaw> = [
         component: () => import('@/views/login/RegisterPage.vue'),
         meta: { title: '注册' },
       },
+      {
+        path: '/CurrentUseinfo',
+        name: 'CurrentUseinfo',
+        component: () => import('@/views/UserManagement/CurrentUseinfo.vue'),
+      }
 
     ],
     redirect: { name: 'Register' },
