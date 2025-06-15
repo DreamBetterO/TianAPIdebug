@@ -42,6 +42,8 @@
 }
 
 .RoleScreening {
+  // width: 1117px;
+  // max-height: 522px;
   // margin: 0px 16px 12px 24px;
   background:
     linear-gradient(173deg, rgba(157, 163, 193, 0.18) 0%, rgba(157, 163, 193, 0) 100%),
@@ -50,6 +52,11 @@
   border-radius: 8px 8px 8px 8px;
   border: 1px solid;
   border-image: linear-gradient(165deg, rgba(157, 163, 193, 1), rgba(157, 163, 193, 0.24)) 1 1;
+
+  background-image: url('@/assets/images/CutImages_2x/块_数据统计3_bg2x.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 .StatusMonitoring {
@@ -70,5 +77,3 @@
   background-repeat: no-repeat;
   background-position: center;
 }
-
-

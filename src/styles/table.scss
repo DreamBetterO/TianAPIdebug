@@ -2,7 +2,7 @@
   --el-table-tr-bg-color: #ffffff00 !important; /* 设置表格行背景色 */
   --el-table-border-color: #ebeef500 !important; /* 设置表格边框颜色 */
   --el-table-header-bg-color: rgba(75, 85, 99, 0.42) !important; /* 设置表头背景色 */
-  --el-table-row-hover-bg-color: rgba(122, 160, 220, 0.571) !important; /* 设置行悬停背景色 */
+  --el-table-row-hover-bg-color: rgba(180, 210, 255, 0.85) !important; /* 设置行悬停背景色，更亮 */
   --el-table-text-color: #ffffff !important; /* 设置表格文本颜色 */
 }
 
@@ -14,10 +14,13 @@
 
 /*表格交叉项*/
 .el-table--striped .el-table__body tr.el-table__row--striped td.el-table__cell {
-  // background: #fafafa !important; /* 设置斑马纹背景色 */
   background: #374151 100% !important; /* 设置斑马纹背景色为透明 */
-  // border-radius: 0px 0px 0px 0px;
-  // border: 1px solid #374151 !important;
+}
+
+/* 修复斑马纹行 hover 颜色被覆盖的问题 */
+.el-table--striped .el-table__body tr.el-table__row--striped:hover td.el-table__cell,
+.el-table__body tr:hover > td.el-table__cell {
+  background: var(--el-table-row-hover-bg-color, rgba(180, 210, 255, 0.85)) !important;
 }
 
 //表格其它部分填充颜色

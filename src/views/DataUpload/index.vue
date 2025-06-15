@@ -181,10 +181,16 @@
                 <el-form-item :required="true">
                   <div class="mul-input">
                     <el-input v-model="FileOperationListParams.minSize" placeholder="最小值"
-                      style="width: 37%;"></el-input>
-                    <span style="margin: 0 5px;">~</span>
+                      style="width: 110px;"></el-input>
+                    <div>至</div>
                     <el-input v-model="FileOperationListParams.maxSize" placeholder="最大值"
-                      style="width: 37%;"></el-input>
+                      style="width: 110px;"></el-input>
+                    <el-select v-model="SearchDataSize" placeholder="单位" class="UnitSelect" :required="true">
+                      <el-option label="B" :value=1></el-option>
+                      <el-option label="KB" :value=1024></el-option>
+                      <el-option label="MB" :value=1048576></el-option>
+                      <el-option label="GB" :value=1073741824></el-option>
+                    </el-select>
                   </div>
                 </el-form-item>
               </div>
@@ -347,7 +353,7 @@
 
             <div style="display: flex;  margin: 18px 0px 5px 0px;  justify-content: space-between;">
               <div><span style=" color: #606266;">共 {{ pagecount }} 页/ {{ totalElements
-              }}条</span>
+                  }}条</span>
               </div>
               <el-pagination v-if="FileListStore.length > 0" :current-page="(FileOperationListParams.page + 1)"
                 :page-sizes="[10, 20, 30, 40]" :page-size="FileOperationListParams.size" :page-count="pagecount"
@@ -489,6 +495,10 @@ const UploadToServer = () => {
 
 //**********************************文件操作列表查询*************************//
 
+const SearchDataSize = ref(1024); //用于文件操作查询的文件大小单位，默认为B
+
+
+
 //查询参数
 const FileOperationListParams = ref<FileOperationListParams>(
   /**用于直接向后端提交的数据，可更改每页显示条数*/
@@ -538,8 +548,10 @@ const FileListStore = ref<FileOperationRecord[]>([
 const dataType = ref(''); //用于FileOperationListParams中的dataType中间值，以便于灵活更改。
 
 function OperationParamsMerge() {
-  FileOperationListParams.value.dataType = dataType.value;
 
+  FileOperationListParams.value.dataType = dataType.value;
+  FileOperationListParams.value.minSize = Math.floor((FileOperationListParams.value.minSize ?? 0) * SearchDataSize.value);
+  FileOperationListParams.value.maxSize = Math.ceil((FileOperationListParams.value.maxSize ?? 0) * SearchDataSize.value);
 }
 
 watch(() => fileOperationList().fileOperationResList, (newVal) => { //文件操作列表查询信息写入

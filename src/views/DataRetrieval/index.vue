@@ -27,10 +27,10 @@
                 <el-input v-model="searchMethodCrude.maxSize" placeholder="最大值KB" style="width: 110px;"
                   controls="false"></el-input>
                 <el-select v-model="SearchDataSize" placeholder="单位" class="UnitSelect" :required="true">
-                  <el-option label="B" value="1"></el-option>
-                  <el-option label="KB" value="1024"></el-option>
-                  <el-option label="MB" value="1048576"></el-option>
-                  <el-option label="GB" value="1073741824"></el-option>
+                  <el-option label="B" :value=1></el-option>
+                  <el-option label="KB" :value=1024></el-option>
+                  <el-option label="MB" :value=1048576></el-option>
+                  <el-option label="GB" :value=1073741824></el-option>
                 </el-select>
               </div>
             </el-form-item>
@@ -219,7 +219,7 @@ const searchMethod = ref<FileSearchParams>({
   sort: '',
 });
 
-const SearchDataSize = ref(); //用作于搜索框中文件倍数选取
+const SearchDataSize = ref(1024); //用作于搜索框中文件倍数选取
 
 const pagecount = computed({  //总页数获取
   get: () => FileListStore().pagination.pagecount,
