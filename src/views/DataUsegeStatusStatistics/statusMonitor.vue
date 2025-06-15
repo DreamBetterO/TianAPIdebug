@@ -1,6 +1,5 @@
 <template>
   <el-container class="StatusMonitoring" direction="vertical">
-    <h3>数据状态监测</h3>
     <el-table :data="statusMonitor" stripe>
       <el-table-column prop="DataName" label="数据名称" sortable></el-table-column>
       <el-table-column prop="Stuts" label="状态" sortable></el-table-column>

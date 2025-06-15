@@ -7,12 +7,12 @@ import ManagementRoutes from './modules/main'
 
 // 2. 合并所有路由配置
 const routes: RouteRecordRaw[] = [
-  {
-    path: '/',
-    name: 'WelcomePage',
-    component: () => import('@/views/Welecome.vue'),
-    meta: { title: '首页' },
-  },
+  // {
+  //   path: '/',
+  //   name: 'WelcomePage',
+  //   component: () => import('@/views/Welecome.vue'),
+  //   meta: { title: '首页' },
+  // },
   // 登录模块
 
   ...ManagementRoutes,
@@ -28,6 +28,7 @@ const routes: RouteRecordRaw[] = [
     component: () => import('@/views/WorkingForNew.vue'),
     meta: { title: '工作台' },
   },
+
 ]
 
 

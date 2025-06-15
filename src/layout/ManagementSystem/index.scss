@@ -31,6 +31,24 @@
         rgba(157, 163, 193, 0)
       )
       1 1;
+
+    .user-info {
+      /* 用户信息区域 */
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-right: 100px;
+    }
+
+    // 去除 el-dropdown 在 hover 和 focus 时的边框
+    .el-dropdown,
+    .el-dropdown:focus,
+    .el-dropdown:hover,
+    .el-dropdown:active {
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
   }
 
   // 过渡动画
@@ -105,7 +123,7 @@
   .el-menu-vertical-demo {
     /*菜单栏*/
     display: flex;
-    width: 100%;
+    width: 1440px;
     flex-wrap: nowrap; /* 不换行 */
     margin-left: 48px;
     font-family:
@@ -124,7 +142,11 @@
 }
 
 .el-menu-vertical-demo .el-menu-item.is-active {
-  background: linear-gradient(180deg, rgba(179, 218, 255, 0.35) 10%, rgba(128, 193, 255, 0.55) 80%) !important;
+  background: linear-gradient(
+    180deg,
+    rgba(179, 218, 255, 0.35) 10%,
+    rgba(128, 193, 255, 0.55) 80%
+  ) !important;
   // color: #409EFF !important; // 激活时的文字颜色
 }
 

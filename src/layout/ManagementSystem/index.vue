@@ -17,7 +17,7 @@
         <div class="loge-text">天球数据库</div>
       </div>
       <!--导航菜单栏-->
-      <el-menu v-model="activeMenu" class="el-menu-vertical-demo" text-color="#ffffff"
+      <el-menu :default-active="activeMenu" class="el-menu-vertical-demo" text-color="#ffffff"
         active-text-color="rgba(227, 232, 240, 0.9)" mode="horizontal" @select="handleMenuSelect">
         <el-menu-item index="/home">
           <svg t="1749524616357" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
@@ -95,6 +95,19 @@
         </el-menu-item>
 
       </el-menu>
+
+      <el-dropdown class="user-info">
+        <template #default>
+          <span>{{ ShowName }}</span>
+        </template>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="Info" @click="viewUserInfo">用户信息</el-dropdown-item>
+            <el-dropdown-item command="LoginOut" @click="logout">退出登录</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
+
     </el-header>
 
     <!-- 主内容区 -->
@@ -114,13 +127,14 @@
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import '@/assets/iconfont/iconfont.js'
-
+import { LoginStore } from '@/stores/LoginSystem/login';
 
 // 路由相关
 const router = useRouter()
 const route = useRoute()
 const activeMenu = ref(route.path)
-
+const userinfo = LoginStore(); // 获取用户信息的 store
+const ShowName = ref('未登录'); // 显示的用户名
 // 侧边栏状态
 
 
@@ -131,6 +145,28 @@ watch(
     activeMenu.value = newPath
   }
 )
+
+
+watch(() => userinfo.$state.loginResponseDate?.username, (newUserName) => {
+  console.log('用户名变化:', newUserName);
+  if (newUserName != undefined) {
+    ShowName.value = newUserName;
+  } else {
+    ShowName.value = '未登录';
+  }
+});
+
+const logout = () => {
+  userinfo.islogin = false; // 更新登录状态
+  userinfo.loginResponseDate = null; // 清除登录信息
+  console.log('退出登录');
+  router.push('/');
+};
+
+const viewUserInfo = () => {
+  console.log('查看用户信息');
+  // 这里可以添加查看用户信息的逻辑
+};
 
 // 导航方法
 const handleMenuSelect = (key: string) => {

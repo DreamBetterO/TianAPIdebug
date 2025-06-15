@@ -1,10 +1,13 @@
 import { type RouteRecordRaw } from 'vue-router'
 import echartsRouter from './echarts'
 import LoginRoutes from './login'
+// 引入登录信息
+import {LoginStore} from '@/stores/LoginSystem/login'
+import { ElMessageBox } from 'element-plus' // 引入 Element Plus 的消息提示框组件
 
 const ManageRoutes: Array<RouteRecordRaw> = [
   {
-    path: '/management-platform',
+    path: '/',
     name: 'ManagementPlatform',
     component: () => import('@/layout/ManagementSystem/index.vue'),
     meta: { title: '首页' },
@@ -38,6 +41,18 @@ const ManageRoutes: Array<RouteRecordRaw> = [
         name: 'UserManagement',
         component: () => import('@/views/UserManagement/index.vue'),
         meta: { title: '用户管理' },
+        beforeEnter: (to, from, next) => {
+          if (LoginStore().loginResponseDate?.role === 1) {
+            next()
+          } else {
+            ElMessageBox.alert('您没有权限访问此页面，请联系管理员！', '提示', {
+              confirmButtonText: '确定',
+              type: 'error',
+            }).then(() => {
+                next(from.fullPath) // 重定向到原有页面
+            })
+          }
+        }
       },
       {
         path: '/data-inspection',
@@ -56,3 +71,5 @@ const ManageRoutes: Array<RouteRecordRaw> = [
 ]
 
 export default ManageRoutes
+
+
